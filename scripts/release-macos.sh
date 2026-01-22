@@ -85,6 +85,10 @@ rm -f "$ZIP"
 echo "==> Zipping: $ZIP"
 cd "$DIST"
 ditto -c -k --sequesterRsrc --keepParent "${APP_NAME}.app" "$(basename "$ZIP")"
+LATEST_ZIP="$DIST/${APP_NAME}-latest-macOS-arm64.zip"
+cp -f "$ZIP" "$LATEST_ZIP"
+echo "Latest Zip: $LATEST_ZIP"
+
 
 # Create DMG installer
 "$REPO_ROOT/scripts/make-dmg.sh" "$APP" "$VERSION"

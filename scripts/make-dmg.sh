@@ -16,8 +16,8 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST="$REPO_ROOT/dist"
 STAGE="$DIST/dmg-stage"
 
-DMG_NAME="${APP_NAME}-macOS-${VER}-arm64.dmg"
-DMG_PATH="$DIST/$DMG_NAME"
+DMG_VERSIONED="$DIST/${APP_NAME}-macOS-${VER}-arm64.dmg"
+DMG_LATEST="$DIST/${APP_NAME}-latest-macOS-arm64.dmg"
 
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
@@ -28,14 +28,17 @@ cp -R "$APP_PATH" "$STAGE/$APP_NAME.app"
 echo "==> Adding Applications shortcut..."
 ln -s /Applications "$STAGE/Applications"
 
-rm -f "$DMG_PATH"
+rm -f "$DMG_VERSIONED" "$DMG_LATEST"
 
-echo "==> Creating DMG..."
+echo "==> Creating DMG (versioned): $DMG_VERSIONED"
 hdiutil create \
   -volname "$APP_NAME" \
   -srcfolder "$STAGE" \
   -ov -format UDZO \
-  "$DMG_PATH" >/dev/null
+  "$DMG_VERSIONED" >/dev/null
 
-echo "==> Done: $DMG_PATH"
-ls -lh "$DMG_PATH"
+echo "==> Copying DMG to stable 'latest' name: $DMG_LATEST"
+cp -f "$DMG_VERSIONED" "$DMG_LATEST"
+
+echo "==> Done."
+ls -lh "$DMG_VERSIONED" "$DMG_LATEST"
