@@ -188,7 +188,7 @@ echo "==> Creating distribution ZIP: $ZIP"
 cd "$DIST"
 ditto -c -k --sequesterRsrc --keepParent "${APP_NAME}.app" "$(basename "$ZIP")"
 
-LATEST_ZIP="$DIST/${APP_NAME}-latest-macOS-universal.zip"
+LATEST_ZIP="$DIST/${APP_NAME}-macOS-latest-universal.zip"
 cp -f "$ZIP" "$LATEST_ZIP"
 echo "    Latest ZIP: $LATEST_ZIP"
 

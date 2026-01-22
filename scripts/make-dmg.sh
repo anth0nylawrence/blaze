@@ -17,7 +17,7 @@ DIST="$REPO_ROOT/dist"
 STAGE="$DIST/dmg-stage"
 
 DMG_VERSIONED="$DIST/${APP_NAME}-macOS-${VER}-universal.dmg"
-DMG_LATEST="$DIST/${APP_NAME}-latest-macOS-universal.dmg"
+DMG_LATEST="$DIST/${APP_NAME}-macOS-latest-universal.dmg"
 
 # --- Signing config ---
 SIGNING_IDENTITY="${BLAZE_SIGNING_IDENTITY:-}"
