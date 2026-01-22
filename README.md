@@ -1,51 +1,202 @@
-# Cogit0 Blaze
-
 <p align="center">
-  <img src="./Blaze/Resources/Logos/blaze-logo.png" alt="Blaze Logo" width="128" height="128" />
+  <img src="./readme-logo.png" alt="Blaze Logo" width="200" height="200" />
 </p>
 
-<h3 align="center">The native control plane for agentic coding.</h3>
+<h1 align="center">Blaze</h1>
+
+<h3 align="center">The Native Control Plane for Agentic Coding</h3>
 
 <p align="center">
   <strong>Claude Code. Gemini CLI. OpenAI Codex. One cockpit.</strong>
 </p>
 
 <p align="center">
+  <a href="https://getblaze.dev/docs/">Documentation</a> |
   <a href="#quick-start">Quick Start</a> |
-  <a href="#features">Features</a> |
+  <a href="#feature-tour">Features</a> |
   <a href="#architecture">Architecture</a> |
-  <a href="./docs/CONTRIBUTING.md">Contributing</a>
+  <a href="#contributing">Contributing</a>
 </p>
 
 <p align="center">
-  <!-- Badges - replace with actual URLs when ready -->
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-blue?style=flat-square&logo=apple" />
   <img alt="Swift 5.9" src="https://img.shields.io/badge/Swift-5.9-orange?style=flat-square&logo=swift" />
-  <img alt="License" src="https://img.shields.io/badge/license-TBD-lightgrey?style=flat-square" />
+  <img alt="SwiftUI" src="https://img.shields.io/badge/SwiftUI-Native-blue?style=flat-square&logo=swift" />
+  <img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-green?style=flat-square" />
   <img alt="Build Status" src="https://img.shields.io/badge/build-passing-brightgreen?style=flat-square" />
+  <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" />
+  <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-supported-blueviolet?style=flat-square" />
+  <img alt="Gemini CLI" src="https://img.shields.io/badge/Gemini%20CLI-supported-blue?style=flat-square" />
+  <img alt="Codex CLI" src="https://img.shields.io/badge/Codex%20CLI-planned-yellow?style=flat-square" />
+  <img alt="Native Performance" src="https://img.shields.io/badge/Native-60fps-success?style=flat-square" />
 </p>
 
 ---
 
-**Three promises:**
+## Three Promises
 
-1. **Native performance** - SwiftUI with glass effects, 60fps streaming, zero Electron bloat
-2. **Visual automation** - Node-based hooks builder. Drag. Connect. Ship.
-3. **Run agents in parallel** - Claude fixes bugs while Codex writes tests. Same repo. Different worktrees.
+| Promise | What It Means |
+|---------|---------------|
+| **Native Performance** | SwiftUI with glass effects, 60fps streaming, zero Electron bloat |
+| **Visual Automation** | Node-based hooks builder. Drag. Connect. Ship. |
+| **Parallel Agents** | Claude fixes bugs while Codex writes tests. Same repo. Different worktrees. |
+
+---
+
+## Table of Contents
+
+<!-- TOC START -->
+
+1. [What is Blaze?](#what-is-blaze)
+   - [Plain English Explanation](#plain-english-explanation)
+   - [What Blaze is NOT](#what-blaze-is-not)
+   - [The Core Thesis](#the-core-thesis)
+2. [Why Blaze? The Problem We Solve](#why-blaze-the-problem-we-solve)
+   - [The Pain of CLI-Only Development](#the-pain-of-cli-only-development)
+   - [Before and After: A Visual Comparison](#before-and-after-a-visual-comparison)
+   - [The Opportunity Cost](#the-opportunity-cost)
+3. [What Makes Blaze Different?](#what-makes-blaze-different)
+   - [Unique Value Propositions](#unique-value-propositions)
+   - [Feature Comparison Matrix](#feature-comparison-matrix)
+   - [Decision Guide](#decision-guide)
+4. [Who is Blaze For?](#who-is-blaze-for)
+   - [Great Fit](#great-fit)
+   - [Not a Fit](#not-a-fit)
+   - [User Stories](#user-stories)
+5. [Quick Start](#quick-start)
+   - [System Requirements](#system-requirements)
+   - [Prerequisites](#prerequisites)
+   - [Installation Methods](#installation-methods)
+   - [First Launch Setup](#first-launch-setup)
+   - [Your First Session](#your-first-session)
+6. [Feature Tour](#feature-tour)
+   - [6.1 Multi-Engine Orchestration](#61-multi-engine-orchestration)
+   - [6.2 Provider-Aware Model Selection](#62-provider-aware-model-selection)
+   - [6.3 Session Management](#63-session-management)
+   - [6.4 Chat Interface](#64-chat-interface)
+   - [6.5 Tool Execution Display](#65-tool-execution-display)
+   - [6.6 Subagent Display](#66-subagent-display)
+   - [6.7 File Tree and Navigation](#67-file-tree-and-navigation)
+   - [6.8 Diff Viewer](#68-diff-viewer)
+   - [6.9 Security and Trust Modes](#69-security-and-trust-modes)
+   - [6.10 Tool Approval System](#610-tool-approval-system)
+   - [6.11 Command Allowlist](#611-command-allowlist)
+   - [6.12 Design System and Theming](#612-design-system-and-theming)
+   - [6.13 Terminal Integration](#613-terminal-integration)
+   - [6.14 Hooks System](#614-hooks-system)
+   - [6.15 Visual Hooks Builder](#615-visual-hooks-builder)
+   - [6.16 Sidebar Panels](#616-sidebar-panels)
+   - [6.17 Onboarding Flow](#617-onboarding-flow)
+   - [6.18 Git Integration and Worktrees](#618-git-integration-and-worktrees)
+7. [Settings Reference](#settings-reference)
+   - [7.1 Appearance Settings](#71-appearance-settings)
+   - [7.2 Chat and Input Settings](#72-chat-and-input-settings)
+   - [7.3 Models Settings](#73-models-settings)
+   - [7.4 Security and Trust Settings](#74-security-and-trust-settings)
+   - [7.5 Engines Settings](#75-engines-settings)
+   - [7.6 Terminal Settings](#76-terminal-settings)
+   - [7.7 Agents Settings](#77-agents-settings)
+   - [7.8 Files and Editor Settings](#78-files-and-editor-settings)
+   - [7.9 Notifications Settings](#79-notifications-settings)
+   - [7.10 CLI Power Settings](#710-cli-power-settings)
+   - [7.11 Memory and Context Settings](#711-memory-and-context-settings)
+   - [7.12 Git Settings](#712-git-settings)
+   - [7.13 Shortcuts Settings](#713-shortcuts-settings)
+8. [Architecture](#architecture)
+   - [System Overview](#system-overview)
+   - [Component Architecture](#component-architecture)
+   - [Event Pipeline](#event-pipeline)
+   - [Multi-Engine Flow](#multi-engine-flow)
+   - [Session Lifecycle](#session-lifecycle)
+   - [Approval Flow](#approval-flow)
+   - [Hook System Architecture](#hook-system-architecture)
+   - [Worktree Structure](#worktree-structure)
+   - [UI Layout Architecture](#ui-layout-architecture)
+   - [Data Layer Architecture](#data-layer-architecture)
+   - [Subagent Orchestration](#subagent-orchestration)
+9. [CLI Invocation Patterns](#cli-invocation-patterns)
+   - [Claude Code](#claude-code)
+   - [Gemini CLI](#gemini-cli)
+   - [OpenAI Codex CLI](#openai-codex-cli)
+10. [Data Layer Deep Dive](#data-layer-deep-dive)
+    - [SessionStore](#sessionstore)
+    - [EventStore](#eventstore)
+    - [TokenStore](#tokenstore)
+    - [HookStore](#hookstore)
+    - [NDJSONLogger](#ndjsonlogger)
+    - [BackupManager](#backupmanager)
+11. [Subagent System](#subagent-system)
+    - [SubagentRegistry](#subagentregistry)
+    - [SubagentPool](#subagentpool)
+    - [SubagentEventRouter](#subagenteventrouter)
+12. [Keyboard Shortcuts Reference](#keyboard-shortcuts-reference)
+    - [Global Shortcuts](#global-shortcuts)
+    - [Chat Shortcuts](#chat-shortcuts)
+    - [Navigation Shortcuts](#navigation-shortcuts)
+    - [Diff Viewer Shortcuts](#diff-viewer-shortcuts)
+    - [File Tree Shortcuts](#file-tree-shortcuts)
+13. [Performance Notes](#performance-notes)
+    - [Performance Budgets](#performance-budgets)
+    - [Memory Budgets](#memory-budgets)
+    - [Known Bottlenecks](#known-bottlenecks)
+14. [Security Model](#security-model)
+    - [Threat Model](#threat-model)
+    - [Trust Mode Spectrum](#trust-mode-spectrum)
+    - [Approval Workflows](#approval-workflows)
+    - [Audit Logging](#audit-logging)
+15. [Privacy and Telemetry](#privacy-and-telemetry)
+    - [What Stays Local](#what-stays-local)
+    - [What Leaves Your Machine](#what-leaves-your-machine)
+    - [Optional Telemetry](#optional-telemetry)
+16. [Troubleshooting](#troubleshooting)
+    - [Installation Issues](#installation-issues)
+    - [Authentication Issues](#authentication-issues)
+    - [Tool Permission Issues](#tool-permission-issues)
+    - [Hooks Not Firing](#hooks-not-firing)
+    - [Diagnostics](#diagnostics)
+17. [FAQ](#faq)
+18. [Roadmap](#roadmap)
+    - [Now (In Progress)](#now-in-progress)
+    - [Next (30-90 days)](#next-30-90-days)
+    - [Later (3-6 months)](#later-3-6-months)
+    - [What We Are NOT Building](#what-we-are-not-building)
+19. [Contributing](#contributing)
+    - [Development Setup](#development-setup)
+    - [Repository Layout](#repository-layout)
+    - [Code Style](#code-style)
+    - [PR Guidelines](#pr-guidelines)
+20. [License](#license)
+21. [Acknowledgments](#acknowledgments)
+
+<!-- TOC END -->
 
 ---
 
 ## What is Blaze?
 
-Blaze is a macOS desktop application that wraps agentic coding CLIs (Claude Code, Gemini CLI, OpenAI Codex CLI) in a polished native interface.
+Blaze is a **native macOS desktop application** that wraps agentic coding CLIs (Claude Code, Gemini CLI, OpenAI Codex CLI) in a polished, high-performance interface.
 
-**The elevator pitch:** You get the raw power of CLI agents, minus the terminal fatigue. Tool calls become cards. Diffs become reviewable PRs. Bash commands need your approval. Everything streams at 60fps with that macOS glass aesthetic.
+### Plain English Explanation
 
-### Plain English
-
-Think of Blaze as Mission Control for AI coding agents. The CLI does the work. Blaze shows you what's happening, lets you approve dangerous operations, and keeps a perfect audit trail.
+Think of Blaze as **Mission Control for AI coding agents**. The CLI does the work. Blaze shows you what's happening, lets you approve dangerous operations, and keeps a perfect audit trail.
 
 It spawns CLI processes, reads their structured JSON output, and renders everything in a proper GUI. No API keys to manage. No token counting in your head. Just run `claude` or `gemini` through a UI that doesn't make your eyes bleed.
+
+```
++------------------------------------------------------------------+
+|                         THE BLAZE CONCEPT                         |
++------------------------------------------------------------------+
+|                                                                   |
+|   YOU  ------>  BLAZE  ------>  CLI  ------>  AI PROVIDER        |
+|                   |                                               |
+|                   |  - Structured event rendering                 |
+|                   |  - Visual diff review                         |
+|                   |  - Approval workflows                         |
+|                   |  - Session persistence                        |
+|                   |  - Hooks automation                           |
+|                                                                   |
++------------------------------------------------------------------+
+```
 
 ### What Blaze is NOT
 
@@ -55,1333 +206,288 @@ It spawns CLI processes, reads their structured JSON output, and renders everyth
 | Web wrapper / Electron app | Native SwiftUI with glass materials |
 | API client | CLI orchestrator (uses official CLIs) |
 | Code editor | Coding agent cockpit |
+| Token counter | Visual progress and cost tracker |
+| Chat app | Workflow automation platform |
 
-### Who is Blaze for?
+### The Core Thesis
 
-**Great fit:**
-- Developers who use Claude Code / Gemini CLI daily and want a better UX
-- Teams that need audit trails and approval workflows for AI-assisted coding
-- Anyone who wants to run multiple agents in parallel on the same codebase
-
-**Not a fit:**
-- Looking for a VS Code extension (try Cursor or Continue)
-- Need Windows/Linux today (macOS only for now)
-- Want direct API access (Blaze uses CLIs, not provider APIs)
-
----
-
-## 30-Second Demo
-
-<p align="center">
-  <!-- TODO: Replace with actual GIF/video -->
-  <img src="./docs/resources/demo-placeholder.gif" alt="Blaze Demo" width="800" />
-  <br />
-  <em>Creating a React component with Claude Code through Blaze</em>
-</p>
-
-**What you just saw:**
-
-1. **Prompt sent** - Natural language request in the chat pane
-2. **Tool cards appear** - Each `Read`, `Write`, `Bash` call gets its own collapsible card with timing
-3. **Diff review** - File changes shown in PR-style unified diff. Accept or reject.
-4. **Streaming response** - Token-by-token rendering. No waiting for the full response.
-5. **Session saved** - Everything persisted. Resume tomorrow where you left off.
-
-### Minimal Walkthrough
-
-```bash
-# 1. Install Blaze (download DMG from releases)
-open Blaze.dmg && cp -R Blaze.app /Applications/
-
-# 2. Launch and authenticate
-# Blaze triggers `claude login` on first run - you auth with Anthropic directly
-
-# 3. Open a project
-# Cmd+O or drag a folder onto Blaze
-
-# 4. Start coding
-# Type a prompt. Watch the magic.
+```
++------------------------------------------------------------------+
+|                        BLAZE ARCHITECTURE                         |
++------------------------------------------------------------------+
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  |                    macOS App (SwiftUI)                      |  |
+|  |                                                              |  |
+|  |  UI Layer:        Chat timeline, tool cards, diffs          |  |
+|  |  Orchestration:   SessionStore, EngineManager, Hooks        |  |
+|  |  EngineAdapter:   ClaudeCodeAdapter, GeminiCliAdapter,      |  |
+|  |                   CodexCliAdapter                            |  |
+|  +-----------------------------+--------------------------------+  |
+|                                |                                   |
+|                                | spawn child process / pipes       |
+|                                v                                   |
+|  +------------------------------------------------------------+  |
+|  |              Provider CLIs (unmodified binaries)            |  |
+|  |                                                              |  |
+|  |  claude -p "..." --output-format stream-json                |  |
+|  |  gemini -p "..." --output-format stream-json                |  |
+|  |  codex exec --json "..."                                    |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
 ```
 
+**Key insight**: Blaze is NOT a terminal emulator. It's NOT a web wrapper. It's a **structured event renderer** that consumes JSON events from CLI stdout and presents them as interactive UI components.
+
 ---
 
-## Why Blaze Exists
+## Why Blaze? The Problem We Solve
 
-### The Pain of CLI-Only
+### The Pain of CLI-Only Development
 
 Terminal-based AI coding is powerful but exhausting:
 
-- **Context blindness** - You can't see what the agent is about to do until it does it
-- **Scroll archaeology** - Finding that one tool call from 10 minutes ago
-- **Copy-paste diffs** - Reviewing changes means manual `git diff` gymnastics
-- **No pause button** - Agent runs wild. You watch. You pray.
-- **Session amnesia** - Close terminal, lose context. Start over.
+| Pain Point | Description |
+|------------|-------------|
+| **Context blindness** | You can't see what the agent is about to do until it does it |
+| **Scroll archaeology** | Finding that one tool call from 10 minutes ago |
+| **Copy-paste diffs** | Reviewing changes means manual `git diff` gymnastics |
+| **No pause button** | Agent runs wild. You watch. You pray. |
+| **Session amnesia** | Close terminal, lose context. Start over. |
+| **Multi-tool fatigue** | Different CLIs, different interfaces, different workflows |
+| **Approval friction** | Y/N prompts with no context or preview |
+| **Hook hell** | Writing JSON configs and shell scripts for automation |
 
-### What "Agentic" Feels Like in a Native GUI
+### Before and After: A Visual Comparison
 
-Blaze transforms the experience:
+```
++------------------------------------------------------------------+
+|                    WITHOUT BLAZE (Terminal)                       |
++------------------------------------------------------------------+
+|                                                                   |
+|  $ claude -p "Fix the auth bug"                                  |
+|                                                                   |
+|  I'll look at the authentication code...                         |
+|                                                                   |
+|  [Tool: Read] src/auth/login.ts                                  |
+|  ... 200 lines of code scrolling by ...                          |
+|                                                                   |
+|  [Tool: Read] src/auth/session.ts                                |
+|  ... more scrolling ...                                          |
+|                                                                   |
+|  I found the issue. Let me fix it.                               |
+|                                                                   |
+|  [Tool: Write] src/auth/login.ts                                 |
+|  Allow this operation? [y/N]                                     |
+|                                                                   |
+|  (What changed? How many lines? Which functions?)                |
+|  (Scrolls up frantically to find context)                        |
+|                                                                   |
++------------------------------------------------------------------+
 
-| CLI Pain | Blaze Solution |
-|----------|----------------|
-| Wall of text | Collapsible tool cards with duration, inputs, outputs |
-| Scroll to find | Timeline view with filters. Jump to any event. |
-| `git diff \| less` | Inline diff viewer with syntax highlighting. Accept/Reject buttons. |
-| No control | Three trust modes: Review (approve everything), Trusted, Sandbox |
-| Lost sessions | SQLite + JSONL persistence. Crash-safe. Searchable. |
++------------------------------------------------------------------+
+|                      WITH BLAZE (Native GUI)                      |
++------------------------------------------------------------------+
+|                                                                   |
+|  +----------------+  +---------------------------------------+   |
+|  | Sessions       |  | Fix the auth bug           [Claude]  |   |
+|  |                |  +---------------------------------------+   |
+|  | > Auth Bug     |  |                                       |   |
+|  |   API Refactor |  | YOU: Fix the auth bug                 |   |
+|  |   Tests        |  |                                       |   |
+|  |                |  | CLAUDE: I'll analyze the auth flow... |   |
+|  +----------------+  |                                       |   |
+|                      | +-----------------------------------+ |   |
+|  +----------------+  | | [v] Read: src/auth/login.ts  1.2s | |   |
+|  | Files          |  | |     245 lines | [Expand]          | |   |
+|  |                |  | +-----------------------------------+ |   |
+|  | src/           |  |                                       |   |
+|  |   auth/        |  | +-----------------------------------+ |   |
+|  |     login.ts   |  | | [v] Read: src/auth/session.ts 0.8s| |   |
+|  |     session.ts |  | |     189 lines | [Expand]          | |   |
+|  |                |  | +-----------------------------------+ |   |
+|  +----------------+  |                                       |   |
+|                      | I found the issue in the token...    |   |
+|  +----------------+  |                                       |   |
+|  | Approvals (1)  |  | +-----------------------------------+ |   |
+|  |                |  | | Diff: src/auth/login.ts   +5 -2   | |   |
+|  | Write: login.ts|  | |                                   | |   |
+|  | [Accept][Deny] |  | | - if (expired) return null;       | |   |
+|  |                |  | | + if (expired) {                  | |   |
+|  +----------------+  | | +   await refreshToken();         | |   |
+|  | [Preview diff] |  | | + }                               | |   |
+|  +----------------+  | |                                   | |   |
+|                      | | [Accept] [Reject] [Edit]          | |   |
+|                      | +-----------------------------------+ |   |
+|                      +---------------------------------------+   |
+|                                                                   |
++------------------------------------------------------------------+
+```
 
 ### The Opportunity Cost
 
-Every hour spent fighting terminal UX is an hour not shipping. Blaze gives you back that time.
+Every hour spent fighting terminal UX is an hour not shipping.
+
+| Task | Terminal Time | Blaze Time | Savings |
+|------|---------------|------------|---------|
+| Review multi-file diff | 5-10 min | 30 sec | 90% |
+| Find specific tool call | 2-3 min | 5 sec | 95% |
+| Set up approval hook | 30 min | 2 min | 93% |
+| Compare sessions | Manual | 1 click | 100% |
+| Resume after crash | Start over | Automatic | 100% |
 
 The hooks builder alone saves days of YAML wrangling. Drag a "PreToolUse" trigger, connect it to a "Block if path matches" condition, wire up a notification action. Export. Done.
 
 And with git worktree support, you can run Claude Code on a bug fix while Codex writes integration tests - simultaneously, isolated, on the same repo. That's not a workflow optimization. That's a multiplier.
-## 4. Key Concepts
-
-Before diving into features, here are the core concepts that make Blaze tick.
-
-### Agents
-
-AI assistants that execute coding tasks. Each agent is a CLI process (Claude Code, Codex CLI, or Gemini CLI) that Blaze spawns, monitors, and orchestrates. Agents can run in parallel, each isolated in its own worktree.
-
-**Key points:**
-- Agents are defined as markdown files in `~/.claude/agents/`
-- You can configure concurrency limits (default: 10, max: 100)
-- Auto-throttle reduces concurrency when system resources run low
-- Each agent has a timeout (default: 300 seconds)
-
-### Providers
-
-The AI backend powering your agents. Currently supported:
-
-| Provider | CLI | Model Examples |
-|----------|-----|----------------|
-| Anthropic | Claude Code | Claude Sonnet, Claude Opus |
-| OpenAI | Codex CLI | o1, o3-mini, GPT-4 |
-| Google | Gemini CLI | Gemini Pro, Gemini Ultra |
-
-Switch providers per-session. Each has its own authentication flow and environment variables.
-
-### Sessions
-
-A session represents a single task or conversation with an agent. Sessions persist across app restarts and include:
-
-- **Messages**: The full conversation history
-- **Metadata**: Token usage, cost, turn count
-- **State**: Idle, streaming, waiting, or error
-- **Project binding**: Linked to a specific repository
-
-Sessions are stored in SQLite with WAL mode for durability. Each session gets an NDJSON log file for replay and debugging.
-
-### Workspaces (Projects)
-
-Your codebase. Sessions are grouped by project path. The sidebar shows all your projects with their active sessions nested underneath.
-
-When you select a project folder, Blaze canonicalizes the path to handle symlinks and relative paths consistently.
-
-### Git Worktrees
-
-Each session can have its own isolated git worktree. This means multiple agents can work on the same repo simultaneously without stepping on each other.
-
-**How it works:**
-1. Worktrees live in `{repo}/.blaze-worktrees/{sessionId}/`
-2. Each worktree gets its own branch: `blaze-session-{short-uuid}`
-3. Changes stay isolated until you merge them
-4. Orphan detection cleans up abandoned worktrees
-
-**Why this matters:** Run frontend fixes and backend refactoring in parallel. No merge conflicts until you choose to merge.
-
-### Tools
-
-Actions that agents can take: read files, write files, run commands, search the web, etc. Blaze intercepts tool calls and renders them as rich cards in the timeline.
-
-Tool categories:
-- **Read-only**: `Read`, `Glob`, `Grep`, `WebFetch`, `WebSearch`
-- **Write**: `Write`, `Edit`, `NotebookEdit`
-- **Execute**: `Bash` (shell commands)
-- **Interactive**: `AskUserQuestion`, `TodoWrite`
-
-### Hooks
-
-Event handlers that run before or after tool execution. Blaze supports the Claude Code hooks system:
-
-| Hook Event | When It Fires |
-|------------|---------------|
-| `PreToolUse` | Before a tool runs (can block) |
-| `PostToolUse` | After a tool completes |
-| `UserPromptSubmit` | Before processing user input |
-| `SessionStart` | On session start or resume |
-| `Stop` | When agent finishes |
-
-Register hooks in `.claude/settings.json`. They run as shell commands with JSON input/output.
-
-### Trust Modes
-
-Security levels that control what agents can do without asking.
-
-| Mode | Behavior | CLI Flag |
-|------|----------|----------|
-| **Review** | Ask permission for everything | (default) |
-| **Trusted** | Ask once per tool, then auto-allow | `--allowedTools <list>` |
-| **YOLO** | Skip ALL permission prompts | `--dangerously-skip-permissions` |
-| **Sandbox** | Read-only tools only | `--allowedTools Read,Glob,Grep,...` |
-
-**Review** is recommended for most users. **YOLO** mode is for experienced users who accept full risk.
 
 ---
 
-## 5. Feature Tour
+## What Makes Blaze Different?
 
-### 5.1 Native macOS GUI and Theme Engine
-
-Blaze is a native SwiftUI app. No Electron. No web wrapper. Just pure macOS performance with proper transparency, vibrancy, and system integration.
-
-#### What
-
-A fully customizable appearance system with glass effects, accent colors, and six built-in themes.
-
-#### Why
-
-Terminal-based CLIs force you into their aesthetic. Blaze lets you match your desktop, reduce eye strain, and work the way you want.
-
-#### How
-
-The theme engine uses semantic color tokens that adapt to your choices:
-
-```swift
-// Core semantic colors
-background    // Deepest layer
-surface       // Card backgrounds
-surfaceHover  // Interactive states
-accent        // Primary brand color
-accentHover   // Hover states for accent
-textPrimary   // Main text
-textSecondary // Subtitles, labels
-textMuted     // Tertiary text
-border        // Separators, outlines
-success       // Positive states
-warning       // Caution indicators
-error         // Error states
-```
-
-#### Built-in Themes
-
-| Theme | Description | Vibe |
-|-------|-------------|------|
-| **Nebula** | Deep blue dark aesthetic | Ghostty-inspired |
-| **Obsidian** | Pure dark with minimal contrast | Sleek, professional |
-| **Aurora** | Cyan/teal accents on dark | Nature-inspired |
-| **Sunrise** | Warm dark with orange accents | Cozy, inviting |
-| **Monochrome** | Grayscale only, no color | Minimalist |
-| **Hyperion** | Deep purple dark aesthetic | Original Nebula colors |
-
-#### Glass Levels
-
-Control transparency and blur intensity:
-
-- **None**: Solid backgrounds, no blur
-- **Subtle**: Light transparency
-- **Regular**: Balanced (default)
-- **Prominent**: Maximum glass effect
-
-Glass effects use `NSVisualEffectView` under the hood for native macOS vibrancy.
-
-#### Accent Colors
-
-Nine preset accent colors plus custom:
-
-Blue, Purple, Pink, Red, Orange, Yellow, Green, Mint, Teal
-
-Select any color and it propagates through the entire UI: buttons, selections, highlights, focus rings.
-
-#### Custom Themes
-
-Don't like the presets? Create your own:
-
-1. Open **Settings > Appearance**
-2. Click **New Theme**
-3. Pick colors for each semantic token
-4. Adjust glass level and accent
-5. Save with a custom name
-
-Custom themes persist and can be exported/shared.
-
-#### Controls
-
-**Settings > Appearance**
-- Theme picker grid with live preview
-- Glass level segmented control
-- Accent color swatches
-- Reset to defaults button
-- Theme editor for full customization
-
----
-
-### 5.2 Multi-Provider, Multi-Agent Orchestration
-
-Run Claude Code and Codex CLI side by side. Assign different tasks to different engines. Let the best model for the job handle each task.
-
-#### What
-
-A unified orchestration layer that spawns, monitors, and coordinates multiple AI agents across providers.
-
-#### Why
-
-Different models excel at different tasks:
-- Claude Sonnet: Fast iteration, broad knowledge
-- Claude Opus: Complex reasoning, long-context
-- o1/o3: Mathematical reasoning, code optimization
-- GPT-4: General purpose, tool use
-
-Why choose one when you can use them all?
-
-#### How
-
-The `EngineAdapter` protocol abstracts CLI differences:
+### Unique Value Propositions
 
 ```
-+-----------------------------------------------------+
-|                    Blaze UI                         |
-+-----------------------------------------------------+
-|              SessionOrchestrator                    |
-+-----------------------------------------------------+
-|   ClaudeAdapter    CodexAdapter    GeminiAdapter    |
-|        |                |               |           |
-|        v                v               v           |
-|   claude -p ...    codex exec ...  gemini -p ...    |
-+-----------------------------------------------------+
++------------------------------------------------------------------+
+|                  BLAZE DIFFERENTIATORS                            |
++------------------------------------------------------------------+
+|                                                                   |
+|  1. MULTI-ENGINE ORCHESTRATION                                   |
+|     +--------+     +--------+     +--------+                     |
+|     | Claude |     | Gemini |     | Codex  |                     |
+|     +--------+     +--------+     +--------+                     |
+|          \             |             /                            |
+|           \            |            /                             |
+|            +------------------------+                             |
+|            |    Unified Interface   |                             |
+|            +------------------------+                             |
+|                                                                   |
+|  2. VISUAL HOOKS BUILDER (Only in Blaze)                         |
+|     [Trigger] ---> [Filter] ---> [Action] ---> [Output]          |
+|         |             |             |             |               |
+|     Drag & Drop   Conditions    Scripts      Notifications       |
+|                                                                   |
+|  3. PARALLEL WORKTREES                                           |
+|     main/  -----------> Session A (Claude: features)             |
+|       |                                                          |
+|       +--worktree-1/ -> Session B (Codex: tests)                 |
+|       |                                                          |
+|       +--worktree-2/ -> Session C (Claude: docs)                 |
+|                                                                   |
+|  4. NATIVE PERFORMANCE                                           |
+|     SwiftUI + Metal = 60fps streaming, glass effects, <1s launch |
+|                                                                   |
++------------------------------------------------------------------+
 ```
 
-Each adapter:
-- Spawns the CLI with correct flags
-- Parses streaming JSON output
-- Maps events to `NormalizedEvent` types
-- Handles authentication flows
-- Manages process lifecycle
-
-#### Parallel Worktrees
-
-Run multiple agents on the same repo without conflicts:
-
-```
-my-project/
-  .blaze-worktrees/
-    abc12345-session-1/    # Claude working on auth
-    def67890-session-2/    # Codex optimizing queries
-    ghi11111-session-3/    # Claude writing tests
-```
-
-Each worktree is a full checkout with its own branch. Merge when ready.
-
-#### Collaboration Patterns
-
-**Divide and conquer:**
-1. Start Session A with Claude: "Implement the data model"
-2. Start Session B with Codex: "Optimize the SQL queries"
-3. Both run in parallel, isolated
-4. Review and merge results
-
-**Specialist agents:**
-- Use Claude Opus for architecture decisions
-- Use Claude Sonnet for rapid implementation
-- Use o1 for algorithmic problems
-- Use Gemini for research and docs
-
-#### Engine Settings
-
-Per-provider configuration:
-
-**Claude Code:**
-- API key (Anthropic, Bedrock, or Vertex)
-- Max tokens per response
-- Model selection
-
-**Codex CLI:**
-- OpenAI API key
-- Organization ID
-- Sandbox mode toggle
-- OAuth login flow
-
-**Gemini CLI:**
-- Google API key
-- Model selection
-- Service account credentials
-
-#### Controls
-
-**Settings > Engines**
-- Default engine picker (segmented)
-- Environment variables per engine
-- OAuth authentication for Codex
-- Test connection button
-- MCP server configuration (coming soon)
-
-**Session creation:**
-- Provider dropdown (Anthropic, OpenAI, Google)
-- Model dropdown (filtered by provider)
-- Per-session overrides
-
----
-
-### 5.3 Structured Event Rendering
-
-Raw CLI output becomes a rich, interactive timeline. Every tool call, file diff, and status update gets its own card.
-
-#### What
-
-A real-time event stream that transforms JSON events into visual components: tool cards, diff viewers, progress indicators, and interactive prompts.
-
-#### Why
-
-Terminal output is linear and ephemeral. You can't easily:
-- Jump back to see what that file edit actually changed
-- Approve or reject individual diffs
-- Track which tools are pending vs complete
-- Get an overview of session activity
-
-Blaze structures everything so you can review, navigate, and interact.
-
-#### How
-
-The event pipeline:
-
-```
-CLI stdout (NDJSON)
-    |
-    v
-EngineAdapter.parseEvent()
-    |
-    v
-NormalizedEvent (unified type)
-    |
-    v
-EventEnvelope (sequenced, timestamped)
-    |
-    v
-EventStore (SQLite persistence)
-    |
-    v
-ChatTimeline (SwiftUI rendering)
-```
-
-#### Event Types
-
-Content events:
-- `assistantDelta` - Streaming text chunks
-- `assistantComplete` - Full response when done
-- `thinkingDelta` - Model reasoning (Claude)
-- `reasoningDelta` - Model reasoning (Codex)
-
-Tool events:
-- `toolCallStarted` - Tool invocation begins
-- `toolCallComplete` - Tool finishes with result
-- `toolRequest` - Pending approval request
-- `toolDecision` - User approved/rejected
-- `toolResult` - Execution output
-
-File events:
-- `fileDiffProduced` - Unified diff with hunks
-- `fileWritten` - Write confirmation
-- `fileRead` - Read operation logged
-
-Subagent events:
-- `subagentSpawned` - Background agent started
-- `subagentProgress` - Status update
-- `subagentCompleted` - Finished successfully
-- `subagentFailed` - Encountered error
-
-#### Tool Cards
-
-Every tool call renders as an expandable card:
-
-```
-+-----------------------------------------------+
-| ? AskUserQuestion                             |
-|                                               |
-| Which approach do you prefer?                 |
-| Please select one option to continue.         |
-|                                               |
-| ( ) Quick Implementation                      |
-|     Fast but minimal features                 |
-|                                               |
-| (*) Thorough Implementation                   |
-|     Complete features with full test coverage |
-|                                               |
-| ( ) Iterative Approach                        |
-|     Start simple and expand over time         |
-|                                               |
-|                            [Submit]           |
-+-----------------------------------------------+
-```
-
-Features:
-- Single-select or multi-select options
-- Free-text input for unknown tools
-- Submission state (idle, submitting, submitted, failed)
-- Retry button on failure
-- Raw JSON disclosure for debugging
-
-#### Rich Diff Viewer
-
-File changes display as syntax-highlighted diffs:
-
-```
-+-----------------------------------------------+
-| > ContentView.swift       +5 -2       [v] [x] |
-+-----------------------------------------------+
-| @@ -3,5 +3,7 @@                                |
-|   import SwiftUI                              |
-|                                               |
-| - struct OldView: View {                      |
-| + struct NewView: View {                      |
-| +     let title: String                       |
-|       var body: some View {                   |
-| -         Text("Hello")                       |
-| +         Text(title)                         |
-| +             .font(.headline)                |
-|       }                                       |
-+-----------------------------------------------+
-```
-
-Features:
-- Syntax highlighting per language
-- Line numbers (old and new)
-- Collapsible hunks
-- Accept/Reject buttons per file
-- Large diff warning with "Show All" option
-- Decision badges (Pending, Accepted, Rejected, Modified)
-
-Supported languages: Swift, JavaScript, TypeScript, Python, Go, Rust, and more.
-
-#### Real-Time Streaming
-
-Text streams character-by-character as the model generates. No waiting for complete responses.
-
-The UI accumulates `assistantDelta` events into a growing text block. When `assistantComplete` fires, the message is finalized and persisted.
-
-Progress indicators show:
-- Thinking spinner during model reasoning
-- Tool execution status
-- Subagent activity
-
-#### Activity Timeline
-
-The sidebar shows recent activity across all sessions:
-
-- Which session is streaming
-- Pending approval requests (badge count)
-- Errors requiring attention
-- Subagent spawns and completions
-
-Click any event to jump to that point in the conversation.
-
-#### Controls
-
-**Chat view:**
-- Collapsible tool cards (click to expand/collapse)
-- Diff viewer modal (click diff card for full-screen)
-- Copy button for code blocks
-- Scroll-to-bottom with new message indicator
-
-**Sidebar:**
-- Activity stream with timestamps
-- Filter by event type
-- Session quick-switch
-
-**Settings > Chat:**
-- Auto-expand tool cards toggle
-- Diff viewer theme
-- Code font family and size
-## 5.4 Governance & Permissions
-
-Blaze provides a comprehensive security layer between you and the AI agent. Rather than relying solely on CLI-level prompts, Blaze offers a visual governance system that maps directly to provider CLI flags while adding approval workflows the CLIs don't natively support.
-
-### Trust Modes
-
-Four security levels control how Blaze interacts with agent CLIs:
-
-| Mode | Description | CLI Mapping | Risk Level |
-|------|-------------|-------------|------------|
-| **Review** | Every tool invocation requires approval | Default CLI behavior (no flags) | Safest |
-| **Trusted** | Ask once per tool, then auto-approve | `--allowedTools <list>` | Moderate |
-| **YOLO** | Skip ALL permission prompts | `--dangerously-skip-permissions` | Dangerous |
-| **Sandbox** | Read-only tools only | `--allowedTools Read,Glob,Grep,WebFetch,WebSearch` | Safest |
-
-**Review Mode (Default)**: The agent asks permission for every file write, command execution, and network request. This mirrors the default Claude Code behavior but adds Blaze's visual diff previews and one-click approval UI.
-
-**Trusted Mode**: Implements "ask once" semantics. When you approve a tool (e.g., `Bash`), it's added to your trusted list and auto-approves for the rest of the session. The trusted tools list persists and can be managed in Settings:
-
-```
-Trusted Tools: [Bash] [Read] [Write] [Edit] [Glob] [+]
-              Quick add: Grep | WebFetch | WebSearch
-```
-
-**YOLO Mode**: For experienced users who understand the risks. Blaze passes `--dangerously-skip-permissions` to the CLI, bypassing all safety prompts. A confirmation dialog warns:
-
-> "YOLO mode uses --dangerously-skip-permissions to bypass ALL Claude Code safety prompts. The agent can execute any command, write any file, and make network requests without asking."
-
-**Sandbox Mode**: Read-only exploration. Only safe tools are allowed: `Read`, `Glob`, `Grep`, `WebFetch`, `WebSearch`. Perfect for auditing codebases or learning without risk.
-
-### Command Allowlist
-
-Beyond trust modes, Blaze maintains a granular command allowlist for shell operations:
-
-```
-Command     | Description              | Permission
------------ | ------------------------ | -----------
-ls          | List directory contents  | [x] Read
-cat         | Display file contents    | [x] Read
-grep        | Search text patterns     | [x] Read
-mkdir       | Create directories       | [ ] Read+Write
-rm          | Remove files/directories | [ ] Read+Write
-```
-
-Each command can be toggled individually with **Read** or **Read+Write** permissions. Git commands redirect to a separate Git Settings panel for more granular control.
-
-### Auto-Approve Patterns
-
-File patterns that skip confirmation prompts (for Trusted and Review modes):
-
-```
-*.swift     - All Swift files
-src/*       - Files in src/ directory
-**/*.ts     - TypeScript files anywhere
-tests/**/*  - Anything in tests folder
-```
-
-Pattern matching uses glob syntax. In Sandbox mode, patterns are ignored (no writes allowed). In YOLO mode, all files auto-approve.
-
-### Approval Flow in Practice
-
-When the agent requests a risky operation in Review or Trusted mode:
-
-```
- ┌─────────────────────────────────────────────────────────────┐
- │  Permission Request                                         │
- │  ─────────────────────────────────────────────────────────  │
- │  Tool: Bash                                                 │
- │  Command: rm -rf ./build/                                   │
- │                                                             │
- │  This command will delete the build directory.              │
- │                                                             │
- │  ┌─────────────────────────────────────────────────────┐   │
- │  │ ./build/                                             │   │
- │  │   cache/          (147 files)                        │   │
- │  │   artifacts/      (23 files)                         │   │
- │  │   ...                                                │   │
- │  └─────────────────────────────────────────────────────┘   │
- │                                                             │
- │  [Deny]  [Allow Once]  [Allow & Trust Bash]                │
- └─────────────────────────────────────────────────────────────┘
-```
-
-Choosing "Allow & Trust Bash" adds Bash to your trusted tools list, auto-approving future Bash commands for this session.
-
----
-
-## 5.5 Session Workspaces
-
-Blaze treats each project as a **workspace** with its own session history, file state, and task tracking. Unlike terminal-based workflows where context scatters across shell history and editor tabs, Blaze maintains coherent state.
-
-### Multi-File Editing
-
-The agent often edits multiple files in a single turn. Blaze presents these as a unified changeset:
-
-```
- ┌─────────────────────────────────────────────────────────────┐
- │  Changes (3 files)                                   [Apply All]
- │  ─────────────────────────────────────────────────────────  │
- │                                                             │
- │  src/App.swift                                    +12 -3    │
- │  ┌─────────────────────────────────────────────────────┐   │
- │  │  - import Foundation                                │   │
- │  │  + import Foundation                                │   │
- │  │  + import SwiftUI                                   │   │
- │  │    ...                                              │   │
- │  └─────────────────────────────────────────────────────┘   │
- │  [Revert] [Edit] [Apply]                                   │
- │                                                             │
- │  src/Models/User.swift                            +45 -0    │
- │  (new file)                                                │
- │  [Preview] [Apply]                                         │
- │                                                             │
- │  tests/AppTests.swift                             +8 -2     │
- │  [Expand] [Apply]                                          │
- └─────────────────────────────────────────────────────────────┘
-```
-
-Features:
-- **Unified diffs**: See all changes before applying any
-- **Selective application**: Apply files individually or all at once
-- **Inline editing**: Modify the agent's proposed changes before applying
-- **Revert tracking**: Undo applied changes with full history
-
-### Task Tracking
-
-Long-running agent tasks are tracked in a sidebar panel:
-
-```
- Tasks
- ──────────────────────────────
- [x] Create User model
- [x] Add authentication routes
- [>] Implement OAuth flow
-     - Fetching Google SDK docs...
- [ ] Write integration tests
- [ ] Update README
-```
-
-Tasks sync with the agent's `TodoWrite` tool calls. The `[>]` indicator shows the currently active task. Click any task to jump to its associated conversation turn.
-
-### Worktree Management (Planned)
-
-For advanced workflows, Blaze supports **git worktrees** - isolated working directories that let you run parallel agent tasks without branch conflicts:
-
-```
- Worktrees
- ──────────────────────────────
- main          ~/Projects/app/
- feature/auth  ~/Projects/app/.worktrees/auth/
- fix/bug-123   ~/Projects/app/.worktrees/bug-123/
-```
-
-Each worktree gets its own agent session. Changes in one worktree don't affect others. When ready, merge back to main via Blaze's git integration.
-
-**Status**: Worktree support follows the CodexMonitor pattern and is planned for the 30-day milestone.
-
-### Session Persistence
-
-Every session is crash-safe:
-- **Event log**: Append-only JSONL captures every agent event
-- **SQLite index**: Fast queries over session history
-- **Recovery**: Resume interrupted sessions exactly where you left off
-
-```swift
-// Under the hood
-SessionStore.save(event: .toolCallStarted(tool: "Write", args: [...]))
-SessionStore.save(event: .fileDiffProduced(path: "src/App.swift", diff: ...))
-```
-
----
-
-## 5.6 Visual Hooks Workflow Builder
-
-**This is Blaze's flagship feature.** No other agent harness offers visual, node-based automation for AI coding workflows.
-
-### What Are Hooks?
-
-Hooks are automation scripts that trigger on agent events:
-- **PreToolUse**: Before the agent uses a tool (can block)
-- **PostToolUse**: After a tool completes
-- **SessionStart**: When a session begins or resumes
-- **PreCompact**: Before context compaction
-- **Stop**: When the agent finishes
-
-Normally, hooks require writing shell scripts and manually editing `settings.json`. Blaze's Hooks Builder provides a visual canvas where you drag, drop, and connect nodes to build workflows.
-
-### The Canvas Interface
-
-```
- ┌─────────────────────────────────────────────────────────────────────────┐
- │  Hook Workflow Builder                            [Test] [Save]         │
- ├────────────┬────────────────────────────────────────────────┬───────────┤
- │  Nodes     │                                                │ Inspector │
- │  ────────  │    ┌──────────────┐      ┌──────────────┐     │ ───────── │
- │            │    │ PreToolUse   │      │   Filter     │     │           │
- │  Events    │    │   Trigger    │─────▶│  tool=Bash   │     │  Filter   │
- │  ○ Pre...  │    └──────────────┘      └──────┬───────┘     │           │
- │  ○ Post... │                                 │              │  Pattern: │
- │  ○ Session │                                 ▼              │  [Bash  ] │
- │            │                          ┌──────────────┐     │           │
- │  Filters   │                          │   Condition  │     │  Match:   │
- │  ○ Tool    │    ┌──────────────┐◀─No──│  rm -rf ?    │     │  [Exact ] │
- │  ○ Pattern │    │   Continue   │      └──────┬───────┘     │           │
- │  ○ Path    │    └──────────────┘             │ Yes         │           │
- │            │                                 ▼              │           │
- │  Actions   │                          ┌──────────────┐     │           │
- │  ○ Block   │                          │    Block     │     │           │
- │  ○ Command │                          │  "Dangerous" │     │           │
- │  ○ Log     │                          └──────────────┘     │           │
- │  ○ Notify  │                                               │           │
- └────────────┴────────────────────────────────────────────────┴───────────┘
-```
-
-**Left Panel**: Node palette organized by category (Events, Filters, Actions, Outputs)
-
-**Center Canvas**: Visual workflow editor with:
-- Drag nodes from palette
-- Connect nodes by dragging between ports
-- Zoom/pan controls (Cmd+/-, fit to view)
-- Multi-select for bulk operations
-
-**Right Panel**: Inspector showing properties for selected node
-
-### Node Types
-
-| Category | Nodes | Purpose |
-|----------|-------|---------|
-| **Events** | PreToolUse, PostToolUse, SessionStart, PreCompact, Stop | Workflow triggers |
-| **Filters** | Tool Match, Path Pattern, Content Match, Regex | Narrow which events fire |
-| **Actions** | Block, Continue, Run Command, Log, Notify, Modify | What happens when triggered |
-| **Outputs** | System Message, User Notification, File Write | Results and side effects |
-
-### Example Workflows
-
-**1. Block Destructive Commands**
-
-Prevent `rm -rf`, `git reset --hard`, and other dangerous operations:
-
-```
-[PreToolUse] → [Tool = Bash] → [Regex: rm -rf|git reset --hard] → [Block: "Destructive command blocked"]
-```
-
-**2. Auto-Index Artifacts**
-
-Index files to a search database after the agent writes them:
-
-```
-[PostToolUse] → [Tool = Write] → [Path: *.md] → [Command: index-file.sh $FILE_PATH]
-```
-
-**3. Session Continuity**
-
-Load context from a continuity ledger when sessions start:
-
-```
-[SessionStart] → [Type = resume] → [Command: load-ledger.sh] → [System Message: $OUTPUT]
-```
-
-**4. Notification on Completion**
-
-Get a macOS notification when long tasks finish:
-
-```
-[Stop] → [Notify: "Agent finished: $SUMMARY"]
-```
-
-**5. Dangerous Pattern Detection**
-
-Warn when the agent tries to access sensitive files:
-
-```
-[PreToolUse] → [Tool = Read|Write] → [Path: **/.env|**/credentials*] → [Block: "Accessing secrets requires manual approval"]
-```
-
-### Testing Workflows
-
-Before saving, test your workflow with the built-in test runner:
-
-1. Click **Test** in the toolbar
-2. Blaze runs command nodes with captured stdout/stderr
-3. Results appear in a modal:
-
-```
- ┌─────────────────────────────────────────────────────────────┐
- │  Test Results                                      [Done]   │
- │  ─────────────────────────────────────────────────────────  │
- │                                                             │
- │  Validation                                       PASSED    │
- │                                                             │
- │  Command Results                                            │
- │  ┌─────────────────────────────────────────────────────┐   │
- │  │ [OK] Run Command: echo "test"                       │   │
- │  │      Output: test                                   │   │
- │  └─────────────────────────────────────────────────────┘   │
- │  ┌─────────────────────────────────────────────────────┐   │
- │  │ [OK] Run Command: load-ledger.sh                    │   │
- │  │      Output: Loaded continuity from session abc123  │   │
- │  └─────────────────────────────────────────────────────┘   │
- └─────────────────────────────────────────────────────────────┘
-```
-
-### Template Gallery
-
-Don't want to build from scratch? Blaze includes **22 production-ready templates**:
-
-- Security: Block destructive commands, detect secrets access, sandbox enforcement
-- Productivity: Auto-index artifacts, log tool calls, session continuity
-- Integration: Slack notifications, webhook triggers, custom MCP routing
-- Debugging: Trace tool calls, capture timing, breakpoint hooks
-
-Browse templates by category, preview the workflow graph, and install with one click.
-
-### Export & Share
-
-Export workflows as JSON for backup or sharing:
-
-```json
-{
-  "name": "block-destructive",
-  "event": "PreToolUse",
-  "nodes": [...],
-  "connections": [...]
-}
-```
-
-Import workflows from teammates or the community. Blaze validates imported workflows before installation.
-
-### Why This Matters
-
-Other tools give you hooks via config files:
-
-```json
-// settings.json (the old way)
-{
-  "hooks": {
-    "PreToolUse": [{
-      "matcher": ["Bash"],
-      "hooks": [{"type": "command", "command": "./block-rm.sh"}]
-    }]
-  }
-}
-```
-
-Blaze gives you a visual canvas where non-trivial workflows become obvious at a glance. Conditional logic, branching paths, and complex filters that would be error-prone in JSON become drag-and-drop simple.
-
----
-
-## 6. Feature Comparison Matrix
-
-How does Blaze compare to other ways of using AI coding agents?
-
-### Overview Matrix
-
-| Feature | Blaze | [Warp 2.0](https://www.warp.dev/) | [Cursor](https://www.cursor.com/) | VS Code + Extensions | CLI (Claude/Codex) | [Commander](https://commanderai.app/) | [CodexMonitor](https://github.com/Dimillian/CodexMonitor) |
-|---------|-------|------|--------|---------------------|-------------------|-----------|-------------|
-| **Native macOS** | Yes | Yes | Electron | Electron | Terminal | Yes | Yes (Tauri) |
-| **Multi-CLI Support** | Claude, Gemini, Codex | Warp agents only | Cursor models | Via extensions | Single CLI | Claude only | Codex only |
-| **Structured Event Parsing** | Yes | Partial | No | No | N/A | TBD | Yes |
+### Feature Comparison Matrix
+
+| Feature | Blaze | Warp 2.0 | Cursor | VS Code + Extensions | CLI Direct | Commander | CodexMonitor |
+|---------|-------|----------|--------|---------------------|------------|-----------|--------------|
+| **Platform** | Native macOS | Native | Electron | Electron | Terminal | Native macOS | Tauri |
+| **Multi-CLI Support** | Claude, Gemini, Codex | Warp agents | Cursor models | Via extensions | Single CLI | Claude only | Codex only |
+| **Structured Events** | Yes | Partial | No | No | N/A | TBD | Yes |
 | **Visual Diff Review** | Yes | No | Yes | Via extensions | No | Yes | Yes |
-| **Hooks/Automation** | Visual Builder | No | No | Extension-based | Config files | No | No |
-| **Trust Mode Control** | 4 modes + allowlists | Model-level | Project rules | Extension settings | CLI flags | TBD | Via Codex |
-| **Session Persistence** | SQLite + JSONL | Warp Drive | Project-based | Workspace | Varies by CLI | TBD | Thread storage |
-| **Worktree Support** | Planned | No | No | No | Manual | No | Yes |
-| **Task Tracking** | Visual sidebar | No | No | Extensions | TodoWrite | TBD | Thread list |
-| **Cross-Platform** | macOS only | macOS, Linux, Win | All | All | All | macOS only | macOS only |
-| **Price** | TBD | Free tier + Pro | $20/mo | Free + extensions | Free (API costs) | Free | Free |
-
-### Detailed Comparisons
-
-#### Blaze vs Warp 2.0
-
-[Warp](https://www.warp.dev/) is an "Agentic Development Environment" that embeds AI agents into a terminal.
-
-| Aspect | Blaze | Warp |
-|--------|-------|------|
-| **Approach** | CLI harness (spawns external CLIs) | Built-in agents |
-| **Models** | Uses provider CLIs (Claude, Gemini, Codex) | OpenAI, Anthropic, Google via Warp |
-| **Code Editing** | Agent-driven via CLI | Warp Code feature |
-| **Terminal** | Separate from agent | Integrated terminal |
-| **Hooks** | Visual workflow builder | Not available |
-| **Collaboration** | TBD | Warp Drive sharing |
-
-**Choose Warp if**: You want an all-in-one terminal replacement with AI built in.
-
-**Choose Blaze if**: You prefer using official provider CLIs with a governance layer and visual automation.
-
-#### Blaze vs Cursor
-
-[Cursor](https://www.cursor.com/) is a VS Code fork with AI capabilities deeply integrated.
-
-| Aspect | Blaze | Cursor |
-|--------|-------|--------|
-| **Type** | Agent harness | Full IDE |
-| **Code Editing** | Agent suggests, you review | Inline completions + Composer |
-| **Multi-file** | Unified changeset view | Composer mode |
-| **Context Window** | CLI-dependent | 272k tokens |
-| **Customization** | Hooks, trust modes | Rules, .cursorrules |
-| **Price** | TBD | $20/month |
-
-**Choose Cursor if**: You want AI integrated into your editor with inline completions.
-
-**Choose Blaze if**: You want a dedicated agent workflow tool alongside your existing editor.
-
-#### Blaze vs VS Code + Extensions
-
-| Aspect | Blaze | VS Code + Copilot/Cline/etc |
-|--------|-------|----------------------------|
-| **Setup** | Single app | Install multiple extensions |
-| **Agent Experience** | First-class | Extension-dependent |
-| **Consistency** | Unified UX | Varies by extension |
-| **Governance** | Built-in trust modes | Extension settings |
-| **Automation** | Visual hooks builder | None or manual |
-
-**Choose VS Code if**: You're invested in the VS Code ecosystem and want AI as an add-on.
-
-**Choose Blaze if**: You want a purpose-built agent interface with consistent governance.
-
-#### Blaze vs Raw CLI
-
-| Aspect | Blaze | Claude/Codex CLI directly |
-|--------|-------|---------------------------|
-| **Interface** | Visual UI | Terminal |
-| **Diff Review** | Inline previews | Terminal output |
-| **Approval UX** | One-click buttons | Y/N prompts |
-| **Session History** | Searchable timeline | Scroll back |
-| **Automation** | Visual builder | Edit settings.json |
-| **Learning Curve** | Lower | Higher |
-
-**Choose CLI if**: You're terminal-native and want minimal overhead.
-
-**Choose Blaze if**: You want visual tooling for review, approval, and automation.
-
-#### Blaze vs Commander
-
-[Commander](https://commanderai.app/) is a native macOS interface for Claude Code.
-
-| Aspect | Blaze | Commander |
-|--------|-------|-----------|
-| **CLI Support** | Claude, Gemini, Codex | Claude only |
-| **Hooks** | Visual workflow builder | Not available |
-| **Trust Modes** | 4 modes + allowlists | TBD |
-| **Git Integration** | Planned | Built-in |
-| **Price** | TBD | Free |
-
-**Choose Commander if**: You only use Claude Code and want a simple, free native wrapper.
-
-**Choose Blaze if**: You want multi-CLI support and visual automation workflows.
-
-#### Blaze vs CodexMonitor
-
-[CodexMonitor](https://github.com/Dimillian/CodexMonitor) is a macOS app for managing Codex CLI agents.
-
-| Aspect | Blaze | CodexMonitor |
-|--------|-------|--------------|
-| **CLI Support** | Claude, Gemini, Codex | Codex only |
-| **Worktrees** | Planned | Built-in |
-| **Custom Prompts** | TBD | Yes, with autocomplete |
-| **Hooks** | Visual builder | Not available |
-| **Architecture** | Native Swift | Tauri (Rust + Web) |
-| **Open Source** | TBD | Yes |
-
-**Choose CodexMonitor if**: You're Codex-only and want proven worktree management.
-
-**Choose Blaze if**: You want multi-CLI support and visual hook automation.
+| **Visual Hooks Builder** | Yes | No | No | No | No | No | No |
+| **Trust Modes** | 4 modes + allowlists | Model-level | Project rules | Extension settings | CLI flags | TBD | Via Codex |
+| **Session Persistence** | SQLite + JSONL | Warp Drive | Project-based | Workspace | Varies | TBD | Thread storage |
+| **Worktree Support** | Yes | No | No | No | Manual | No | Yes |
+| **Subagent Display** | Yes | No | No | No | Text only | No | Yes |
+| **Token Visualization** | Yes | No | No | No | No | No | No |
+| **60fps Streaming** | Yes | Yes | No | No | N/A | TBD | Yes |
+| **Glass Effects** | 5 levels | Some | No | No | N/A | Some | No |
+| **Price** | TBD | Free + Pro | $20/mo | Free + ext | Free (API) | Free | Free |
 
 ### Decision Guide
 
 ```
-                     Do you use multiple AI coding CLIs?
-                              /              \
-                           Yes                No
-                            |                  |
-                     Use Blaze          Which CLI?
-                                        /    |    \
-                                  Claude  Codex  Gemini
-                                    |       |       |
-                              Commander  CodexMonitor  CLI directly
-                              or Blaze   or Blaze      or Blaze
-
-              Do you want visual automation/hooks?
-                              /              \
-                           Yes                No
-                            |                  |
-                     Use Blaze          Warp, Cursor, or CLI
-
-                     Do you want a full IDE?
-                              /              \
-                           Yes                No
-                            |                  |
-                   Cursor or VS Code      Use Blaze
++------------------------------------------------------------------+
+|                    SHOULD YOU USE BLAZE?                          |
++------------------------------------------------------------------+
+|                                                                   |
+|              Do you use AI coding assistants?                     |
+|                          |                                        |
+|              +-----------+-----------+                            |
+|              |                       |                            |
+|             Yes                     No                            |
+|              |                       |                            |
+|     Are you on macOS?         Not for you                        |
+|              |                (try Claude web)                    |
+|     +--------+--------+                                          |
+|     |                 |                                          |
+|    Yes               No                                          |
+|     |                 |                                          |
+| Do you want GUI?   Windows/Linux                                 |
+|     |              not supported                                 |
+|  +--+--+                                                         |
+|  |     |                                                         |
+| Yes   No                                                         |
+|  |     |                                                         |
+|  |   Use CLI                                                     |
+|  |   directly                                                    |
+|  |                                                               |
+| Do you need visual hooks?                                        |
+|  |                                                               |
+| +--+--+                                                          |
+| |     |                                                          |
+|Yes   No                                                          |
+| |     |                                                          |
+| |  Consider Commander                                            |
+| |  (simpler, Claude-only)                                        |
+| |                                                                |
+| +---> BLAZE IS FOR YOU                                           |
+|                                                                   |
++------------------------------------------------------------------+
 ```
-
-### Summary
-
-**Choose Blaze if you want:**
-- A native macOS experience for AI coding agents
-- Visual governance with trust modes and approval workflows
-- The only visual hooks workflow builder for agent automation
-- Multi-CLI support (Claude, Gemini, Codex) from one interface
-- Purpose-built agent UX separate from your editor
-
-**Consider alternatives if:**
-- You want an all-in-one IDE (Cursor)
-- You prefer terminal-native workflows (CLI, Warp)
-- You only use one CLI and want the simplest wrapper (Commander for Claude, CodexMonitor for Codex)
 
 ---
 
-*Feature availability based on public documentation as of January 2025. Features marked "TBD" or "Planned" are on the roadmap but not yet implemented.*
-## 7. Security Model
+## Who is Blaze For?
 
-Blaze is a **governance layer** that sits between you and powerful AI coding agents. The security model assumes that AI agents will attempt operations you might not want—and gives you control over what actually happens.
+### Great Fit
 
-### 7.1 Threat Model
+| User Profile | Why Blaze |
+|--------------|-----------|
+| **Power Users** | Multiple CLIs, parallel agents, custom hooks |
+| **Security-Conscious** | Review mode, approval workflows, audit logs |
+| **Visual Thinkers** | Diff preview, tool cards, timeline view |
+| **Automation Enthusiasts** | Visual hooks builder, no YAML |
+| **Teams** | Consistent workflows, shared hook templates |
 
-| Threat | Risk Level | Mitigation |
-|--------|-----------|------------|
-| **Accidental file deletion** | High | Pre-hook blocking for destructive commands (`rm -rf`, `git clean`) |
-| **Secret exfiltration** | Critical | Pattern scanning for `.env`, credentials; network request auditing |
-| **Unreviewed code changes** | Medium | Mandatory diff review in Review mode |
-| **Shell command injection** | High | Command allowlisting; dangerous pattern detection |
-| **Scope creep** | Medium | Directory restrictions; project boundaries |
-| **Runaway resource usage** | Low | Timeout enforcement; process monitoring |
+### Not a Fit
 
-### 7.2 Trust Modes
+| User Profile | Better Alternative |
+|--------------|-------------------|
+| VS Code natives | Cursor, Continue, Copilot |
+| Windows/Linux users | CLI direct, web UIs |
+| API-first developers | Direct API integration |
+| Simple use cases | Claude web, ChatGPT |
 
-Blaze provides four trust modes, configurable per-project or globally:
+### User Stories
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         TRUST MODE SPECTRUM                          │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   SANDBOX ◀───────── REVIEW ───────── TRUSTED ─────────▶ YOLO      │
-│   (Locked)         (Default)          (Expert)        (Dangerous)   │
-│                                                                      │
-│   Read-only        Approvals          Minimal gates   No gates      │
-│   Safe tools       Required           Trust user      Auto-approve  │
-│   No writes                                           everything    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**The Security-Conscious Developer**
 
-| Mode | File Writes | Shell Commands | Network | Best For |
-|------|-------------|----------------|---------|----------|
-| **Sandbox** | Blocked | Safe only (`ls`, `git status`) | Blocked | Code review, exploration |
-| **Review** (default) | Requires approval | Requires approval | Logged | Daily development |
-| **Trusted** | Allowed in project | Most allowed | Allowed | Experienced users |
-| **YOLO** | All allowed | All allowed | All allowed | Testing only; use at your own risk |
+> "I want to use Claude for coding, but I don't trust giving an AI full access to my filesystem."
 
-**Setting trust mode:**
+How Blaze helps: Review Mode requires explicit approval for every file write and shell command. You see exactly what's being modified before it happens. The PolicyEngine blocks dangerous patterns automatically.
 
-```bash
-# In Blaze settings (Settings > Security > Trust Mode)
-# Or via project-level config:
-cat > .blaze/config.json << 'EOF'
-{
-  "trustMode": "review",
-  "allowedPaths": ["src/", "tests/", "docs/"],
-  "blockedPaths": [".env", "secrets/", "*.pem"]
-}
-EOF
-```
+**The Multi-Tool User**
 
-### 7.3 Approval Workflows
+> "I use Claude for some tasks, Gemini for others, and want to try Codex. Managing three different tools is annoying."
 
-When an operation requires approval, you can grant permission at different scopes:
+How Blaze helps: Blaze provides a unified interface for all three CLIs. Same keyboard shortcuts, same diff viewer, same session history - regardless of which AI you're talking to.
 
-| Scope | Duration | Example |
-|-------|----------|---------|
-| **Once** | This operation only | "Run `npm install` this one time" |
-| **Session** | Until session ends | "Allow file writes for this session" |
-| **Project** | Persisted to project config | "Always allow in this repo" |
-| **Always** | Global user preference | "Never ask about `git commit` again" |
+**The Automation Enthusiast**
 
-**Approval dialog example:**
+> "I want to run tests automatically after Claude edits code, and notify Slack when sessions complete."
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  APPROVAL REQUIRED                                              │
-├─────────────────────────────────────────────────────────────────┤
-│  Claude wants to run:                                           │
-│                                                                 │
-│  ┌───────────────────────────────────────────────────────────┐ │
-│  │ rm -rf node_modules && npm install                         │ │
-│  └───────────────────────────────────────────────────────────┘ │
-│                                                                 │
-│  [Deny]  [Allow Once]  [Allow Session]  [Always Allow]         │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### 7.4 Tool Allowlists
-
-Control which tools the AI can use:
-
-```json
-{
-  "toolPolicy": {
-    "allow": ["Read", "Grep", "Glob", "Edit", "Write"],
-    "requireApproval": ["Bash", "WebFetch"],
-    "block": ["Task"]
-  }
-}
-```
-
-**Default tool classifications:**
-
-| Category | Tools | Default Policy |
-|----------|-------|----------------|
-| **Safe** | `Read`, `Grep`, `Glob` | Auto-allow |
-| **Moderate** | `Edit`, `Write`, `WebFetch` | Allow in Review mode |
-| **Risky** | `Bash`, `Task` | Require approval |
-| **Dangerous** | N/A (custom hooks) | Block by default |
-
-### 7.5 Command Blocking
-
-Pre-configured patterns that trigger blocking or approval:
-
-```bash
-# Always blocked (unless YOLO mode):
-rm -rf /               # Root deletion
-rm -rf ~               # Home deletion
-git push --force       # Force push to remote
-chmod -R 777           # Unsafe permissions
-curl | bash            # Pipe to shell
-
-# Require approval:
-rm -rf *               # Wildcard deletion
-git reset --hard       # Discard changes
-npm publish            # Package publishing
-docker rm              # Container deletion
-```
-
-### 7.6 Audit Logging
-
-Every operation is logged to an append-only audit trail:
-
-```json
-{
-  "timestamp": "2026-01-19T10:30:45.123Z",
-  "sessionId": "abc-123",
-  "eventType": "tool.calling",
-  "tool": "Bash",
-  "input": { "command": "npm test" },
-  "decision": "allow",
-  "decidedBy": "user",
-  "scope": "session"
-}
-```
-
-**Audit log locations:**
-
-```
-~/.blaze/audit/
-  sessions.jsonl        # Session lifecycle events
-  tools.jsonl           # Tool call decisions
-  approvals.jsonl       # User approval history
-  blocked.jsonl         # Blocked operations
-```
-
-**Querying the audit log:**
-
-```bash
-# View recent blocked operations
-jq 'select(.decision == "blocked")' ~/.blaze/audit/tools.jsonl | tail -20
-
-# Export session audit for review
-blaze audit export --session abc-123 --format csv > audit.csv
-```
-
-### 7.7 Safe Defaults
-
-Blaze ships with conservative defaults:
-
-- Trust mode: **Review**
-- New projects: Inherit global settings
-- Unknown tools: Require approval
-- External network: Logged
-- File writes outside project: Blocked
-- Secrets in diffs: Flagged for review
+How Blaze helps: The Hook System lets you trigger custom scripts on any event. Set up a post-hook on file writes to run tests, and a session end hook to call a Slack webhook.
 
 ---
 
-## 8. Privacy & Telemetry
+## Quick Start
 
-Blaze is designed with a **privacy-first** architecture. Your code, conversations, and data stay on your machine.
-
-### 8.1 What Stays Local
-
-| Data Type | Location | Encrypted |
-|-----------|----------|-----------|
-| Session transcripts | `~/.blaze/sessions/` | Optional |
-| Event logs (JSONL) | `~/.blaze/events/` | No |
-| Audit trail | `~/.blaze/audit/` | No |
-| SQLite database | `~/.blaze/blaze.db` | Optional |
-| Cached context | `~/.blaze/cache/` | No |
-| User preferences | `~/.blaze/config.json` | No |
-
-### 8.2 What Leaves Your Machine
-
-**By design, Blaze sends data ONLY to:**
-
-1. **Provider CLIs** (Claude Code, Gemini CLI, Codex CLI)
-   - Your prompts and code context
-   - Controlled by each provider's privacy policy
-   - Blaze does NOT add tracking to CLI calls
-
-2. **Webhook hooks** (if YOU configure them)
-   - Only the data you explicitly send
-   - You control the destination
-
-3. **Optional telemetry** (disabled by default)
-   - See section 8.4
-
-### 8.3 What Blaze Never Collects
-
-- Your source code
-- Your API keys or credentials
-- Your conversation content
-- Your file system structure
-- Your usage patterns (unless opted in)
-- Screenshots or screen recordings
-
-### 8.4 Optional Telemetry
-
-Telemetry is **disabled by default**. If you opt in, we collect:
-
-| Data | Purpose | Identifiable? |
-|------|---------|---------------|
-| App crashes | Stability | Hashed device ID |
-| Feature usage counts | Prioritization | No |
-| Performance metrics | Optimization | No |
-| Error messages | Debugging | Sanitized |
-
-**To enable/disable:**
-
-```bash
-# In Settings > Privacy > Telemetry
-# Or via config:
-echo '{"telemetry": {"enabled": false}}' > ~/.blaze/privacy.json
-```
-
-### 8.5 Data Storage & Retention
-
-**Local retention defaults:**
-
-| Data Type | Default Retention | Configurable |
-|-----------|------------------|--------------|
-| Session transcripts | 90 days | Yes |
-| Audit logs | 365 days | Yes |
-| Cached context | 7 days | Yes |
-| Performance metrics | 30 days | Yes |
-
-**To configure retention:**
-
-```json
-{
-  "retention": {
-    "sessions": "90d",
-    "audit": "365d",
-    "cache": "7d",
-    "metrics": "30d"
-  }
-}
-```
-
-**To delete all local data:**
-
-```bash
-# From Blaze menu: Blaze > Delete All Data...
-# Or manually:
-rm -rf ~/.blaze/sessions ~/.blaze/events ~/.blaze/audit
-```
-
-### 8.6 Provider Privacy Considerations
-
-Remember: Blaze spawns provider CLIs, so your prompts go to the provider:
-
-| Provider | Privacy Policy | Data Usage |
-|----------|---------------|------------|
-| Anthropic (Claude Code) | [anthropic.com/privacy](https://anthropic.com/privacy) | API data not used for training |
-| Google (Gemini CLI) | [cloud.google.com/terms](https://cloud.google.com/terms) | Check your workspace settings |
-| OpenAI (Codex CLI) | [openai.com/privacy](https://openai.com/privacy) | API data not used for training by default |
-
----
-
-## 9. Installation
-
-### 9.1 System Requirements
+### System Requirements
 
 | Requirement | Minimum | Recommended |
 |-------------|---------|-------------|
@@ -1391,7 +497,7 @@ Remember: Blaze spawns provider CLIs, so your prompts go to the provider:
 | **Disk** | 500 MB | 2 GB (with caches) |
 | **Xcode CLT** | Required | Latest |
 
-### 9.2 Prerequisites
+### Prerequisites
 
 Before installing Blaze, you need at least one supported CLI:
 
@@ -1409,13 +515,13 @@ gemini auth login
 # codex auth login
 ```
 
-### 9.3 Installation Methods
+### Installation Methods
 
 #### Method 1: DMG Download (Recommended)
 
 ```bash
 # Download latest release
-curl -L https://github.com/cogit0/blaze/releases/latest/download/Blaze.dmg -o Blaze.dmg
+curl -L https://github.com/anth0nylawrence/blaze/releases/latest/download/Blaze.dmg -o Blaze.dmg
 
 # Mount and install
 hdiutil attach Blaze.dmg
@@ -1426,18 +532,11 @@ hdiutil detach /Volumes/Blaze
 open /Applications/Blaze.app
 ```
 
-#### Method 2: Homebrew (Coming Soon)
-
-```bash
-# TBD - Not yet available
-brew install --cask cogit0-blaze
-```
-
-#### Method 3: Build from Source
+#### Method 2: Build from Source
 
 ```bash
 # Clone repository
-git clone https://github.com/cogit0/blaze.git
+git clone git@github.com:anth0nylawrence/blaze.git
 cd blaze
 
 # Build with Xcode
@@ -1450,391 +549,2104 @@ xcodebuild -project Blaze/Blaze.xcodeproj \
 cp -R build/Build/Products/Release/Blaze.app /Applications/
 ```
 
-### 9.4 Verifying the Installation
+### First Launch Setup
 
-Blaze is code-signed and notarized by Apple:
+On first launch, Blaze will guide you through setup:
 
-```bash
-# Verify code signature
-codesign -dv --verbose=4 /Applications/Blaze.app
-
-# Check notarization
-spctl -a -v /Applications/Blaze.app
-# Expected: "source=Notarized Developer ID"
+```
++------------------------------------------------------------------+
+|                     BLAZE ONBOARDING FLOW                         |
++------------------------------------------------------------------+
+|                                                                   |
+|  Step 1: Welcome                                                 |
+|  +------------------------------------------------------------+  |
+|  |                                                              |  |
+|  |  Welcome to Blaze                                           |  |
+|  |                                                              |  |
+|  |  The native control plane for agentic coding.               |  |
+|  |                                                              |  |
+|  |  [Get Started]                                              |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  Step 2: CLI Detection                                           |
+|  +------------------------------------------------------------+  |
+|  |  Detected CLIs:                                             |  |
+|  |                                                              |  |
+|  |  [x] Claude Code v1.2.3  (authenticated)                   |  |
+|  |  [x] Gemini CLI v0.8.1   (needs login)                     |  |
+|  |  [ ] Codex CLI           (not installed)                   |  |
+|  |                                                              |  |
+|  |  [Install Missing] [Continue]                              |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  Step 3: Provider Selection                                      |
+|  +------------------------------------------------------------+  |
+|  |  Default Provider:                                          |  |
+|  |                                                              |  |
+|  |  ( ) Anthropic (Claude Code)                               |  |
+|  |  ( ) Google (Gemini CLI)                                   |  |
+|  |  ( ) OpenAI (Codex CLI)                                    |  |
+|  |                                                              |  |
+|  |  [Continue]                                                 |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  Step 4: Directory Selection                                     |
+|  +------------------------------------------------------------+  |
+|  |  Where do you keep your projects?                           |  |
+|  |                                                              |  |
+|  |  [~/Projects]  [Browse...]                                  |  |
+|  |                                                              |  |
+|  |  [Finish Setup]                                             |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
 ```
 
-### 9.5 First Launch Setup
-
-On first launch, Blaze will:
-
-1. **Request permissions:**
-   - Full Disk Access (optional, for project access)
-   - Accessibility (optional, for global shortcuts)
-
-2. **Detect installed CLIs:**
-   - Scans for `claude`, `gemini`, `codex` on PATH
-   - Verifies authentication status
-
-3. **Create data directories:**
-   ```
-   ~/.blaze/
-     config.json       # User preferences
-     sessions/         # Session transcripts
-     events/           # Event logs
-     audit/            # Audit trail
-     cache/            # Cached context
-   ```
-
-### 9.6 Updating
-
-Blaze checks for updates automatically (can be disabled in Settings).
+### Your First Session
 
 ```bash
-# Manual update check
-# From menu: Blaze > Check for Updates...
+# 1. Launch Blaze
+open /Applications/Blaze.app
 
-# Or download and replace:
-curl -L https://github.com/cogit0/blaze/releases/latest/download/Blaze.dmg -o Blaze.dmg
-# Follow DMG installation steps above
-```
+# 2. Add a project (Cmd+Shift+N or click +)
+# Select your project directory
 
-### 9.7 Uninstalling
+# 3. Create new session (Cmd+N)
+# Choose engine: Claude Code
+# Name: "Fix authentication bug"
 
-```bash
-# Remove application
-rm -rf /Applications/Blaze.app
+# 4. Send your first prompt
+# "Look at the auth flow in src/auth/ and identify why
+#  login fails when the session token expires."
 
-# Remove user data (optional)
-rm -rf ~/.blaze
-
-# Remove caches (optional)
-rm -rf ~/Library/Caches/com.cogit0.blaze
-rm -rf ~/Library/Application\ Support/Blaze
+# 5. Watch the magic
+# - Tool cards appear for each operation
+# - Diffs show with Accept/Reject buttons
+# - Streaming text renders at 60fps
 ```
 
 ---
 
-## 10. Quickstart
+## Feature Tour
 
-Get from zero to productive in under 5 minutes.
+### 6.1 Multi-Engine Orchestration
 
-### 10.1 Provider Setup
+Blaze provides a unified interface for multiple AI coding CLIs.
 
-First, ensure you have at least one CLI authenticated:
+```
++------------------------------------------------------------------+
+|                   MULTI-ENGINE ARCHITECTURE                       |
++------------------------------------------------------------------+
+|                                                                   |
+|                      +------------------+                         |
+|                      |    Blaze UI      |                         |
+|                      +--------+---------+                         |
+|                               |                                   |
+|                      +--------v---------+                         |
+|                      | SessionOrchestrator |                      |
+|                      +--------+---------+                         |
+|                               |                                   |
+|        +----------------------+----------------------+            |
+|        |                      |                      |            |
+|  +-----v------+        +------v-----+        +------v-----+      |
+|  |  Claude    |        |  Gemini    |        |  Codex     |      |
+|  |  Adapter   |        |  Adapter   |        |  Adapter   |      |
+|  +-----+------+        +------+-----+        +------+-----+      |
+|        |                      |                      |            |
+|        v                      v                      v            |
+|   claude -p ...          gemini -p ...         codex exec ...    |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Supported Providers:**
+
+| Provider | CLI | Model Tiers | Status |
+|----------|-----|-------------|--------|
+| **Anthropic** | Claude Code | Flagship: Opus 4, Opus 4.5<br>Standard: Sonnet 4, 3.5<br>Speed: Haiku 3.5 | Supported |
+| **Google** | Gemini CLI | Flagship: Gemini Ultra<br>Standard: Gemini Pro<br>Speed: Gemini Flash | Supported |
+| **OpenAI** | Codex CLI | Flagship: o1, o3<br>Standard: GPT-4, GPT-4.5<br>Speed: o3-mini | Planned |
+
+**Key Features:**
+
+- Unified NormalizedEvent schema across all providers
+- Provider-aware model selection with tier groupings
+- Reasoning effort control (Low/Medium/High)
+- Extended thinking support for Claude models
+- CLI authentication delegation to vendor login flows
+
+### 6.2 Provider-Aware Model Selection
+
+```
++------------------------------------------------------------------+
+|                    MODEL SELECTION UI                             |
++------------------------------------------------------------------+
+|                                                                   |
+|  Provider: [Anthropic v]                                         |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | FLAGSHIP                                                     |  |
+|  |   (*) Claude Opus 4.5     - Best reasoning, highest cost   |  |
+|  |   ( ) Claude Opus 4       - Advanced reasoning             |  |
+|  +------------------------------------------------------------+  |
+|  | STANDARD                                                     |  |
+|  |   ( ) Claude Sonnet 4     - Balanced performance           |  |
+|  |   ( ) Claude Sonnet 3.5   - Good for most tasks            |  |
+|  +------------------------------------------------------------+  |
+|  | SPEED                                                        |  |
+|  |   ( ) Claude Haiku 3.5    - Fast, cost-effective           |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  Reasoning Effort: [Low] [Medium] [High]                        |
+|                                                                   |
+|  Extended Thinking: [x] Enable (Opus models only)               |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### 6.3 Session Management
+
+Sessions are the core unit of work in Blaze. Each session represents a conversation with an AI agent.
+
+**Session States:**
+
+| State | Description | Visual |
+|-------|-------------|--------|
+| Creating | Session initializing | Spinner |
+| Ready | Waiting for input | Green dot |
+| Running | Agent processing | Pulsing blue |
+| Stopped | User paused | Orange dot |
+| Errored | Error occurred | Red dot |
+| Archived | Completed/stored | Gray dot |
+
+**Session Features:**
+
+```
++------------------------------------------------------------------+
+|                    SESSION MANAGEMENT                             |
++------------------------------------------------------------------+
+|                                                                   |
+|  Session List                    Session Actions                 |
+|  +--------------------------+    +---------------------------+   |
+|  | > Fix auth bug    [Claude]|    | [Resume] [Fork] [Export] |   |
+|  |   API refactor   [Gemini]|    | [Archive] [Delete]       |   |
+|  |   Write tests    [Claude]|    +---------------------------+   |
+|  |   + New Session          |                                    |
+|  +--------------------------+    Export Formats:                 |
+|                                  - JSON (full data)              |
+|  Search: [____________]          - Markdown (readable)           |
+|                                  - HTML (shareable)              |
+|  Filter: [All v]                                                 |
+|    - All Sessions                                                |
+|    - Active                                                      |
+|    - Archived                                                    |
+|    - By Provider                                                 |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Session Branching:**
+
+Fork any session at any point to explore alternatives:
+
+```
+Session: Fix auth bug
+    |
+    +-- Turn 1: "Look at auth flow"
+    |
+    +-- Turn 2: "Found token issue"
+    |       |
+    |       +-- [Fork] --> "Try approach A"
+    |       |
+    |       +-- [Fork] --> "Try approach B"
+    |
+    +-- Turn 3: Continue with original
+```
+
+### 6.4 Chat Interface
+
+The chat interface is optimized for code-heavy conversations.
+
+```
++------------------------------------------------------------------+
+|                      CHAT INTERFACE                               |
++------------------------------------------------------------------+
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  |  Fix authentication bug                    [Claude Sonnet] |  |
+|  +------------------------------------------------------------+  |
+|  |                                                              |  |
+|  |  10:30 AM  YOU                                              |  |
+|  |  +--------------------------------------------------------+ |  |
+|  |  | Fix the auth bug in src/auth/. The login fails when    | |  |
+|  |  | the session token expires.                              | |  |
+|  |  |                                                          | |  |
+|  |  | @src/auth/login.ts  @src/auth/session.ts               | |  |
+|  |  +--------------------------------------------------------+ |  |
+|  |                                                              |  |
+|  |  10:30 AM  CLAUDE                                           |  |
+|  |  +--------------------------------------------------------+ |  |
+|  |  | I'll analyze the authentication flow...                 | |  |
+|  |  |                                                          | |  |
+|  |  | +----------------------------------------------------+ | |  |
+|  |  | | > Thinking...                                 2.3s | | |  |
+|  |  | | The token refresh logic appears to be missing a   | | |  |
+|  |  | | check for token validity before making API calls. | | |  |
+|  |  | +----------------------------------------------------+ | |  |
+|  |  |                                                          | |  |
+|  |  | Based on my analysis...                                 | |  |
+|  |  +--------------------------------------------------------+ |  |
+|  |                                                              |  |
+|  +------------------------------------------------------------+  |
+|  | @mentions | Model: [Sonnet v] | Effort: [Med]  | [Send]    |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Chat Features:**
+
+| Feature | Description |
+|---------|-------------|
+| **Message Bubbles** | Role-based styling (user/assistant) |
+| **60fps Streaming** | Token-by-token with auto-scroll |
+| **Markdown Rendering** | Full markdown with syntax highlighting |
+| **Thinking Disclosure** | Collapsible extended thinking sections |
+| **Copy on Hover** | One-click copy for any message |
+| **Multi-line Input** | Expandable input area |
+| **@ File Mentions** | Autocomplete files and folders |
+| **File Pills** | Selected files shown as chips |
+| **Model Selector** | Change model mid-session |
+| **Reasoning Effort** | Adjust per message |
+
+### 6.5 Tool Execution Display
+
+Every tool call renders as an interactive card.
+
+```
++------------------------------------------------------------------+
+|                    TOOL CALL CARDS                                |
++------------------------------------------------------------------+
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | [v] Read                                            1.2s   |  |
+|  |     src/auth/login.ts                                       |  |
+|  |     245 lines                                    [Expand]  |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | [>] Bash                                         Running   |  |
+|  |     npm test -- --grep "auth"                              |  |
+|  |     [===========>                    ] 12s elapsed         |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | [x] Write                                         Failed   |  |
+|  |     /etc/passwd                                             |  |
+|  |     Error: Permission denied                    [Retry]    |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | [?] AskUserQuestion                              Pending   |  |
+|  |                                                              |  |
+|  |  Which approach do you prefer?                              |  |
+|  |                                                              |  |
+|  |  ( ) Quick Implementation - Fast but minimal               |  |
+|  |  (*) Thorough Implementation - Full coverage               |  |
+|  |  ( ) Iterative Approach - Start simple                     |  |
+|  |                                                              |  |
+|  |                                            [Submit]         |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Tool Status Indicators:**
+
+| Status | Icon | Description |
+|--------|------|-------------|
+| Pending | `[ ]` | Waiting to execute |
+| Running | `[>]` | Currently executing |
+| Succeeded | `[v]` | Completed successfully |
+| Failed | `[x]` | Error occurred |
+| Rejected | `[-]` | User denied |
+| Cancelled | `[o]` | User cancelled |
+
+**Tool Card Actions:**
+
+- **Expand/Collapse**: Show/hide input and output
+- **Copy**: Copy tool input or output
+- **Rerun**: Execute the tool again
+- **Explain**: Ask AI to explain what this tool does
+
+### 6.6 Subagent Display
+
+When the main agent spawns subagents for parallel work, Blaze displays them clearly.
+
+```
++------------------------------------------------------------------+
+|                    SUBAGENT BLOCKS                                |
++------------------------------------------------------------------+
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | Subagent: research-docs                                     |  |
+|  | Status: Running                                              |  |
+|  | Task: "Research React 18 concurrent features"               |  |
+|  |                                                              |  |
+|  | Token Usage:                                                 |  |
+|  | [=================>                    ] 45,230 / 100,000   |  |
+|  |                                                              |  |
+|  | Progress: Searching documentation...                        |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | Subagent: write-tests                                       |  |
+|  | Status: Completed                                           |  |
+|  | Task: "Write unit tests for auth module"                    |  |
+|  |                                                              |  |
+|  | Token Usage:                                                 |  |
+|  | [========================================] 23,456 / 50,000  |  |
+|  |                                                              |  |
+|  | Result: Created 12 test files                     [Expand]  |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Subagent States:**
+
+| State | Description |
+|-------|-------------|
+| Queued | Waiting to start |
+| Running | Currently processing |
+| Completed | Finished successfully |
+| Failed | Error occurred |
+| Cancelled | Terminated by user or parent |
+
+### 6.7 File Tree and Navigation
+
+A virtualized file tree with advanced features.
+
+```
++------------------------------------------------------------------+
+|                      FILE TREE                                    |
++------------------------------------------------------------------+
+|                                                                   |
+|  Search: [auth____________]                    [Sort: Name v]    |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | v my-project/                                               |  |
+|  |   v src/                                                    |  |
+|  |     v auth/                                                 |  |
+|  |       [ts] login.ts                           Modified     |  |
+|  |       [ts] session.ts                                       |  |
+|  |       [ts] refresh.ts                         New          |  |
+|  |     > components/                                           |  |
+|  |     > utils/                                                |  |
+|  |   v tests/                                                  |  |
+|  |     [ts] auth.test.ts                                       |  |
+|  |   [json] package.json                                       |  |
+|  |   [md] README.md                                            |  |
+|  |   [->] node_modules/                          (symlink)    |  |
+|  |   [.] .env                                    (hidden)     |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  Right-click menu:                                               |
+|  +------------------------+                                      |
+|  | Open                   |                                      |
+|  | Open in Editor         |                                      |
+|  | Reveal in Finder       |                                      |
+|  | Copy Path              |                                      |
+|  | Copy Relative Path     |                                      |
+|  | Insert as @reference   |                                      |
+|  +------------------------+                                      |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**File Tree Features:**
+
+| Feature | Description |
+|---------|-------------|
+| **Virtualized** | Handles large directories efficiently |
+| **Lazy Loading** | Loads subdirectories on demand |
+| **Single Click** | Preview file (temporary tab) |
+| **Double Click** | Open file (persistent tab) |
+| **Drag to Chat** | Insert @file:path reference |
+| **Sort Options** | Name, date, size, extension |
+| **Language Icons** | Color-coded by file type |
+| **Hidden Files** | Visible but dimmed |
+| **Symlink Indicators** | Shows link status |
+
+### 6.8 Diff Viewer
+
+PR-style diff viewing with accept/reject workflow.
+
+```
++------------------------------------------------------------------+
+|                      DIFF VIEWER                                  |
++------------------------------------------------------------------+
+|                                                                   |
+|  src/auth/login.ts                              +12 -5          |
+|  +------------------------------------------------------------+  |
+|  | @@ -45,8 +45,15 @@ export async function login(creds) {    |  |
+|  |                                                              |  |
+|  |  45 |  45 |   const token = await fetchToken(creds);       |  |
+|  |  46 |     | - if (!token) return null;                     |  |
+|  |     |  46 | + if (!token) {                                |  |
+|  |     |  47 | +   logger.warn('Token fetch failed');         |  |
+|  |     |  48 | +   return { error: 'AUTH_FAILED' };           |  |
+|  |     |  49 | + }                                            |  |
+|  |  47 |  50 |                                                 |  |
+|  |  48 |     | - return { user: decode(token) };              |  |
+|  |     |  51 | + const decoded = decode(token);               |  |
+|  |     |  52 | + if (isExpired(decoded)) {                    |  |
+|  |     |  53 | +   const refreshed = await refresh(token);    |  |
+|  |     |  54 | +   return { user: decode(refreshed) };        |  |
+|  |     |  55 | + }                                            |  |
+|  |     |  56 | + return { user: decoded };                    |  |
+|  |  49 |  57 | }                                              |  |
+|  |                                                              |  |
+|  +------------------------------------------------------------+  |
+|  | Hunk 1 of 2        [Accept Hunk] [Reject Hunk] [Edit]      |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  Decision: [Pending]     [Accept All] [Reject All] [Edit File] |  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Diff Viewer Features:**
+
+| Feature | Description |
+|---------|-------------|
+| **Unified View** | Standard unified diff format |
+| **Split View** | Side-by-side comparison |
+| **Line Numbers** | Old and new gutters |
+| **Syntax Highlighting** | Language-aware coloring |
+| **Addition/Deletion Colors** | Green/red highlighting |
+| **Per-File Actions** | Accept/Reject entire file |
+| **Per-Hunk Actions** | Accept/Reject individual hunks |
+| **Decision Badges** | Pending, Accepted, Rejected, Modified |
+| **Large Diff Warning** | "Show All" for big diffs |
+| **Stats Badges** | +N additions, -N deletions |
+
+### 6.9 Security and Trust Modes
+
+Four trust levels control agent permissions.
+
+```
++------------------------------------------------------------------+
+|                   TRUST MODE SPECTRUM                             |
++------------------------------------------------------------------+
+|                                                                   |
+|   SANDBOX          REVIEW           TRUSTED          YOLO        |
+|   (Locked)        (Default)        (Expert)       (Dangerous)   |
+|      |               |                |               |          |
+|      v               v                v               v          |
+|   +-------+      +-------+       +-------+       +-------+      |
+|   |       |      |       |       |       |       |       |      |
+|   | Read  |      | Ask   |       | Trust |       | Auto  |      |
+|   | Only  |      | First |       | User  |       | Allow |      |
+|   |       |      |       |       |       |       |       |      |
+|   +-------+      +-------+       +-------+       +-------+      |
+|                                                                   |
+|   - No writes    - All approvals  - Minimal gates - No gates    |
+|   - Safe tools   - Diff preview   - Remember      - Full auto   |
+|   - Read only    - Audit log      - preferences   - Risky!      |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Trust Mode Details:**
+
+| Mode | File Writes | Shell Commands | Network | Best For |
+|------|-------------|----------------|---------|----------|
+| **Sandbox** | Blocked | Safe only (ls, git status) | Blocked | Exploration |
+| **Review** | Requires approval | Requires approval | Logged | Daily dev |
+| **Trusted** | Allowed in project | Most allowed | Allowed | Power users |
+| **YOLO** | All allowed | All allowed | All | Testing only |
+
+### 6.10 Tool Approval System
+
+Visual approval workflow with risk indicators.
+
+```
++------------------------------------------------------------------+
+|                   APPROVAL QUEUE                                  |
++------------------------------------------------------------------+
+|                                                                   |
+|  Pending Approvals (3)                                           |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | [HIGH RISK] Bash                                            |  |
+|  | rm -rf ./build/                                              |  |
+|  |                                                              |  |
+|  | This will delete 147 files in the build directory.         |  |
+|  |                                                              |  |
+|  | [Deny] [Allow Once] [Allow & Trust Bash]                   |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | [MEDIUM RISK] Write                                         |  |
+|  | src/auth/login.ts                                           |  |
+|  |                                                              |  |
+|  | +12 lines, -5 lines                        [Preview Diff]  |  |
+|  |                                                              |  |
+|  | [Deny] [Allow Once] [Allow Similar]                        |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | [LOW RISK] Read                                             |  |
+|  | package.json                                                 |  |
+|  |                                                              |  |
+|  | [Deny] [Allow Once] [Always Allow Read]                    |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Risk Levels:**
+
+| Level | Color | Examples |
+|-------|-------|----------|
+| Low | Green | Read, Glob, Grep |
+| Medium | Yellow | Write, Edit (in project) |
+| High | Red | Bash, Write (outside project) |
+| Critical | Purple | rm -rf, git push --force |
+
+### 6.11 Command Allowlist
+
+Granular control over shell commands.
+
+```
++------------------------------------------------------------------+
+|                  COMMAND ALLOWLIST                                |
++------------------------------------------------------------------+
+|                                                                   |
+|  Standard Commands                                               |
+|  +------------------------------------------------------------+  |
+|  | Command    | Description              | Permission         |  |
+|  |------------|--------------------------|-------------------|  |
+|  | ls         | List directory           | [x] Read          |  |
+|  | cat        | Display file             | [x] Read          |  |
+|  | grep       | Search patterns          | [x] Read          |  |
+|  | git status | Show git status          | [x] Read          |  |
+|  | git diff   | Show changes             | [x] Read          |  |
+|  | mkdir      | Create directory         | [ ] Read+Write    |  |
+|  | rm         | Remove files             | [ ] Read+Write    |  |
+|  | git commit | Commit changes           | [ ] Read+Write    |  |
+|  | git push   | Push to remote           | [ ] Read+Write    |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  Auto-Approve Patterns                                           |
+|  +------------------------------------------------------------+  |
+|  | *.swift     - All Swift files                              |  |
+|  | src/*       - Files in src/ directory                      |  |
+|  | **/*.ts     - TypeScript files anywhere                    |  |
+|  | tests/**/*  - Anything in tests folder                     |  |
+|  |                                                              |  |
+|  | [Add Pattern]                                               |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### 6.12 Design System and Theming
+
+Comprehensive theming with 6 built-in themes and full customization.
+
+```
++------------------------------------------------------------------+
+|                   THEME SYSTEM                                    |
++------------------------------------------------------------------+
+|                                                                   |
+|  Built-in Themes:                                                |
+|                                                                   |
+|  +----------+  +----------+  +----------+                        |
+|  |  NEBULA  |  | OBSIDIAN |  |  AURORA  |                        |
+|  |  Deep    |  |  Pure    |  |  Cyan/   |                        |
+|  |  Blue    |  |  Dark    |  |  Teal    |                        |
+|  +----------+  +----------+  +----------+                        |
+|                                                                   |
+|  +----------+  +----------+  +----------+                        |
+|  | SUNRISE  |  |  MONO-   |  | HYPERION |                        |
+|  |  Warm    |  |  CHROME  |  |  Deep    |                        |
+|  |  Orange  |  |  Gray    |  |  Purple  |                        |
+|  +----------+  +----------+  +----------+                        |
+|                                                                   |
+|  Glass Levels:                                                   |
+|  [Subtle] [Light] [Regular] [Prominent] [Solid]                 |
+|                                                                   |
+|  Blur Intensity: [=========>        ] 24px                      |
+|                                                                   |
+|  Accent Colors:                                                  |
+|  [Blue] [Purple] [Pink] [Red] [Orange]                          |
+|  [Yellow] [Green] [Mint] [Teal] [Custom]                        |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Theme Properties:**
+
+| Property | Description |
+|----------|-------------|
+| `background` | Deepest layer |
+| `surface` | Card backgrounds |
+| `surfaceHover` | Interactive states |
+| `accent` | Primary brand color |
+| `accentHover` | Hover states |
+| `textPrimary` | Main text |
+| `textSecondary` | Subtitles, labels |
+| `textMuted` | Tertiary text |
+| `border` | Separators, outlines |
+| `success` | Positive states |
+| `warning` | Caution indicators |
+| `error` | Error states |
+
+### 6.13 Terminal Integration
+
+Full terminal emulation for interactive commands.
+
+```
++------------------------------------------------------------------+
+|                  TERMINAL INTEGRATION                             |
++------------------------------------------------------------------+
+|                                                                   |
+|  Terminal Tabs:                                                  |
+|  +------------------------------------------------------------+  |
+|  | [Claude #1] [Claude #2] [User Terminal] [+]                |  |
+|  +------------------------------------------------------------+  |
+|  |                                                              |  |
+|  | $ npm test -- --grep "auth"                                 |  |
+|  |                                                              |  |
+|  | PASS  tests/auth.test.ts                                    |  |
+|  |   Authentication                                            |  |
+|  |     v should login with valid credentials (45ms)           |  |
+|  |     v should reject invalid credentials (12ms)              |  |
+|  |     v should refresh expired tokens (89ms)                 |  |
+|  |                                                              |  |
+|  | Test Suites: 1 passed, 1 total                              |  |
+|  | Tests:       3 passed, 3 total                              |  |
+|  | Time:        1.234s                                         |  |
+|  |                                                              |  |
+|  | $                                                            |  |
+|  |                                                              |  |
+|  +------------------------------------------------------------+  |
+|  | [Export] [Clear] [Kill Process]                            |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Terminal Features:**
+
+| Feature | Description |
+|---------|-------------|
+| **User Terminals** | Your own interactive shells |
+| **Claude Terminals** | Agent-spawned processes |
+| **Tab Management** | Multiple terminals in tabs |
+| **Scrollback Buffer** | Full history |
+| **Export Output** | Save terminal content |
+| **Auto-Show** | Opens for foreground commands |
+| **Ghostty Backend** | Fast, native rendering |
+| **SwiftTerm Backend** | Fallback emulation |
+| **Full PTY** | Complete terminal emulation |
+
+### 6.14 Hooks System
+
+Event-driven automation for AI sessions.
+
+```
++------------------------------------------------------------------+
+|                     HOOK EVENTS                                   |
++------------------------------------------------------------------+
+|                                                                   |
+|  EVENT LIFECYCLE:                                                |
+|                                                                   |
+|  SessionStart ----+                                              |
+|                   |                                               |
+|                   v                                               |
+|  UserPromptSubmit ---> PreToolUse ---> [Tool Executes]           |
+|                              |                |                   |
+|                              v                v                   |
+|                         (can block)     PostToolUse               |
+|                                               |                   |
+|                                               v                   |
+|                   +------ PreCompact <--------+                  |
+|                   |                                               |
+|                   v                                               |
+|  Stop <-----------+                                              |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Hook Event Reference:**
+
+| Event | When | Can Block | Common Uses |
+|-------|------|-----------|-------------|
+| `PreToolUse` | Before tool executes | Yes | Block dangerous ops |
+| `PostToolUse` | After tool completes | No | Log, validate |
+| `UserPromptSubmit` | Before processing prompt | Yes | Sanitize, inject |
+| `PreCompact` | Before context compaction | No | Save state |
+| `SessionStart` | Session begins/resumes | No | Load context |
+| `Stop` | Agent finishes turn | Yes | Enforce DoD |
+
+### 6.15 Visual Hooks Builder
+
+The flagship feature: drag-and-drop hook creation.
+
+```
++------------------------------------------------------------------+
+|                  VISUAL HOOKS BUILDER                             |
++------------------------------------------------------------------+
+|                                                                   |
+|  +--------+  +----------------------------------------+  +------+ |
+|  | Nodes  |  |              CANVAS                    |  |Props | |
+|  +--------+  +----------------------------------------+  +------+ |
+|  |        |  |                                        |  |      | |
+|  | Events |  |  +------------+     +------------+    |  |Filter| |
+|  | o Pre  |  |  |PreToolUse |---->| Tool=Bash  |    |  |      | |
+|  | o Post |  |  | Trigger   |     +-----+------+    |  |Tool: | |
+|  | o Start|  |  +------------+          |           |  |[Bash]| |
+|  |        |  |                          v           |  |      | |
+|  |Filters |  |                    +------------+    |  |Match:| |
+|  | o Tool |  |  +------------+<---| rm -rf ?   |    |  |[Regex| |
+|  | o Path |  |  | Continue   |    +-----+------+    |  |      | |
+|  | o Regex|  |  +------------+          | Yes       |  |      | |
+|  |        |  |                          v           |  |      | |
+|  |Actions |  |                    +------------+    |  |      | |
+|  | o Block|  |                    |   Block    |    |  |      | |
+|  | o Log  |  |                    | "Dangerous"|    |  |      | |
+|  | o Cmd  |  |                    +------------+    |  |      | |
+|  | o Notify|  |                                      |  |      | |
+|  +--------+  +----------------------------------------+  +------+ |
+|                                                                   |
+|  [Test Workflow]  [Export JSON]  [Save]  [Templates v]          |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Hook Node Types:**
+
+| Category | Nodes | Purpose |
+|----------|-------|---------|
+| **Events** | PreToolUse, PostToolUse, SessionStart, PreCompact, Stop | Triggers |
+| **Filters** | Tool Match, Path Pattern, Content Match, Regex | Conditions |
+| **Actions** | Block, Continue, Run Command, Log, Notify, Modify | Effects |
+| **Outputs** | System Message, User Notification, File Write | Results |
+
+**22 Built-in Templates:**
+
+- Security: Block destructive, detect secrets, sandbox enforcement
+- Productivity: Auto-index, log tools, session continuity
+- Integration: Slack, webhooks, custom MCP routing
+- Debugging: Trace calls, capture timing, breakpoints
+
+### 6.16 Sidebar Panels
+
+15+ sidebar panels for different workflows.
+
+```
++------------------------------------------------------------------+
+|                   SIDEBAR PANELS                                  |
++------------------------------------------------------------------+
+|                                                                   |
+|  Panel           | Description                                   |
+|  ----------------|-----------------------------------------------|
+|  Sessions        | Session list, search, filter                  |
+|  Files           | Virtualized file tree                         |
+|  Git             | Status, branches, stash                       |
+|  Subagents       | Active subagent status                        |
+|  Approvals       | Pending approval queue                        |
+|  Agents          | Agent definitions, config                     |
+|  Timeline        | Recent activity stream                        |
+|  Context         | Current context window                        |
+|  Tokens          | Usage, costs, budget                          |
+|  Bookmarks       | Saved messages, files                         |
+|  Search          | Full-text search                              |
+|  Prompts         | Prompt templates                              |
+|  Tools           | Available tools reference                     |
+|  Logs            | Debug logs, errors                            |
+|  MCP             | MCP server status                             |
+|  Hooks           | Hook status, debug                            |
+|  Settings        | Quick settings access                         |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### 6.17 Onboarding Flow
+
+Guided first-run experience.
+
+```
++------------------------------------------------------------------+
+|                   ONBOARDING STEPS                                |
++------------------------------------------------------------------+
+|                                                                   |
+|  Step 1: Welcome Screen                                          |
+|  - Introduction to Blaze                                         |
+|  - Key features overview                                         |
+|                                                                   |
+|  Step 2: CLI Detection                                           |
+|  - Auto-detect Claude, Gemini, Codex                            |
+|  - Show installation status                                      |
+|  - Guide CLI installation if missing                            |
+|                                                                   |
+|  Step 3: CLI Installation (if needed)                           |
+|  - npm install commands                                          |
+|  - Verification steps                                            |
+|                                                                   |
+|  Step 4: Provider Selection                                      |
+|  - Choose default provider                                       |
+|  - Configure auth if needed                                      |
+|                                                                   |
+|  Step 5: Plugin/Skill Selection                                  |
+|  - Enable recommended skills                                     |
+|  - Custom skill installation                                     |
+|                                                                   |
+|  Step 6: Directory Source                                        |
+|  - Set default projects directory                               |
+|  - Import existing projects                                      |
+|                                                                   |
+|  Step 7: Completion                                              |
+|  - Quick start tips                                              |
+|  - Link to documentation                                         |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### 6.18 Git Integration and Worktrees
+
+Worktree-per-task isolation for parallel development.
+
+```
++------------------------------------------------------------------+
+|                  GIT WORKTREES                                    |
++------------------------------------------------------------------+
+|                                                                   |
+|  PROJECT STRUCTURE:                                              |
+|                                                                   |
+|  my-project/                         (Main worktree)             |
+|  +-- .git/                           Shared Git data             |
+|  +-- .blaze-worktrees/                                           |
+|  |   +-- abc12345-session-1/         Claude: auth feature       |
+|  |   |   +-- (full checkout)                                     |
+|  |   |   +-- .blaze-session/         Session state              |
+|  |   |                                                           |
+|  |   +-- def67890-session-2/         Codex: query optimization  |
+|  |   |   +-- (full checkout)                                     |
+|  |   |   +-- .blaze-session/                                     |
+|  |   |                                                           |
+|  |   +-- ghi11111-session-3/         Claude: write tests        |
+|  |       +-- (full checkout)                                     |
+|  |       +-- .blaze-session/                                     |
+|  |                                                                |
+|  +-- src/                            main branch files           |
+|  +-- .blaze/                         Project config              |
+|                                                                   |
++------------------------------------------------------------------+
+|                                                                   |
+|  BRANCH NAMING: blaze-session-{short-uuid}                       |
+|  ORPHAN DETECTION: Auto-cleanup abandoned worktrees              |
+|  PARALLEL SESSIONS: Run multiple agents simultaneously           |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+**Worktree Benefits:**
+
+| Benefit | Description |
+|---------|-------------|
+| **Isolation** | Each agent has its own working directory |
+| **No Conflicts** | Changes don't interfere until merge |
+| **Parallel Work** | Multiple features simultaneously |
+| **Easy Cleanup** | Delete worktree, delete branch |
+| **Context Separation** | Each session maintains own state |
+
+---
+
+## Settings Reference
+
+Blaze has 13 settings categories accessible via `Cmd+,` or **Blaze > Settings**.
+
+For full documentation, visit [https://getblaze.dev/docs/](https://getblaze.dev/docs/)
+
+### 7.1 Appearance Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Theme | Nebula, Obsidian, Aurora, Sunrise, Monochrome, Hyperion | Nebula |
+| Glass Level | Subtle, Light, Regular, Prominent, Solid | Regular |
+| Blur Intensity | 8-40px | 24px |
+| Accent Color | Blue, Purple, Pink, Red, Orange, Yellow, Green, Mint, Teal, Custom | Blue |
+| Border Style | None, Subtle, Standard, Layered, Gradient | Subtle |
+| Window Transparency | 0-100% | 95% |
+
+### 7.2 Chat and Input Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Message Style | Bubbles, Minimal, Compact | Bubbles |
+| Timestamp Format | Relative, Absolute | Relative |
+| Code Font | SF Mono, JetBrains Mono, Fira Code, Menlo | SF Mono |
+| Code Font Size | 10-20pt | 12pt |
+| Enable Ligatures | On/Off | On |
+| Auto-scroll | On/Off | On |
+| Show Thinking | Always, On Expand, Never | On Expand |
+
+### 7.3 Models Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Default Provider | Anthropic, Google, OpenAI | Anthropic |
+| Default Model | (per provider) | Sonnet 4 |
+| Reasoning Effort | Low, Medium, High | Medium |
+| Extended Thinking | On/Off | Off |
+| Max Tokens | 1K-200K | 8K |
+
+### 7.4 Security and Trust Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Trust Mode | Sandbox, Review, Trusted, YOLO | Review |
+| Auto-approve Patterns | Glob patterns | (empty) |
+| Blocked Patterns | Glob patterns | rm -rf /, etc. |
+| Require Approval | Tool list | Bash, Write |
+| Audit Logging | On/Off | On |
+
+### 7.5 Engines Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Claude Code Path | File path | /usr/local/bin/claude |
+| Gemini CLI Path | File path | /usr/local/bin/gemini |
+| Codex CLI Path | File path | /usr/local/bin/codex |
+| Default Engine | Claude, Gemini, Codex | Claude |
+| Environment Variables | Key-value pairs | (from shell) |
+
+### 7.6 Terminal Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Shell | /bin/bash, /bin/zsh, custom | /bin/zsh |
+| Scrollback Lines | 1K-100K | 10K |
+| Auto-show Terminal | On/Off | On |
+| Terminal Font | (same as code fonts) | SF Mono |
+| Terminal Font Size | 10-20pt | 12pt |
+
+### 7.7 Agents Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Max Concurrent Agents | 1-100 | 10 |
+| Max Total Agents | 1-500 | 100 |
+| Agent Timeout | 30s-30min | 5min |
+| Auto-throttle | On/Off | On |
+| Memory Limit | 256MB-4GB | 1GB |
+
+### 7.8 Files and Editor Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Default Tab Mode | Preview, Persistent | Preview |
+| Show Hidden Files | On/Off | On (dimmed) |
+| File Sort | Name, Date, Size, Extension | Name |
+| External Editor | VS Code, Xcode, Custom | VS Code |
+| Auto-save | On/Off | On |
+
+### 7.9 Notifications Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Desktop Notifications | On/Off | On |
+| Sound | On/Off | Off |
+| Notify on Complete | On/Off | On |
+| Notify on Error | On/Off | On |
+| Notify on Approval | On/Off | On |
+
+### 7.10 CLI Power Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Custom CLI Flags | Text | (empty) |
+| Environment Overrides | Key-value | (empty) |
+| Working Directory | Path | Project root |
+| Shell Profile | .bashrc, .zshrc, custom | .zshrc |
+
+### 7.11 Memory and Context Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Auto-compact | On/Off | On |
+| Compact Threshold | 50-95% | 80% |
+| Preserve Recent | 5-50 messages | 20 |
+| Context Window | 8K-200K | 100K |
+
+### 7.12 Git Settings
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Auto-create Worktree | On/Off | Off |
+| Worktree Location | In-repo, External | In-repo |
+| Branch Prefix | Text | blaze-session- |
+| Auto-cleanup Orphans | On/Off | On |
+
+### 7.13 Shortcuts Settings
+
+| Action | Default | Customizable |
+|--------|---------|--------------|
+| New Session | Cmd+N | Yes |
+| Send Message | Cmd+Enter | Yes |
+| Stop Generation | Cmd+. | Yes |
+| Accept All Diffs | Cmd+Shift+A | Yes |
+| Toggle Sidebar | Cmd+\ | Yes |
+| Command Palette | Cmd+K | Yes |
+
+---
+
+## Architecture
+
+### System Overview
+
+```
++------------------------------------------------------------------+
+|                    BLAZE SYSTEM ARCHITECTURE                      |
++------------------------------------------------------------------+
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  |                    macOS App (SwiftUI)                      |  |
+|  |                                                              |  |
+|  |  +------------------+  +------------------+  +-----------+  |  |
+|  |  |    GUI Layer     |  |  Orchestration   |  |  Storage  |  |  |
+|  |  |    (SwiftUI)     |  |     Layer        |  |   Layer   |  |  |
+|  |  +--------+---------+  +--------+---------+  +-----+-----+  |  |
+|  |           |                     |                  |        |  |
+|  |  - Chat Timeline         - SessionStore      - SQLite      |  |
+|  |  - Tool Cards            - EngineManager     - JSONL       |  |
+|  |  - Diff Viewer           - HookRunner        - Keychain    |  |
+|  |  - Settings UI           - PolicyEngine      - UserDefs    |  |
+|  |  - Command Palette       - ProcessRunner                    |  |
+|  |  - File Tree             - SubagentPool                     |  |
+|  |                                                              |  |
+|  +---------------------------+----------------------------------+  |
+|                              |                                    |
+|                              | spawn child process / pipes        |
+|                              v                                    |
+|  +------------------------------------------------------------+  |
+|  |                 Provider CLIs (unmodified)                  |  |
+|  |                                                              |  |
+|  |  +----------------+  +----------------+  +----------------+  |  |
+|  |  | ClaudeAdapter  |  | GeminiAdapter  |  | CodexAdapter   |  |  |
+|  |  +----------------+  +----------------+  +----------------+  |  |
+|  |                                                              |  |
+|  +---------------------------+----------------------------------+  |
+|                              |                                    |
+|                              | HTTPS (CLI handles auth)          |
+|                              v                                    |
+|  +------------------------------------------------------------+  |
+|  |                    AI Provider APIs                         |  |
+|  |                                                              |  |
+|  |        Anthropic  |  Google AI  |  OpenAI                   |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Component Architecture
+
+```
++------------------------------------------------------------------+
+|                   COMPONENT BREAKDOWN                             |
++------------------------------------------------------------------+
+|                                                                   |
+|  CORE COMPONENTS                                                 |
+|  +------------------------------------------------------------+  |
+|  | EngineAdapter    | Protocol for CLI invocation, streaming   |  |
+|  | NormalizedEvent  | Unified event schema across providers    |  |
+|  | SessionStore     | SQLite + JSONL crash-safe persistence   |  |
+|  | HookRunner       | Event-triggered automation               |  |
+|  | ProcessRunner    | Child process management                 |  |
+|  | PolicyEngine     | Permission enforcement                   |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  DATA COMPONENTS (11 total)                                      |
+|  +------------------------------------------------------------+  |
+|  | SessionStore     | Branching via parentId/branchPoint       |  |
+|  | EventStore       | Sequence numbers, toolUseId correlation  |  |
+|  | TokenStore       | Cache metrics, cost calc, budget alerts  |  |
+|  | HookStore        | 12 event types, repo-scoped hooks        |  |
+|  | NDJSONLogger     | Dual-write for crash safety              |  |
+|  | BackupManager    | SHA256 checksums, atomic restore         |  |
+|  | PromptStore      | Template management                      |  |
+|  | BookmarkStore    | Saved items                              |  |
+|  | LogStore         | Debug logs                               |  |
+|  | HookExecStore    | Hook execution history                   |  |
+|  | ToolApprovalStore| Approval decisions                       |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  UI COMPONENTS                                                   |
+|  +------------------------------------------------------------+  |
+|  | DesignSystem     | Shared UI, colors, typography            |  |
+|  | ChatTimeline     | Message rendering                        |  |
+|  | ToolCardView     | Tool call display                        |  |
+|  | DiffViewer       | PR-style diff viewing                    |  |
+|  | FileTreeView     | Virtualized file browser                 |  |
+|  | HooksBuilder     | Visual workflow editor                   |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Event Pipeline
+
+```
++------------------------------------------------------------------+
+|                    EVENT PIPELINE                                 |
++------------------------------------------------------------------+
+|                                                                   |
+|  CLI stdout (NDJSON)                                             |
+|       |                                                          |
+|       v                                                          |
+|  EngineAdapter.parseEvent()                                      |
+|       |                                                          |
+|       v                                                          |
+|  NormalizedEvent (unified type)                                  |
+|       |                                                          |
+|       +---> PreHooks (can block/modify)                         |
+|       |          |                                               |
+|       |          v                                               |
+|       |    HookRunner.executePreHooks()                         |
+|       |          |                                               |
+|       |          +---> Block? --> Return error                  |
+|       |          |                                               |
+|       |          +---> Modify? --> Update event                 |
+|       |                                                          |
+|       v                                                          |
+|  EventEnvelope (sequenced, timestamped)                         |
+|       |                                                          |
+|       v                                                          |
+|  EventStore (SQLite persistence)                                 |
+|       |                                                          |
+|       +---> NDJSONLogger (append-only backup)                   |
+|       |                                                          |
+|       v                                                          |
+|  ChatTimeline (SwiftUI rendering)                               |
+|       |                                                          |
+|       v                                                          |
+|  PostHooks (observe, log, notify)                               |
+|       |                                                          |
+|       v                                                          |
+|  HookRunner.executePostHooks()                                  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Multi-Engine Flow
+
+```
++------------------------------------------------------------------+
+|                   MULTI-ENGINE FLOW                               |
++------------------------------------------------------------------+
+|                                                                   |
+|  User selects provider in session creation                       |
+|       |                                                          |
+|       v                                                          |
+|  SessionOrchestrator.createSession(provider: .anthropic)        |
+|       |                                                          |
+|       v                                                          |
+|  EngineManager.getAdapter(for: provider)                        |
+|       |                                                          |
+|       +-------+-------+-------+                                 |
+|       |       |       |       |                                 |
+|       v       v       v       v                                 |
+|   Claude   Gemini   Codex   (future)                            |
+|   Adapter  Adapter  Adapter                                      |
+|       |       |       |                                          |
+|       v       v       v                                          |
+|   +-------+ +-------+ +-------+                                 |
+|   |claude | |gemini | |codex  |                                 |
+|   |-p ... | |-p ... | |exec...|                                 |
+|   +-------+ +-------+ +-------+                                 |
+|       |       |       |                                          |
+|       +-------+-------+                                          |
+|               |                                                   |
+|               v                                                   |
+|       NormalizedEvent                                            |
+|       (same type regardless of provider)                         |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Session Lifecycle
+
+```
++------------------------------------------------------------------+
+|                  SESSION LIFECYCLE                                |
++------------------------------------------------------------------+
+|                                                                   |
+|  [Creating] -----> [Ready] <-----> [Running]                    |
+|       |              |                 |                         |
+|       |              |                 v                         |
+|       |              |           [Streaming]                     |
+|       |              |                 |                         |
+|       |              v                 v                         |
+|       |         [Stopped] <------- [Waiting]                    |
+|       |              |                 |                         |
+|       v              v                 v                         |
+|  [Errored] <---- [Errored] <------ [Errored]                    |
+|       |              |                 |                         |
+|       +-------+------+-----------------+                         |
+|               |                                                   |
+|               v                                                   |
+|          [Archived]                                              |
+|                                                                   |
+|  State Persistence:                                              |
+|  - SQLite: Session metadata, state transitions                  |
+|  - JSONL: Full event log for replay                             |
+|  - Memory: Active session state                                  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Approval Flow
+
+```
++------------------------------------------------------------------+
+|                    APPROVAL FLOW                                  |
++------------------------------------------------------------------+
+|                                                                   |
+|  Tool Call Request                                               |
+|       |                                                          |
+|       v                                                          |
+|  PolicyEngine.evaluate(tool, input)                             |
+|       |                                                          |
+|       +---> Check trust mode                                    |
+|       |         |                                                |
+|       |         +---> YOLO? --> Auto-approve                    |
+|       |         |                                                |
+|       |         +---> Sandbox? --> Check if safe tool           |
+|       |         |                     |                          |
+|       |         |                     +---> Safe? --> Allow     |
+|       |         |                     |                          |
+|       |         |                     +---> Not safe? --> Block |
+|       |         |                                                |
+|       |         +---> Review/Trusted? --> Continue below        |
+|       |                                                          |
+|       +---> Check auto-approve patterns                         |
+|       |         |                                                |
+|       |         +---> Match? --> Allow                          |
+|       |         |                                                |
+|       |         +---> No match? --> Continue                    |
+|       |                                                          |
+|       +---> Check blocked patterns                              |
+|       |         |                                                |
+|       |         +---> Match? --> Block                          |
+|       |         |                                                |
+|       |         +---> No match? --> Continue                    |
+|       |                                                          |
+|       +---> Check trusted tools (Trusted mode)                  |
+|       |         |                                                |
+|       |         +---> Trusted? --> Allow                        |
+|       |         |                                                |
+|       |         +---> Not trusted? --> Queue for approval       |
+|       |                                                          |
+|       v                                                          |
+|  Show Approval Dialog                                            |
+|       |                                                          |
+|       +---> [Deny] --> Block, continue session                  |
+|       |                                                          |
+|       +---> [Allow Once] --> Execute, don't remember            |
+|       |                                                          |
+|       +---> [Allow & Trust] --> Execute, add to trusted list    |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Hook System Architecture
+
+```
++------------------------------------------------------------------+
+|                 HOOK SYSTEM ARCHITECTURE                          |
++------------------------------------------------------------------+
+|                                                                   |
+|  Event Occurs                                                    |
+|       |                                                          |
+|       v                                                          |
+|  HookRunner.dispatch(event)                                      |
+|       |                                                          |
+|       v                                                          |
+|  HookStore.getHooks(event.type)                                  |
+|       |                                                          |
+|       v                                                          |
+|  For each hook:                                                  |
+|       |                                                          |
+|       +---> Check matcher (tool name, path pattern, etc.)       |
+|       |         |                                                |
+|       |         +---> No match? --> Skip                        |
+|       |         |                                                |
+|       |         +---> Match? --> Execute                        |
+|       |                                                          |
+|       +---> Execute hook command                                 |
+|       |         |                                                |
+|       |         +---> stdin: JSON event                         |
+|       |         |                                                |
+|       |         +---> stdout: JSON result                       |
+|       |         |                                                |
+|       |         +---> Parse result:                             |
+|       |               - block: true --> Block event             |
+|       |               - additionalContext --> Inject context    |
+|       |               - updatedInput --> Modify input           |
+|       |                                                          |
+|       v                                                          |
+|  HookExecutionStore.log(hook, result, duration)                 |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Worktree Structure
+
+```
++------------------------------------------------------------------+
+|                  WORKTREE STRUCTURE                               |
++------------------------------------------------------------------+
+|                                                                   |
+|  my-project/                                                     |
+|  |                                                                |
+|  +-- .git/                    <-- Shared Git data               |
+|  |   +-- objects/                                                |
+|  |   +-- refs/                                                   |
+|  |   +-- worktrees/           <-- Worktree metadata             |
+|  |       +-- abc12345/                                           |
+|  |       +-- def67890/                                           |
+|  |                                                                |
+|  +-- .blaze-worktrees/        <-- Blaze worktree location       |
+|  |   |                                                           |
+|  |   +-- abc12345-session-1/  <-- Worktree 1                    |
+|  |   |   +-- src/             <-- Full checkout                 |
+|  |   |   +-- tests/                                              |
+|  |   |   +-- .blaze-session/  <-- Session state                 |
+|  |   |       +-- state.json                                      |
+|  |   |       +-- events.jsonl                                    |
+|  |   |                                                           |
+|  |   +-- def67890-session-2/  <-- Worktree 2                    |
+|  |       +-- src/                                                |
+|  |       +-- tests/                                              |
+|  |       +-- .blaze-session/                                     |
+|  |                                                                |
+|  +-- src/                     <-- Main worktree files           |
+|  +-- tests/                                                      |
+|  +-- .blaze/                  <-- Project config                |
+|      +-- config.json                                             |
+|      +-- hooks/                                                  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### UI Layout Architecture
+
+```
++------------------------------------------------------------------+
+|                    UI LAYOUT                                      |
++------------------------------------------------------------------+
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  | Menu Bar                                                    |  |
+|  +------------------------------------------------------------+  |
+|  |          |                                    |             |  |
+|  | Sidebar  |           Main Content             |  Inspector  |  |
+|  | (240px)  |                                    |  (280px)    |  |
+|  |          |  +--------------------------------+|             |  |
+|  | Sessions |  |        Chat Timeline           ||  Context    |  |
+|  | Files    |  |                                ||  Tokens     |  |
+|  | Git      |  |  +------------------------+   ||  Actions    |  |
+|  | Agents   |  |  | Message Bubbles        |   ||             |  |
+|  | ...      |  |  | Tool Cards             |   ||             |  |
+|  |          |  |  | Diff Viewers           |   ||             |  |
+|  |          |  |  +------------------------+   ||             |  |
+|  |          |  |                                ||             |  |
+|  |          |  +--------------------------------+|             |  |
+|  |          |  |        Input Area              ||             |  |
+|  |          |  +--------------------------------+|             |  |
+|  +----------+------------------------------------+-------------+  |
+|  | Status Bar                                                  |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  NavigationSplitView with:                                       |
+|  - Resizable dividers                                            |
+|  - Column visibility toggles                                     |
+|  - Keyboard navigation                                           |
+|  - Drag-to-resize                                                |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Data Layer Architecture
+
+```
++------------------------------------------------------------------+
+|                  DATA LAYER ARCHITECTURE                          |
++------------------------------------------------------------------+
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  |                      SQLite Database                        |  |
+|  |                                                              |  |
+|  |  +----------------+  +----------------+  +----------------+ |  |
+|  |  |    sessions    |  |     events     |  |     tokens     | |  |
+|  |  |----------------|  |----------------|  |----------------| |  |
+|  |  | id             |  | id             |  | session_id     | |  |
+|  |  | name           |  | session_id     |  | input_tokens   | |  |
+|  |  | provider       |  | sequence       |  | output_tokens  | |  |
+|  |  | model          |  | type           |  | cache_hit      | |  |
+|  |  | status         |  | payload        |  | cost_usd       | |  |
+|  |  | parent_id      |  | tool_use_id    |  | timestamp      | |  |
+|  |  | branch_point   |  | timestamp      |  +----------------+ |  |
+|  |  | created_at     |  +----------------+                     |  |
+|  |  | updated_at     |                                         |  |
+|  |  +----------------+  +----------------+  +----------------+ |  |
+|  |                      |     hooks      |  |   approvals    | |  |
+|  |                      |----------------|  |----------------| |  |
+|  |                      | id             |  | id             | |  |
+|  |                      | event_type     |  | session_id     | |  |
+|  |                      | matcher        |  | tool_name      | |  |
+|  |                      | script_path    |  | decision       | |  |
+|  |                      | repo_scope     |  | scope          | |  |
+|  |                      | enabled        |  | timestamp      | |  |
+|  |                      +----------------+  +----------------+ |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  |                    JSONL Event Logs                         |  |
+|  |                                                              |  |
+|  |  ~/.blaze/sessions/{session_id}/events.jsonl               |  |
+|  |  - Append-only                                              |  |
+|  |  - Crash-safe                                               |  |
+|  |  - Replayable                                               |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
+|  +------------------------------------------------------------+  |
+|  |                    Backup Manager                           |  |
+|  |                                                              |  |
+|  |  - SHA256 checksums                                         |  |
+|  |  - Atomic restore                                           |  |
+|  |  - Scheduled backups                                        |  |
+|  +------------------------------------------------------------+  |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+### Subagent Orchestration
+
+```
++------------------------------------------------------------------+
+|                SUBAGENT ORCHESTRATION                             |
++------------------------------------------------------------------+
+|                                                                   |
+|  Main Agent                                                      |
+|       |                                                          |
+|       v                                                          |
+|  SubagentRegistry.spawn(task, config)                           |
+|       |                                                          |
+|       v                                                          |
+|  SubagentPool.acquire()                                          |
+|       |                                                          |
+|       +---> Check pool capacity                                 |
+|       |         |                                                |
+|       |         +---> Under limit? --> Create subagent          |
+|       |         |                                                |
+|       |         +---> At limit? --> Queue or reject             |
+|       |                                                          |
+|       +---> Check memory                                        |
+|       |         |                                                |
+|       |         +---> Low memory? --> Throttle                  |
+|       |                                                          |
+|       v                                                          |
+|  Subagent Process                                                |
+|       |                                                          |
+|       +---> Dual correlation:                                   |
+|       |     - session_id: Links to parent                       |
+|       |     - subagent_id: Unique identifier                    |
+|       |                                                          |
+|       +---> SubagentEventRouter                                 |
+|             |                                                    |
+|             +---> spawned --> UI shows new subagent block       |
+|             |                                                    |
+|             +---> progress --> Update progress bar              |
+|             |                                                    |
+|             +---> completed --> Show result                     |
+|             |                                                    |
+|             +---> failed --> Show error                         |
+|                                                                   |
+|  Pool Configuration:                                             |
+|  - Default: 10 concurrent                                        |
+|  - Max: 500 total                                                |
+|  - Memory-aware throttling                                       |
+|                                                                   |
++------------------------------------------------------------------+
+```
+
+---
+
+## CLI Invocation Patterns
+
+### Claude Code
 
 ```bash
-# Check Claude Code
-claude --version
-claude auth status
-# If not logged in:
-claude auth login
+# Basic headless invocation
+claude -p "<prompt>" --output-format stream-json
 
-# Check Gemini (optional)
-gemini --version
-gemini auth status
+# With allowed tools
+claude -p "<prompt>" --output-format stream-json --allowedTools Read,Write,Edit,Bash
+
+# With max tokens
+claude -p "<prompt>" --output-format stream-json --max-tokens 8000
+
+# Skip permissions (YOLO mode)
+claude -p "<prompt>" --output-format stream-json --dangerously-skip-permissions
+
+# With model override
+claude -p "<prompt>" --output-format stream-json --model claude-sonnet-4
+
+# Headless mode does NOT persist sessions
+# Blaze manages conversation continuity via stored event logs
 ```
 
-### 10.2 Create Your First Workspace
+### Gemini CLI
 
-1. **Launch Blaze**
-   ```bash
-   open /Applications/Blaze.app
-   ```
+```bash
+# Basic headless invocation
+gemini -p "<prompt>" --output-format stream-json
 
-2. **Add a project**
-   - Click **+** in the sidebar or press `Cmd+Shift+N`
-   - Select your project directory
-   - Blaze auto-detects git repos and existing `.claude/` configs
+# Resume session (Gemini has native persistence)
+gemini --resume
 
-3. **Configure the workspace** (optional)
-   - Right-click project > **Settings**
-   - Set trust mode (default: Review)
-   - Add to tool allowlist if needed
-
-### 10.3 Start Your First Session
-
-1. **Select your project** in the sidebar
-
-2. **Press `Cmd+N`** or click **New Session**
-
-3. **Choose your engine:**
-   ```
-   ┌─────────────────────────────────────────┐
-   │  New Session                            │
-   ├─────────────────────────────────────────┤
-   │  Engine: [Claude Code v]                │
-   │                                         │
-   │  Name: "Fix authentication bug"         │
-   │                                         │
-   │  [Cancel]                  [Create]     │
-   └─────────────────────────────────────────┘
-   ```
-
-4. **Send your first prompt:**
-   ```
-   Look at the auth flow in src/auth/ and identify why
-   login fails when the session token expires.
-   ```
-
-### 10.4 Understanding the Timeline
-
-The main view shows your conversation as a timeline:
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  Fix authentication bug                              Claude Code    │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  10:30 AM  YOU                                                      │
-│  Look at the auth flow in src/auth/ and identify why login fails... │
-│                                                                      │
-│  10:30 AM  CLAUDE                                                   │
-│  I'll analyze the authentication flow. Let me start by reading...   │
-│                                                                      │
-│  ┌─ Tool: Read ─────────────────────────────────────────────────┐   │
-│  │ src/auth/session.ts                               1.2s       │   │
-│  │ 245 lines read                                    [Expand]   │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-│                                                                      │
-│  ┌─ Tool: Grep ─────────────────────────────────────────────────┐   │
-│  │ Pattern: "token.*expir"                          0.3s        │   │
-│  │ 3 matches in 2 files                             [Expand]    │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-│                                                                      │
-│  I found the issue. The token refresh logic in session.ts...        │
-│                                                                      │
-│  ┌─ Diff: src/auth/session.ts ──────────────────────────────────┐   │
-│  │ +  if (isTokenExpired(token)) {                              │   │
-│  │ +    token = await refreshToken(token);                       │   │
-│  │ +  }                                                          │   │
-│  │                                     [Accept] [Reject] [Edit] │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+# With model selection
+gemini -p "<prompt>" --output-format stream-json --model gemini-pro
 ```
 
-### 10.5 Essential Keyboard Shortcuts
+### OpenAI Codex CLI
+
+```bash
+# Basic execution
+codex exec --json "<prompt>"
+
+# Resume multi-turn
+codex exec resume
+
+# Full auto mode
+codex exec --json "<prompt>" --full-auto
+
+# With sandbox
+codex exec --json "<prompt>" --sandbox
+```
+
+---
+
+## Data Layer Deep Dive
+
+### SessionStore
+
+Manages session lifecycle with SQLite persistence.
+
+```swift
+struct Session {
+    let id: UUID
+    var name: String
+    var provider: AIProvider
+    var model: String
+    var status: SessionStatus
+    var parentId: UUID?      // For branching
+    var branchPoint: Int?    // Event index where branch occurred
+    var createdAt: Date
+    var updatedAt: Date
+}
+
+// Branching support
+func fork(session: Session, atEvent: Int) -> Session {
+    return Session(
+        parentId: session.id,
+        branchPoint: atEvent,
+        // ... copy other properties
+    )
+}
+```
+
+### EventStore
+
+Handles event persistence with sequence numbers.
+
+```swift
+struct EventEnvelope {
+    let id: UUID
+    let sessionId: UUID
+    let sequence: Int        // Monotonic sequence number
+    let type: EventType
+    let payload: NormalizedEvent
+    let toolUseId: String?   // For correlation
+    let timestamp: Date
+}
+```
+
+### TokenStore
+
+Tracks token usage and costs.
+
+```swift
+struct TokenUsage {
+    let sessionId: UUID
+    var inputTokens: Int
+    var outputTokens: Int
+    var cacheHitTokens: Int
+    var costUSD: Decimal
+    let timestamp: Date
+}
+
+// Budget alerts
+func checkBudget(session: Session) -> BudgetStatus {
+    let usage = getUsage(session.id)
+    let budget = getBudget(session.id)
+
+    if usage.costUSD > budget.limit {
+        return .exceeded
+    } else if usage.costUSD > budget.limit * 0.8 {
+        return .warning
+    }
+    return .ok
+}
+```
+
+### HookStore
+
+Manages hook definitions with repo scoping.
+
+```swift
+struct HookDefinition {
+    let id: UUID
+    let eventType: HookEventType  // 12 types supported
+    let matcher: [String]?
+    let scriptPath: String
+    let repoScope: String?        // Optional repo restriction
+    var enabled: Bool
+}
+
+enum HookEventType {
+    case preToolUse
+    case postToolUse
+    case userPromptSubmit
+    case preCompact
+    case sessionStart
+    case sessionEnd
+    case notification
+    case stop
+    // ... 4 more
+}
+```
+
+### NDJSONLogger
+
+Dual-write logging for crash safety.
+
+```swift
+class NDJSONLogger {
+    private let fileHandle: FileHandle
+    private let queue: DispatchQueue
+
+    func log(event: EventEnvelope) {
+        queue.async {
+            let json = try! JSONEncoder().encode(event)
+            self.fileHandle.write(json + "\n")
+            self.fileHandle.synchronizeFile()  // Ensure durability
+        }
+    }
+
+    func replay() -> [EventEnvelope] {
+        // Read line by line, parse each as JSON
+    }
+}
+```
+
+### BackupManager
+
+Handles backups with integrity verification.
+
+```swift
+class BackupManager {
+    func backup(session: Session) throws {
+        let data = try export(session)
+        let checksum = SHA256.hash(data)
+
+        let backup = Backup(
+            sessionId: session.id,
+            data: data,
+            checksum: checksum.hexString,
+            timestamp: Date()
+        )
+
+        try save(backup)
+    }
+
+    func restore(backupId: UUID) throws -> Session {
+        let backup = try load(backupId)
+
+        // Verify checksum
+        let checksum = SHA256.hash(backup.data)
+        guard checksum.hexString == backup.checksum else {
+            throw BackupError.corruptedBackup
+        }
+
+        return try import(backup.data)
+    }
+}
+```
+
+---
+
+## Subagent System
+
+### SubagentRegistry
+
+Tracks subagent relationships.
+
+```swift
+class SubagentRegistry {
+    // Dual correlation
+    private var bySessionId: [UUID: [Subagent]] = [:]
+    private var bySubagentId: [UUID: Subagent] = [:]
+
+    func spawn(
+        parentSession: UUID,
+        task: String,
+        config: SubagentConfig
+    ) -> Subagent {
+        let subagent = Subagent(
+            id: UUID(),
+            parentSessionId: parentSession,
+            task: task,
+            status: .queued,
+            config: config
+        )
+
+        bySessionId[parentSession, default: []].append(subagent)
+        bySubagentId[subagent.id] = subagent
+
+        return subagent
+    }
+}
+```
+
+### SubagentPool
+
+Manages concurrency and resources.
+
+```swift
+class SubagentPool {
+    let defaultConcurrency = 10
+    let maxConcurrency = 500
+
+    private var active: [Subagent] = []
+    private var queued: [Subagent] = []
+
+    func acquire(for subagent: Subagent) throws {
+        // Check memory
+        if isMemoryLow() {
+            throttle()
+        }
+
+        // Check capacity
+        if active.count >= maxConcurrency {
+            throw PoolError.atCapacity
+        }
+
+        if active.count >= defaultConcurrency {
+            queued.append(subagent)
+            return
+        }
+
+        active.append(subagent)
+        start(subagent)
+    }
+
+    func release(_ subagent: Subagent) {
+        active.removeAll { $0.id == subagent.id }
+
+        if let next = queued.first {
+            queued.removeFirst()
+            start(next)
+        }
+    }
+}
+```
+
+### SubagentEventRouter
+
+Routes events to UI.
+
+```swift
+class SubagentEventRouter {
+    func route(_ event: SubagentEvent) {
+        switch event.type {
+        case .spawned:
+            NotificationCenter.default.post(
+                name: .subagentSpawned,
+                object: event.subagent
+            )
+
+        case .progress:
+            NotificationCenter.default.post(
+                name: .subagentProgress,
+                object: event.progress
+            )
+
+        case .completed:
+            NotificationCenter.default.post(
+                name: .subagentCompleted,
+                object: event.result
+            )
+
+        case .failed:
+            NotificationCenter.default.post(
+                name: .subagentFailed,
+                object: event.error
+            )
+        }
+    }
+}
+```
+
+---
+
+## Keyboard Shortcuts Reference
+
+### Global Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
 | `Cmd+N` | New session |
+| `Cmd+Shift+N` | New project |
+| `Cmd+O` | Open project |
+| `Cmd+W` | Close session |
+| `Cmd+Q` | Quit Blaze |
+| `Cmd+,` | Open settings |
 | `Cmd+K` | Command palette |
+| `Cmd+\` | Toggle sidebar |
+| `Cmd+Shift+\` | Toggle inspector |
+
+### Chat Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
 | `Cmd+Enter` | Send message |
+| `Shift+Enter` | New line in input |
+| `Cmd+.` | Stop generation |
+| `Cmd+L` | Clear chat (new turn) |
+| `Cmd+C` | Copy selected text |
+| `Cmd+Shift+C` | Copy code block |
+| `Escape` | Cancel current action |
+
+### Navigation Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Cmd+1` | Sessions panel |
+| `Cmd+2` | Files panel |
+| `Cmd+3` | Git panel |
+| `Cmd+4` | Approvals panel |
+| `Cmd+[` | Previous session |
+| `Cmd+]` | Next session |
+| `Cmd+Up` | Scroll to top |
+| `Cmd+Down` | Scroll to bottom |
+
+### Diff Viewer Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
 | `Cmd+Shift+A` | Accept all diffs |
 | `Cmd+Shift+R` | Reject all diffs |
-| `Cmd+.` | Stop current generation |
-| `Cmd+D` | Toggle diff view (unified/split) |
-| `Cmd+1/2/3` | Switch sidebar tabs |
+| `Cmd+D` | Toggle diff view mode |
+| `J` | Next hunk |
+| `K` | Previous hunk |
+| `A` | Accept current hunk |
+| `R` | Reject current hunk |
 
-### 10.6 Add Your First Hook
+### File Tree Shortcuts
 
-Hooks automate responses to events. Here's a simple example:
-
-1. **Open Settings** (`Cmd+,`) > **Hooks**
-
-2. **Click "Create Hook"**
-
-3. **Configure:**
-   ```
-   Event: PostToolUse
-   Matcher: Write, Edit
-   Description: "Run tests after file changes"
-   Script: ~/.blaze/hooks/run-tests.sh
-   ```
-
-4. **Create the script:**
-   ```bash
-   mkdir -p ~/.blaze/hooks
-   cat > ~/.blaze/hooks/run-tests.sh << 'EOF'
-   #!/bin/bash
-   cd "$BLAZE_PROJECT_PATH"
-   npm test 2>&1 | head -50
-   EOF
-   chmod +x ~/.blaze/hooks/run-tests.sh
-   ```
-
-Now tests run automatically after Claude edits files!
+| Shortcut | Action |
+|----------|--------|
+| `Enter` | Open file |
+| `Space` | Preview file |
+| `Cmd+Shift+R` | Reveal in Finder |
+| `Cmd+Shift+C` | Copy path |
+| `Cmd+Shift+I` | Insert as @reference |
 
 ---
 
-## 11. Workspaces & Worktrees Deep Dive
+## Performance Notes
 
-### 11.1 Why Git Worktrees?
+### Performance Budgets
 
-Traditional branch switching has friction:
+| Metric | Target | Critical |
+|--------|--------|----------|
+| App Launch (cold) | < 1.0s | < 2.0s |
+| App Launch (warm) | < 0.3s | < 0.5s |
+| Command Palette | < 50ms | < 100ms |
+| First Token Render | < 100ms | < 200ms |
+| Tool Card Render | < 50ms | < 100ms |
+| Diff Render (1K lines) | < 100ms | < 300ms |
+| Diff Render (10K lines) | < 500ms | < 1s |
+| Message Send | < 30ms | < 100ms |
+| Scroll (60fps) | 16.6ms/frame | 33ms/frame |
 
-```bash
-# The old way (painful)
-git stash                    # Save current work
-git checkout feature-auth    # Switch branches
-# ... work on feature ...
-git checkout main            # Switch back
-git stash pop                # Restore work (hope for no conflicts!)
-```
+### Memory Budgets
 
-**Worktrees eliminate this entirely:**
+| State | Target | Critical |
+|-------|--------|----------|
+| Idle | < 150 MB | < 300 MB |
+| Active Session | < 300 MB | < 500 MB |
+| Large Session (1000 events) | < 400 MB | < 600 MB |
+| Memory Growth/Hour | < 10 MB | < 50 MB |
 
-```bash
-# The worktree way (smooth)
-git worktree add ../feature-auth -b feature-auth
-# Now you have TWO working directories, both active simultaneously
-```
+### Known Bottlenecks
 
-### 11.2 Blaze Worktree Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     PROJECT WITH WORKTREES                          │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  ~/projects/my-app/                    (Main worktree)              │
-│  ├── .git/                             Shared Git data              │
-│  ├── src/                              main branch files            │
-│  └── .blaze/                           Project config               │
-│                                                                      │
-│  ~/.blaze/worktrees/my-app/                                         │
-│  ├── feature-auth/                     (Worktree 1)                 │
-│  │   ├── src/                          feature/auth branch          │
-│  │   └── .blaze-session/               Session state                │
-│  │                                                                   │
-│  └── bugfix-login/                     (Worktree 2)                 │
-│      ├── src/                          bugfix/login branch          │
-│      └── .blaze-session/               Session state                │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### 11.3 Recommended Layout
-
-For solo developers:
-
-```
-~/projects/
-  my-app/                     # Main repo (main branch)
-
-~/.blaze/worktrees/my-app/
-  feature-auth/               # Feature work
-  bugfix-123/                 # Bug fix
-  experiment-xyz/             # Experimentation
-```
-
-For teams:
-
-```
-~/projects/
-  my-app/                     # Main repo (main branch)
-
-~/worktrees/my-app/           # Team-visible location
-  anthony/feature-auth/       # Your feature
-  sarah/refactor-api/         # Teammate's work
-```
-
-### 11.4 Creating Worktrees in Blaze
-
-**Via UI:**
-
-1. Right-click project > **New Worktree**
-2. Enter branch name: `feature/user-profiles`
-3. (Optional) Enter task description
-4. Check "Create AI session"
-5. Click **Create**
-
-**Via command palette (`Cmd+K`):**
-
-```
-> worktree new feature/user-profiles "Add user profiles feature"
-```
-
-### 11.5 Parallel Agents
-
-Each worktree can run its own AI session simultaneously:
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  PARALLEL WORKTREE SESSIONS                                         │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  ┌─ Worktree: feature-auth ────────────────────────────────────┐    │
-│  │  Session: "Implement OAuth"                                  │    │
-│  │  Engine: Claude Code                                         │    │
-│  │  Status: Working on token refresh...                         │    │
-│  └──────────────────────────────────────────────────────────────┘    │
-│                                                                      │
-│  ┌─ Worktree: bugfix-login ────────────────────────────────────┐    │
-│  │  Session: "Fix login timeout"                                │    │
-│  │  Engine: Claude Code                                         │    │
-│  │  Status: Running tests...                                    │    │
-│  └──────────────────────────────────────────────────────────────┘    │
-│                                                                      │
-│  ┌─ Main ──────────────────────────────────────────────────────┐    │
-│  │  Session: "Code review"                                      │    │
-│  │  Engine: Gemini CLI                                          │    │
-│  │  Status: Idle                                                │    │
-│  └──────────────────────────────────────────────────────────────┘    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-**Benefits:**
-
-- Work on multiple features simultaneously
-- Each agent has isolated context (no cross-contamination)
-- Merge when ready, discard experiments freely
-- Context inheritance from main worktree (optional)
-
-### 11.6 Merging Worktree Changes
-
-When your feature is ready:
-
-1. **Ensure clean state** (commit or stash changes)
-2. Click **Merge** in the worktree status bar
-3. Choose merge strategy:
-   - **Merge commit** (preserves history)
-   - **Squash** (single commit)
-   - **Rebase** (linear history)
-4. Resolve any conflicts via the built-in resolver
-5. **Cleanup** (delete worktree and branch)
-
-### 11.7 Worktree Best Practices
-
-| Practice | Why |
-|----------|-----|
-| One task per worktree | Clean separation of concerns |
-| Descriptive branch names | `feature/user-auth` not `fix1` |
-| Delete after merge | Avoid worktree sprawl |
-| Use session descriptions | "Implement OAuth flow" helps resume work |
-| Inherit policies | Consistency across worktrees |
+| Area | Issue | Mitigation |
+|------|-------|------------|
+| Large diffs | 10K+ line rendering | Virtualization |
+| Long sessions | Memory growth | Event pruning |
+| Streaming | High token rate | Batched updates |
+| Database | Large queries | Pagination |
 
 ---
 
-## 12. Hooks Workflow Builder Deep Dive
+## Security Model
 
-### 12.1 What Are Hooks?
+### Threat Model
 
-Hooks are automations that trigger on specific events in the AI session lifecycle:
+| Threat | Risk | Mitigation |
+|--------|------|------------|
+| Accidental file deletion | High | Pre-hook blocking |
+| Secret exfiltration | Critical | Pattern scanning |
+| Unreviewed code changes | Medium | Mandatory diff review |
+| Shell command injection | High | Command allowlisting |
+| Scope creep | Medium | Directory restrictions |
+| Runaway resource usage | Low | Timeout enforcement |
+
+### Trust Mode Spectrum
 
 ```
-EVENT occurs --> Hook matches --> Action executes --> Optional result
+SANDBOX -------- REVIEW -------- TRUSTED -------- YOLO
+(Locked)       (Default)        (Expert)      (Dangerous)
+
+Read-only      Approvals        Minimal        No gates
+Safe tools     Required         gates          Auto-approve
+No writes                                      everything
 ```
 
-### 12.2 Hook Events Reference
+### Approval Workflows
 
-| Event | When It Fires | Can Block? | Common Uses |
-|-------|--------------|------------|-------------|
-| `SessionStart` | Session begins/resumes | No | Load context, set env vars |
-| `SessionEnd` | Session terminates | No | Cleanup, export logs |
-| `PreToolUse` | Before tool executes | Yes | Block dangerous ops, transform input |
-| `PostToolUse` | After tool completes | No | Log results, run validators |
-| `UserPromptSubmit` | User sends message | Yes | Sanitize input, inject context |
-| `Stop` | Agent finishes turn | Yes | Enforce "definition of done" |
-| `PreCompact` | Before context compaction | No | Save state, export summary |
-| `Notification` | CLI sends notification | No | Alerts, desktop notifications |
+| Scope | Duration | Use Case |
+|-------|----------|----------|
+| Once | This operation | One-time commands |
+| Session | Until session ends | Repeated tools |
+| Project | Persisted | Project-specific trust |
+| Always | Global preference | Common tools |
 
-### 12.3 Hook Cookbook
+### Audit Logging
 
-#### Recipe 1: Auto-Run Tests After File Changes
+All operations logged to append-only trail:
 
-**Goal:** Run tests whenever Claude edits code.
+```
+~/.blaze/audit/
+  sessions.jsonl      # Session lifecycle
+  tools.jsonl         # Tool decisions
+  approvals.jsonl     # User approvals
+  blocked.jsonl       # Blocked operations
+```
+
+---
+
+## Privacy and Telemetry
+
+### What Stays Local
+
+| Data | Location | Encrypted |
+|------|----------|-----------|
+| Sessions | `~/.blaze/sessions/` | Optional |
+| Event logs | `~/.blaze/events/` | No |
+| Audit trail | `~/.blaze/audit/` | No |
+| Database | `~/.blaze/blaze.db` | Optional |
+| Preferences | `~/.blaze/config.json` | No |
+
+### What Leaves Your Machine
+
+1. **Provider CLIs** - Your prompts go to AI providers
+2. **Webhooks** - Only if YOU configure them
+3. **Telemetry** - Disabled by default
+
+### Optional Telemetry
+
+Disabled by default. If opted in:
+
+| Data | Purpose | Identifiable? |
+|------|---------|---------------|
+| Crashes | Stability | Hashed device |
+| Feature counts | Prioritization | No |
+| Performance | Optimization | No |
+
+---
+
+## Troubleshooting
+
+### Installation Issues
+
+**"Blaze can't be opened because it is from an unidentified developer"**
+
+```bash
+xattr -d com.apple.quarantine /Applications/Blaze.app
+```
+
+**Missing CLI binary**
+
+```bash
+which claude || npm install -g @anthropic-ai/claude-code
+```
+
+### Authentication Issues
+
+**"Not logged in" error**
+
+```bash
+claude logout && claude login
+```
+
+### Tool Permission Issues
+
+1. Check trust mode in Settings
+2. Review blocked patterns
+3. Check hook logs
+
+### Hooks Not Firing
+
+1. Verify hook is enabled
+2. Check event type matches
+3. Review hook timeout
+4. Check logs: `tail -f ~/.blaze/logs/hooks.log`
+
+### Diagnostics
+
+```bash
+# Application logs
+tail -f ~/Library/Logs/com.blaze.app/blaze.log
+
+# Reset settings
+rm -rf ~/.blaze/settings.json
+```
+
+---
+
+## Hook Cookbook
+
+### Recipe 1: Auto-Run Tests After File Changes
+
+**Goal:** Run tests whenever Claude edits code files.
 
 ```json
 {
@@ -1863,7 +2675,6 @@ EXIT_CODE=$?
 if [ $EXIT_CODE -eq 0 ]; then
   echo '{"additionalContext": "Tests passed."}'
 else
-  # Include failure summary
   FAILURES=$(echo "$OUTPUT" | grep -A5 "FAIL\|Error" | head -20)
   cat << EOF
 {
@@ -1875,7 +2686,7 @@ EOF
 fi
 ```
 
-#### Recipe 2: Block Destructive Commands
+### Recipe 2: Block Destructive Commands
 
 **Goal:** Prevent `rm -rf`, force pushes, and other dangerous operations.
 
@@ -1898,11 +2709,9 @@ fi
 ```bash
 #!/bin/bash
 
-# Read event from stdin
 EVENT=$(cat)
 COMMAND=$(echo "$EVENT" | jq -r '.tool_input.command // empty')
 
-# Dangerous patterns
 DANGEROUS_PATTERNS=(
   "rm -rf /"
   "rm -rf ~"
@@ -1927,11 +2736,10 @@ EOF
   fi
 done
 
-# Allow
 echo '{"block": false}'
 ```
 
-#### Recipe 3: Require Approval for Writes Outside Safe Paths
+### Recipe 3: Require Approval for Writes Outside Safe Paths
 
 **Goal:** Allow writes to `src/` and `tests/` without approval; require approval elsewhere.
 
@@ -1957,10 +2765,8 @@ echo '{"block": false}'
 EVENT=$(cat)
 FILE_PATH=$(echo "$EVENT" | jq -r '.tool_input.file_path // .tool_input.path // empty')
 
-# Safe paths (relative to project)
 SAFE_PATHS=("src/" "tests/" "docs/")
 
-# Check if path is safe
 for safe in "${SAFE_PATHS[@]}"; do
   if [[ "$FILE_PATH" == *"$safe"* ]]; then
     echo '{"permissionDecision": "allow"}'
@@ -1968,7 +2774,6 @@ for safe in "${SAFE_PATHS[@]}"; do
   fi
 done
 
-# Require approval for other paths
 cat << EOF
 {
   "permissionDecision": "ask",
@@ -1977,32 +2782,7 @@ cat << EOF
 EOF
 ```
 
-#### Recipe 4: Update Session Heartbeat After Tool Use
-
-**Goal:** Track session activity for monitoring.
-
-```json
-{
-  "id": "heartbeat",
-  "event": "PostToolUse",
-  "type": "observer",
-  "action": {
-    "type": "script",
-    "command": "~/.blaze/hooks/heartbeat.sh"
-  }
-}
-```
-
-**Script (`~/.blaze/hooks/heartbeat.sh`):**
-
-```bash
-#!/bin/bash
-
-# Write heartbeat to coordination file
-echo "{\"session\": \"$BLAZE_SESSION_ID\", \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\", \"event\": \"$BLAZE_EVENT_TYPE\"}" >> ~/.blaze/heartbeats.jsonl
-```
-
-#### Recipe 5: Load Project Context on Session Start
+### Recipe 4: Load Project Context on Session Start
 
 **Goal:** Automatically inject project-specific context when a session begins.
 
@@ -2026,12 +2806,10 @@ echo "{\"session\": \"$BLAZE_SESSION_ID\", \"timestamp\": \"$(date -u +%Y-%m-%dT
 
 cd "$BLAZE_PROJECT_PATH"
 
-# Gather context
 BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
 LAST_COMMIT=$(git log -1 --oneline 2>/dev/null || echo "no commits")
 TODO_COUNT=$(grep -r "TODO" src/ 2>/dev/null | wc -l | tr -d ' ')
 
-# Inject as system context
 cat << EOF
 {
   "additionalContext": "Project context: Branch '$BRANCH', last commit: $LAST_COMMIT, $TODO_COUNT TODOs in src/"
@@ -2039,547 +2817,301 @@ cat << EOF
 EOF
 ```
 
-### 12.4 Node Types in Visual Builder
+### Recipe 5: Slack Notification on Session Complete
 
-| Node Type | Purpose | Example |
-|-----------|---------|---------|
-| **Event** | Trigger point | `PreToolUse`, `SessionStart` |
-| **Matcher** | Filter events | `["Write", "Bash"]`, regex |
-| **Command** | Run script | `~/.blaze/hooks/my-hook.sh` |
-| **Decision** | Block/allow | `allow`, `deny`, `ask` |
-| **Transform** | Modify data | `updatedInput`, `additionalContext` |
-| **Logger** | Write logs | Structured output |
-
-### 12.5 Debugging Hooks
-
-**Enable verbose logging:**
+**Goal:** Send a Slack message when a long-running session finishes.
 
 ```json
 {
-  "hooks": {
-    "debug": true,
-    "logLevel": "verbose"
+  "id": "slack-notify",
+  "event": "Stop",
+  "type": "observer",
+  "action": {
+    "type": "script",
+    "command": "~/.blaze/hooks/slack-notify.sh"
   }
 }
 ```
 
-**Test a hook manually:**
+**Script (`~/.blaze/hooks/slack-notify.sh`):**
 
 ```bash
-# Simulate PreToolUse event
-echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf test/"}}' | \
-  ~/.blaze/hooks/check-dangerous.sh
+#!/bin/bash
 
-# Check output
-# {"block": true, "reason": "Blocked dangerous command..."}
+EVENT=$(cat)
+SESSION_NAME=$(echo "$EVENT" | jq -r '.session_name // "Unknown session"')
+
+curl -X POST -H 'Content-type: application/json' \
+  --data "{\"text\":\"Blaze session completed: $SESSION_NAME\"}" \
+  "$SLACK_WEBHOOK_URL"
 ```
 
-**View hook execution logs:**
+### Recipe 6: Auto-Format Code Before Commit
 
-```bash
-# Recent hook activity
-tail -f ~/.blaze/logs/hooks.log
-
-# Filter by hook ID
-grep "auto-test" ~/.blaze/logs/hooks.log
-```
-
-### 12.6 Hook Best Practices
-
-| Practice | Reason |
-|----------|--------|
-| Keep hooks fast (<5s) | Slow hooks block the AI |
-| Use structured JSON output | Enables UI integration |
-| Log failures | Debug issues later |
-| Test locally first | `echo '{}' \| ./hook.sh` |
-| Use `observer` for async | Don't block main flow |
-| Add descriptions | Distinguish similar hooks |
-| Version control hooks | Track changes |
-
-### 12.7 Migrating from Claude Code Hooks
-
-If you have existing Claude Code hooks in `~/.claude/settings.json`:
-
-```bash
-# Blaze includes a migration tool
-blaze hooks migrate ~/.claude/settings.json
-
-# This creates:
-# ~/.blaze/hooks/hooks.json (hook definitions)
-# ~/.blaze/hooks/migrated/ (copied scripts)
-```
-
-**Event mapping:**
-
-| Claude Code | Blaze |
-|-------------|-------|
-| `PreToolUse` | `PreToolUse` (pre) |
-| `PostToolUse` | `PostToolUse` (post) |
-| `UserPromptSubmit` | `UserPromptSubmit` (pre) |
-| `PreCompact` | `PreCompact` (post) |
-| `SessionStart` | `SessionStart` (post) |
-| `Stop` | `Stop` (pre, can block) |
-## Configuration & Settings
-
-Blaze settings are divided into two categories: **App Settings** (appearance, typography, behavior) and **Claude Code Settings** (CLI integration, permissions, hooks).
-
-Access settings via `Blaze > Settings...` or `Cmd + ,`
-
-### Theme & Appearance
-
-| Setting | Options | Default |
-|---------|---------|---------|
-| Color Scheme | System, Light, Dark | System |
-| Accent Color | System Blue, Purple, Pink, Red, Orange, Yellow, Green, Custom | System Blue |
-| Window Vibrancy | Enable glass effect | Enabled |
-| Sidebar Style | Default, Compact, Minimal | Default |
-
-### Typography
-
-**UI Fonts:**
-
-| Setting | Range | Default |
-|---------|-------|---------|
-| UI Font Family | System, SF Pro, Custom | System |
-| UI Font Size | 11-18pt | 13pt |
-
-**Code Fonts:**
-
-| Setting | Range | Default |
-|---------|-------|---------|
-| Code Font Family | SF Mono, JetBrains Mono, Fira Code, Menlo | SF Mono |
-| Code Font Size | 10-20pt | 12pt |
-| Enable Ligatures | On/Off | Enabled |
-| Tab Width | 2, 4, 8 | 4 |
-
-### Chat Display
-
-| Setting | Options | Default |
-|---------|---------|---------|
-| Message Bubbles | Rounded, Square, Minimal | Rounded |
-| Show Timestamps | Always, Hover, Never | Hover |
-| Timestamp Format | Relative, Absolute | Relative |
-| Message Spacing | Compact, Comfortable, Spacious | Comfortable |
-
-### Tool Cards & Diffs
-
-| Setting | Description | Default |
-|---------|-------------|---------|
-| Default State | Expanded or Collapsed | Collapsed |
-| Show Duration | Display execution time | Enabled |
-| Syntax Highlighting | Code coloring | Enabled |
-| Max Output Height | Truncation threshold | 300px |
-| Diff View Mode | Unified, Side-by-Side, Inline | Unified |
-| Show Line Numbers | In diff viewer | Enabled |
-
-### Terminal Backend
-
-Blaze uses SwiftTerm for terminal emulation when needed. Configuration:
-
-| Setting | Description | Default |
-|---------|-------------|---------|
-| Shell | Shell for bash commands | /bin/zsh |
-| Environment Passthrough | Variables to forward | PATH, HOME |
-| Working Directory | Project root override | Auto-detect |
-
-### Permission Modes
-
-Three security modes control tool permissions:
-
-| Mode | File Writes | Shell Commands | Network | Use Case |
-|------|-------------|----------------|---------|----------|
-| **Review** (default) | Require approval | Require approval | Gated | Daily development |
-| **Trusted** | Auto-approve | Auto-approve | Allowed | Experienced users |
-| **Sandbox** | Blocked | Blocked | Blocked | Exploration only |
-
-### Tools Configuration
-
-Configure which tools are available:
-
-```
-Core Tools:     Read, Write, Edit, Glob, Grep, Bash, WebFetch
-MCP Tools:      Per-server enablement
-Dangerous:      Pattern-based restrictions on Bash
-```
-
-**Bash Restrictions Example:**
+**Goal:** Run prettier/eslint before allowing git commit commands.
 
 ```json
 {
-  "blocked_patterns": ["rm -rf /", "git push --force"],
-  "require_confirm": ["rm", "git push", "npm publish"]
-}
-```
-
-### Auto-Approve Patterns
-
-Skip approval for known-safe operations:
-
-```json
-{
-  "auto_approve": {
-    "bash": ["git status", "git diff", "npm test", "swift build"],
-    "write": ["**/*.test.ts", "**/tests/**"],
-    "read": ["**/*"]
+  "id": "pre-commit-format",
+  "event": "PreToolUse",
+  "matcher": ["Bash"],
+  "type": "pre",
+  "action": {
+    "type": "script",
+    "command": "~/.blaze/hooks/pre-commit-format.sh"
   }
 }
 ```
 
-### Settings Storage
-
-| Type | Location | Format |
-|------|----------|--------|
-| App Settings | `~/Library/Preferences/com.cogit0.blaze.plist` | Property List |
-| Claude Code Settings | `~/.cogit0-blaze/settings.json` | JSON |
-| Hooks | `~/.cogit0-blaze/hooks/` | JSON + Scripts |
-| Skills | `~/.cogit0-blaze/skills/` | Markdown |
-
----
-
-## Architecture Overview
-
-Blaze is a native macOS SwiftUI application that serves as a "harness" for agentic coding CLIs. It spawns CLI processes, parses their structured streaming output (NDJSON), and renders a polished desktop experience.
-
-### System Diagram
-
-```
-+--------------------------- macOS App (SwiftUI) ---------------------------+
-|                                                                            |
-|  +----------------+  +------------------+  +------------------+            |
-|  |   GUI Layer    |  |  Orchestration   |  |     Storage      |            |
-|  |  (SwiftUI)     |  |  Layer           |  |  Layer           |            |
-|  +-------+--------+  +--------+---------+  +--------+---------+            |
-|          |                    |                     |                      |
-|  - Chat Timeline      - SessionStore        - SQLite (sessions)            |
-|  - Tool Cards         - EngineManager       - JSONL (events)               |
-|  - Diff Viewer        - HookRunner          - Memory Layer                 |
-|  - Settings UI        - PolicyEngine        - Preferences                  |
-|  - Command Palette    - ProcessRunner                                      |
-|                                                                            |
-+----------------------------------+-----------------------------------------+
-                                   |
-                                   | spawn child process / pipes
-                                   v
-+--------------------------------------------------------------------------+
-|                        Provider CLIs (unmodified)                          |
-|  +------------------+  +------------------+  +------------------+          |
-|  | ClaudeCodeAdapter|  | GeminiCliAdapter |  | CodexCliAdapter  |          |
-|  +------------------+  +------------------+  +------------------+          |
-+--------------------------------------------------------------------------+
-                                   |
-                                   | HTTPS (CLI handles auth)
-                                   v
-+--------------------------------------------------------------------------+
-|                         AI Provider APIs                                   |
-|           Anthropic API  |  Google AI API  |  OpenAI API                   |
-+--------------------------------------------------------------------------+
-```
-
-### Key Components
-
-| Component | Responsibility | Key Files |
-|-----------|----------------|-----------|
-| **EngineAdapter** | Protocol for CLI invocation, auth, streaming | `Blaze/Sources/Engine/` |
-| **NormalizedEvent** | Unified event schema across providers | `Blaze/Sources/Core/` |
-| **SessionStore** | SQLite + JSONL for crash-safe persistence | `Blaze/Sources/Data/` |
-| **HookRunner** | Event-triggered automation | `Blaze/Sources/Core/` |
-| **ProcessRunner** | Child process management with pipes | `Blaze/Sources/Engine/` |
-| **PolicyEngine** | Permission enforcement | `Blaze/Sources/Security/` |
-| **DesignSystem** | Shared UI components, colors, typography | `Blaze/Sources/DesignSystem/` |
-
-### Execution Lifecycle
-
-```
-1. User sends prompt
-   |
-2. SessionStore creates turn, persists to JSONL
-   |
-3. EngineManager selects adapter (Claude/Gemini/Codex)
-   |
-4. Adapter spawns CLI with --output-format stream-json
-   |
-5. ProcessRunner reads stdout via pipe
-   |
-6. Events parsed as NDJSON -> NormalizedEvent
-   |
-7. Pre-hooks fire (can block)
-   |
-8. UI renders streaming delta
-   |
-9. Tool calls go through PolicyEngine
-   |
-10. Post-hooks fire
-   |
-11. Turn completes, SessionStore persists
-```
-
-### Data Flow
-
-```
-User Input -> Blaze UI -> Prompt Construction -> CLI Process
-                                                      |
-                                                      v
-                                              AI Provider API
-                                                      |
-                                                      v
-NDJSON Stream <- stdout/stderr <- CLI Process Response
-      |
-      v
-Event Processing -> Tool Execution -> Filesystem Changes
-                         |
-                         v
-                  (bash, file edits, etc.)
-```
-
-### Golden Constraints
-
-1. **Never impersonate provider auth** - Only invoke each vendor's CLI login flow
-2. **Never parse ANSI terminal output** - Always use structured JSON output modes
-3. **Clean boundary** - Engine state and UI state are strictly separated
-4. **Security paranoia** - File access, sandbox, approvals, secrets must be explicit
-
----
-
-## Performance Notes
-
-Blaze is built with the philosophy that **performance is a feature**. A native macOS app must feel instantaneous to justify its existence over web alternatives.
-
-### Performance Budgets
-
-| Metric | Target | Critical Threshold |
-|--------|--------|-------------------|
-| App Launch (cold) | < 1.0s | < 2.0s |
-| App Launch (warm) | < 0.3s | < 0.5s |
-| Command Palette Open | < 50ms | < 100ms |
-| First Token Render | < 100ms | < 200ms |
-| Tool Card Render | < 50ms | < 100ms |
-| Diff Render (1K lines) | < 100ms | < 300ms |
-| Diff Render (10K lines) | < 500ms | < 1s |
-| Message Send | < 30ms | < 100ms |
-| Scroll (60fps) | 16.6ms/frame | 33ms/frame |
-
-### Memory Budgets
-
-| State | Target | Critical |
-|-------|--------|----------|
-| Idle | < 150 MB | < 300 MB |
-| Active Session | < 300 MB | < 500 MB |
-| Large Session (1000 events) | < 400 MB | < 600 MB |
-| Memory Growth/Hour | < 10 MB | < 50 MB |
-
-### Known Bottlenecks
-
-| Area | Issue | Mitigation |
-|------|-------|------------|
-| Large diffs | Rendering 10K+ line diffs | Virtualization, lazy loading |
-| Long sessions | Memory growth over time | Event pruning, compaction |
-| Streaming | High token rate rendering | Batched UI updates at 60fps |
-| Database | Large session queries | Pagination, indexed queries |
-
-### Benchmark Plan
-
-TBD - Automated benchmarks run on every PR via GitHub Actions:
+**Script:**
 
 ```bash
-# Run benchmark suite
-make benchmark
+#!/bin/bash
 
-# Compare to baseline
-./scripts/compare-benchmarks.sh
+EVENT=$(cat)
+COMMAND=$(echo "$EVENT" | jq -r '.tool_input.command // empty')
+
+# Only intercept git commit
+if [[ "$COMMAND" == *"git commit"* ]]; then
+  cd "$BLAZE_PROJECT_PATH"
+
+  # Run formatter
+  npm run format 2>/dev/null
+  npm run lint --fix 2>/dev/null
+
+  # Stage any formatting changes
+  git add -u
+fi
+
+echo '{"block": false}'
 ```
 
----
+### Recipe 7: Detect Secrets in Code
 
-## Troubleshooting
-
-### Installation Issues
-
-**"Blaze can't be opened because it is from an unidentified developer"**
+**Goal:** Block writes that appear to contain API keys or secrets.
 
 ```bash
-# Option 1: Right-click > Open (first time)
-# Option 2: System Settings > Privacy & Security > Open Anyway
-# Option 3: Remove quarantine
-xattr -d com.apple.quarantine /Applications/Blaze.app
+#!/bin/bash
+
+EVENT=$(cat)
+CONTENT=$(echo "$EVENT" | jq -r '.tool_input.content // empty')
+
+SECRET_PATTERNS=(
+  "api[_-]?key"
+  "secret[_-]?key"
+  "password\s*="
+  "AWS_SECRET"
+  "PRIVATE_KEY"
+  "-----BEGIN RSA"
+  "sk-[a-zA-Z0-9]{48}"
+)
+
+for pattern in "${SECRET_PATTERNS[@]}"; do
+  if echo "$CONTENT" | grep -qiE "$pattern"; then
+    cat << EOF
+{
+  "block": true,
+  "reason": "Detected potential secret in code. Pattern: $pattern"
+}
+EOF
+    exit 0
+  fi
+done
+
+echo '{"block": false}'
 ```
 
-**"Blaze is damaged and can't be opened"**
+### Recipe 8: Rate Limit Tool Calls
 
-This usually means the app wasn't properly notarized. Re-download from the official source.
-
-**Missing CLI binary**
+**Goal:** Prevent runaway agents by limiting tool calls per minute.
 
 ```bash
-# Verify Claude Code is installed
-which claude
+#!/bin/bash
 
-# If not found, install via npm
-npm install -g @anthropic-ai/claude-code
+RATE_FILE="/tmp/blaze-rate-$BLAZE_SESSION_ID"
+MAX_CALLS_PER_MINUTE=30
 
-# Verify installation
-claude --version
-```
+# Get current count
+NOW=$(date +%s)
+if [ -f "$RATE_FILE" ]; then
+  LAST_RESET=$(head -1 "$RATE_FILE")
+  COUNT=$(tail -1 "$RATE_FILE")
 
-### Authentication Issues
+  # Reset if minute has passed
+  if [ $((NOW - LAST_RESET)) -gt 60 ]; then
+    echo "$NOW" > "$RATE_FILE"
+    echo "1" >> "$RATE_FILE"
+    COUNT=1
+  else
+    COUNT=$((COUNT + 1))
+    echo "$LAST_RESET" > "$RATE_FILE"
+    echo "$COUNT" >> "$RATE_FILE"
+  fi
+else
+  echo "$NOW" > "$RATE_FILE"
+  echo "1" >> "$RATE_FILE"
+  COUNT=1
+fi
 
-**"Not logged in" error**
-
-```bash
-# Re-authenticate with Claude Code
-claude login
-
-# Verify auth status
-claude auth status
-```
-
-**Token expired**
-
-```bash
-# Force re-authentication
-claude logout && claude login
-```
-
-### Tool Permission Issues
-
-**Tool calls being blocked unexpectedly**
-
-1. Check current permission mode: `Settings > Claude Code > Permission Modes`
-2. Review blocked patterns: `Settings > Claude Code > Allowed Tools`
-3. Check hook logs for pre-hook vetoes
-
-**"Permission denied" for file operations**
-
-1. Grant Full Disk Access: `System Settings > Privacy & Security > Full Disk Access`
-2. Add Blaze.app to the list
-3. Restart Blaze
-
-### Hooks Not Firing
-
-**Hook registered but not executing**
-
-1. Check hook is enabled in Settings
-2. Verify event type matches (e.g., `tool.calling` vs `tool.completed`)
-3. Check hook timeout (default 10s)
-4. Review hook logs:
-
-```bash
-# View hook execution logs
-tail -f ~/.cogit0-blaze/logs/hooks.log
-```
-
-**Hook timing out**
-
-Increase timeout in hook configuration or optimize hook script.
-
-### Diagnostics
-
-**Generate debug bundle**
-
-```
-Settings > Claude Code > Advanced > Export Debug Bundle
-```
-
-**Enable debug mode**
-
-```
-Settings > Claude Code > Advanced > Show Raw Events: ON
-```
-
-**View logs**
-
-```bash
-# Application logs
-tail -f ~/Library/Logs/com.cogit0.blaze/blaze.log
-
-# CLI interaction logs
-tail -f ~/.cogit0-blaze/logs/cli.log
-```
-
-**Reset to defaults**
-
-```bash
-# Reset all settings (destructive)
-rm -rf ~/.cogit0-blaze/settings.json
-rm ~/Library/Preferences/com.cogit0.blaze.plist
+if [ $COUNT -gt $MAX_CALLS_PER_MINUTE ]; then
+  echo '{"block": true, "reason": "Rate limit exceeded. Slow down."}'
+else
+  echo '{"block": false}'
+fi
 ```
 
 ---
 
 ## FAQ
 
-### Is it safe?
+### Safety and Security
 
-**Q: Can Claude/Gemini/Codex delete my files?**
+**Q: Can the AI delete my files?**
 
-A: Only if you approve it. By default, Blaze runs in **Review Mode** where:
-- All file writes require your explicit approval
-- All shell commands require confirmation
-- Dangerous patterns (like `rm -rf`) are blocked entirely
-
-You can enable Trusted Mode if you prefer autonomous operation, but that's your choice.
+A: Only if you approve it. In Review mode (default), every file write requires explicit approval. Even in Trusted mode, dangerous patterns like `rm -rf /` are blocked by the PolicyEngine. Only YOLO mode bypasses all checks - and even then, some patterns are hardcoded as blocked.
 
 **Q: What about prompt injection attacks?**
 
-A: Blaze inherits the security properties of the underlying CLIs. We add an additional layer via the PolicyEngine that can block suspicious patterns. However, AI systems are fundamentally unpredictable - always review before approving.
+A: Blaze inherits the security properties of the underlying CLIs. We add an additional layer via the PolicyEngine that can block suspicious patterns. However, AI systems are fundamentally unpredictable - always review before approving. The diff viewer exists specifically to help you verify changes.
 
-### Does it send data to the cloud?
+**Q: What if Claude tries `rm -rf /`?**
+
+A: Blocked by PolicyEngine, even in Trusted mode. Certain patterns are hardcoded as never-allow regardless of your trust settings:
+- `rm -rf /`
+- `rm -rf ~`
+- `chmod -R 777 /`
+- `dd if=/dev/zero of=/dev/sda`
+- And several others
+
+**Q: How do I audit what the AI has done?**
+
+A: Everything is logged:
+- `~/.blaze/audit/tools.jsonl` - All tool calls with inputs and outputs
+- `~/.blaze/audit/approvals.jsonl` - Your approval decisions
+- `~/.blaze/audit/blocked.jsonl` - What was blocked and why
+- Each session has a complete event log in JSONL format
+
+### Privacy
 
 **Q: Does Blaze phone home?**
 
-A: Blaze itself sends zero data to any server. Your conversations go only to the AI provider you choose (Anthropic, Google, or OpenAI) via their official CLI tools.
+A: No. Blaze itself sends zero data to any server. Your conversations go only to the AI provider you choose (Anthropic, Google, or OpenAI) via their official CLI tools.
 
 **Q: Is telemetry enabled?**
 
-A: Optional and disabled by default. If enabled, only anonymous usage stats (no conversation content) are collected.
+A: Optional and disabled by default. If you opt in, only anonymous usage stats (crash reports, feature counts) are collected - never conversation content or code.
 
 **Q: Where is my data stored?**
 
-A: Everything stays local:
-- Sessions: `~/.cogit0-blaze/sessions/`
-- Logs: `~/.cogit0-blaze/logs/`
-- Settings: `~/.cogit0-blaze/settings.json`
+A: Everything stays local on your machine:
+- Sessions: `~/.blaze/sessions/`
+- Event logs: `~/.blaze/events/`
+- Settings: `~/.blaze/config.json`
+- Audit logs: `~/.blaze/audit/`
+- Database: `~/.blaze/blaze.db`
 
-### Can it delete files?
+**Q: Is my code sent anywhere besides the AI provider?**
 
-**Q: What if Claude tries to `rm -rf /`?**
+A: No. Only to the provider APIs via their official CLIs. Blaze adds no additional data transmission.
 
-A: The PolicyEngine blocks dangerous patterns by default. Even in Trusted Mode, certain patterns are hardcoded as blocked.
-
-### Where do API keys go?
+### Authentication
 
 **Q: Do I need an API key?**
 
-A: Blaze uses each provider's CLI login flow. For Claude Code, you authenticate via `claude login` which opens a browser flow. No raw API keys are stored in Blaze.
+A: No. Blaze uses each provider's CLI login flow. For Claude Code, you authenticate via `claude login` which opens a browser flow. No raw API keys are stored in Blaze.
 
 **Q: How does authentication work?**
 
 A: Each CLI manages its own authentication:
-- Claude: OAuth via browser, tokens stored in system keychain
-- Gemini: Google account OAuth
-- Codex: OpenAI API key or OAuth
+- **Claude**: OAuth via browser, tokens stored in system keychain
+- **Gemini**: Google account OAuth
+- **Codex**: OpenAI API key or OAuth
 
 Blaze never sees or stores your credentials directly.
 
-### Does it work offline?
+**Q: What if my token expires?**
 
-**Q: Can I use Blaze without internet?**
+A: Blaze detects auth failures and prompts you to re-authenticate via the CLI's login flow.
 
-A: No. Blaze requires internet access because:
-1. AI inference happens on provider servers
-2. The CLIs call provider APIs
+### Features
 
-Local LLM support is on the roadmap (see below).
+**Q: Does it work offline?**
 
-### How does it compare to alternatives?
+A: No. Blaze requires internet access because AI inference happens on provider servers.
 
-| Feature | Blaze | Web UI | Terminal | VS Code Extension |
-|---------|-------|--------|----------|-------------------|
-| Native macOS | Yes | No | Partial | No |
-| Unified multi-CLI | Yes | No | No | No |
-| Visual diff review | Yes | Limited | No | Yes |
-| Custom hooks | Yes | No | Manual | Limited |
-| Offline history | Yes | No | Manual | Limited |
-| Glass UI | Yes | No | No | No |
+**Q: Can I use local LLMs?**
+
+A: On the roadmap. Support for Ollama and LM Studio is planned for the 6-month timeframe.
+
+**Q: Can I use Blaze with my team?**
+
+A: Currently single-user. Team features (shared sessions, policy templates, collaborative review) are planned for the 6-month milestone.
+
+**Q: Can I use custom MCP servers?**
+
+A: MCP server management UI is on the 30-90 day roadmap. Currently, you can configure MCP via the CLI's native settings.
+
+### Comparisons
+
+**Q: How is Blaze different from Cursor?**
+
+A: Cursor is a full IDE (VS Code fork) with AI built in. Blaze is an agent cockpit - it doesn't replace your editor but works alongside it. Choose Cursor if you want inline completions in your editor. Choose Blaze if you want visual governance, multi-CLI support, and hook automation.
+
+**Q: How is Blaze different from Warp?**
+
+A: Warp is a terminal replacement with AI features. Blaze is a structured event renderer that sits above CLIs. Warp shows terminal output; Blaze parses JSON events into tool cards, diff viewers, and approval flows.
+
+**Q: Why not just use the CLI directly?**
+
+A: You can! Blaze adds value if you want:
+- Visual diff review before accepting changes
+- Approval workflows with preview
+- Session persistence and search
+- Visual hook builder
+- Multi-CLI unified interface
+- Parallel agent support via worktrees
+
+If you're terminal-native and don't need these, the CLI is great.
+
+### Technical
+
+**Q: Why native macOS only?**
+
+A: We prioritized depth over breadth. Native SwiftUI enables 60fps streaming, glass effects, and system integration that Electron can't match. Cross-platform is being evaluated for later.
+
+**Q: What's the memory footprint?**
+
+A: Target is <150MB idle, <300MB with active session. We use virtualized lists and lazy loading to stay lean.
+
+**Q: Can I extend Blaze with plugins?**
+
+A: Plugin system is on the 3-6 month roadmap. Currently, hooks provide extensibility at the event level.
+
+**Q: Does Blaze modify the CLI binaries?**
+
+A: No. Blaze spawns unmodified CLI processes and reads their stdout. We never patch or wrap the binaries.
+
+### Troubleshooting
+
+**Q: My hooks aren't firing, what do I check?**
+
+A: Check in order:
+1. Is the hook enabled in Settings?
+2. Does the event type match?
+3. Does the matcher match the tool name?
+4. Is the script executable? (`chmod +x`)
+5. Check logs: `tail -f ~/.blaze/logs/hooks.log`
+
+**Q: The diff viewer shows wrong colors, how do I fix it?**
+
+A: Check Settings > Appearance > Theme. Some custom themes may have insufficient contrast. Try a built-in theme to verify.
+
+**Q: Session won't load after crash, what do I do?**
+
+A: Sessions have crash-safe JSONL backup. Try:
+1. Check `~/.blaze/sessions/{id}/events.jsonl` exists
+2. Restart Blaze - it auto-recovers on launch
+3. If still broken, check `~/.blaze/backups/` for recent backup
 
 ---
 
@@ -2598,216 +3130,101 @@ Local LLM support is on the roadmap (see below).
 - Multi-agent orchestration
 - MCP server management UI
 - Voice dictation mode
-- Branch conversations (fork sessions)
+- Branch conversations
 
 ### Later (3-6 months)
 
 - Plugin/extension system
 - Policy templates marketplace
-- Team collaboration features
-- Local LLM support (Ollama, LM Studio)
-- Windows/Linux versions (evaluating)
+- Team collaboration
+- Local LLM support
+- Windows/Linux (evaluating)
 
-### What We're NOT Building
+### What We Are NOT Building
 
-- **A terminal emulator** - Use iTerm2 or Terminal.app for that
-- **An IDE** - Use VS Code, Cursor, or Xcode
-- **A web wrapper** - We're native macOS, not Electron
-- **Our own AI model** - We orchestrate existing CLIs
+- Terminal emulator (use iTerm2)
+- IDE (use VS Code, Cursor)
+- Web wrapper (we're native)
+- Our own AI model (we orchestrate)
 
 ---
 
 ## Contributing
 
-We welcome contributions. Here's how to get started.
-
 ### Development Setup
 
-**Prerequisites:**
-- macOS 14.0+
-- Xcode 15.0+
-- Swift 5.9+
-- Claude Code CLI installed (`npm install -g @anthropic-ai/claude-code`)
-
-**Clone and build:**
-
 ```bash
-git clone https://github.com/cogit0/blaze.git
-cd blaze
+# Prerequisites
+# - macOS 14.0+
+# - Xcode 15.0+
+# - Claude Code CLI
 
-# Build with Swift Package Manager
-cd Blaze
+# Clone and build
+git clone git@github.com:anth0nylawrence/blaze.git
+cd blaze/Blaze
 swift build
 
 # Or open in Xcode
-open Blaze/Package.swift
-```
-
-**Run tests:**
-
-```bash
-cd Blaze
-swift test
+open Package.swift
 ```
 
 ### Repository Layout
 
 ```
-cogit0-blaze/
-|-- Blaze/                    # Main Swift package
-|   |-- Sources/
-|   |   |-- App/              # App entry point, delegates
-|   |   |-- Core/             # Models, events, adapters
-|   |   |-- Data/             # Database, migrations, persistence
-|   |   |-- DesignSystem/     # Shared UI components
-|   |   |-- Engine/           # CLI adapters, process runner
-|   |   |-- Onboarding/       # First-run experience
-|   |   |-- Registry/         # Model registry
-|   |   |-- Security/         # Policy engine
-|   |   |-- Services/         # Background services
-|   |   |-- Settings/         # Settings UI
-|   |   |-- Terminal/         # Terminal emulation
-|   |   |-- UI/               # Main UI views
-|   |   +-- Views/            # Reusable view components
-|   |-- Tests/                # Unit tests
-|   +-- Resources/            # Assets, images
-|
-|-- docs/
-|   |-- atoms/                # Feature roadmap (JSONL)
-|   |-- roadmap/              # Generated roadmap (do not edit)
-|   +-- specs/                # Technical specifications
-|
-|-- scripts/                  # Build and validation scripts
-+-- thoughts/                 # Design notes, decisions
-```
-
-### Tests
-
-```bash
-# Run all tests
-make test
-
-# Run specific test file
-swift test --filter BlazeTests.AIProviderTests
-
-# Run with verbose output
-swift test --verbose
+blaze/
++-- Blaze/
+|   +-- Sources/
+|   |   +-- App/          # Entry point
+|   |   +-- Core/         # Models, events
+|   |   +-- Data/         # Database
+|   |   +-- DesignSystem/ # UI components
+|   |   +-- Engine/       # CLI adapters
+|   |   +-- Security/     # Policy engine
+|   |   +-- UI/           # Main views
+|   +-- Tests/
++-- docs/
+|   +-- atoms/            # Feature roadmap
++-- scripts/
 ```
 
 ### Code Style
 
-- **Swift:** Follow [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
-- **Formatting:** Use `swift-format` with default settings
-- **Naming:** Match existing conventions (grep before inventing)
-- **Files:** Keep under 500 LOC, split as needed
+- Swift API Design Guidelines
+- swift-format defaults
+- Files < 500 LOC
+- Conventional commits
 
 ### PR Guidelines
 
-1. **One feature per PR** - Keep PRs focused and reviewable
-2. **Tests required** - Add tests for new functionality
-3. **Update docs** - If behavior changes, update inline docs
-4. **Conventional commits** - Use `feat|fix|refactor|docs|test|chore` prefixes
-5. **No breaking changes** - Without discussion first
-
-**PR Template:**
-
-```markdown
-## Summary
-[1-3 bullet points]
-
-## Test Plan
-- [ ] Unit tests pass
-- [ ] Manual testing completed
-- [ ] Docs updated if needed
-
-## Screenshots
-[If UI changes]
-```
-
-### Atoms System
-
-Features are tracked via the atoms system:
-
-```bash
-# Validate atoms
-make validate-atoms
-
-# Render roadmap
-make render-roadmap
-
-# Both (run before commit)
-make atoms
-```
-
-Never edit `docs/roadmap/feature-roadmap.md` directly - it's generated.
+1. One feature per PR
+2. Tests required
+3. Update docs if needed
+4. Conventional commit prefix
 
 ---
 
 ## License
 
-This project is licensed under the GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later).
-See the LICENSE (and COPYING) file(s) for details.
+This project is licensed under the **GNU Affero General Public License v3.0 or later** (AGPL-3.0-or-later).
+
+See LICENSE file for details.
 
 ---
 
-## Decision Tree: Should You Use Blaze?
+## Acknowledgments
 
-```
-                        Do you use AI coding assistants?
-                                    |
-                   +----------------+----------------+
-                   |                                 |
-                  Yes                               No
-                   |                                 |
-        Are you on macOS?                    Blaze isn't for you
-                   |                         (try Claude web UI)
-          +--------+--------+
-          |                 |
-         Yes               No
-          |                 |
-   Do you want a GUI?   Windows/Linux not
-          |             supported yet
-     +----+----+
-     |         |
-    Yes       No
-     |         |
-     |    Use CLI directly
-     |    (claude, gemini, codex)
-     |
-Do you need multi-CLI support?
-     |
-+----+----+
-|         |
-Yes       No
-|         |
-|    Consider Blaze or
-|    provider's native app
-|
-+-> Blaze is for you
-```
+- **Anthropic** - Claude Code CLI
+- **Google** - Gemini CLI
+- **OpenAI** - Codex CLI
+- **SwiftUI Team** - Native macOS frameworks
+- **Open Source Community** - Inspiration and tools
 
 ---
 
-## User Stories
+<p align="center">
+  <strong>Documentation:</strong> <a href="https://getblaze.dev/docs/">getblaze.dev/docs</a>
+</p>
 
-### The Security-Conscious Developer
-
-> "I want to use Claude for coding, but I don't trust giving an AI full access to my filesystem."
-
-**How Blaze helps:** Review Mode requires explicit approval for every file write and shell command. You see exactly what's being modified before it happens. The PolicyEngine blocks dangerous patterns automatically.
-
-### The Multi-Tool User
-
-> "I use Claude for some tasks, Gemini for others, and want to try Codex. Managing three different tools is annoying."
-
-**How Blaze helps:** Blaze provides a unified interface for all three CLIs. Same keyboard shortcuts, same diff viewer, same session history - regardless of which AI you're talking to.
-
-### The Automation Enthusiast
-
-> "I want to run tests automatically after Claude edits code, and notify Slack when sessions complete."
-
-**How Blaze helps:** The Hook System lets you trigger custom scripts on any event. Set up a post-hook on `file.written` to run tests, and a session.ended hook to call a Slack webhook.
-
----
-
-*Last updated: January 2026*
+<p align="center">
+  <em>Last updated: January 2026</em>
+</p>
