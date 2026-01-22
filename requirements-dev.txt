@@ -1,0 +1,6 @@
+# Development dependencies for Blaze tooling
+#
+# Install with: pip install -r requirements-dev.txt
+
+# JSON Schema validation for atoms
+jsonschema>=4.20.0

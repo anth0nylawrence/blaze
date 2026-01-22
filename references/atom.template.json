@@ -1,0 +1,121 @@
+{
+  "atom_template": {
+    "id": "E001-F001-S001-T001-A001",
+    "severity": "P2",
+    "epic": "<epic title>",
+    "feature": "<feature title>",
+    "story": "<story title>",
+    "story_description": "<short story description>",
+    "task": "<task title>",
+    "task_description": "<task description>",
+    "atom": "<atom title>",
+    "atom_description": "<detailed atom description>",
+
+    "problem_statement": "<why this atom exists and what it fixes>",
+    "scope_in": ["<in-scope item 1>", "<in-scope item 2>"],
+    "scope_out": ["<out-of-scope item 1>"],
+    "assumptions": ["<assumption or N/A>"],
+    "constraints": ["<constraint or N/A>"],
+
+    "functional_requirements": ["<req 1>", "<req 2>"],
+    "nonfunctional_requirements": ["<perf/security/ux req or N/A>"],
+    "implementation_steps": ["<step 1>", "<step 2>"],
+    "files_touched": ["<path or N/A>"],
+    "new_files": ["<path or N/A>"],
+    "commands_used": ["<command or N/A>"],
+    "data_model_changes": ["<change or N/A>"],
+    "api_contracts": ["<contract or N/A>"],
+    "event_contracts": ["<contract or N/A>"],
+
+    "ui_states": ["<state or N/A>"],
+    "ui_interactions": ["<interaction or N/A>"],
+    "ui_copy": ["<copy or N/A>"],
+
+    "edge_cases": ["<edge case 1>", "<edge case 2>"],
+    "failure_modes": ["<failure mode or N/A>"],
+    "rollback_plan": "<rollback steps or N/A>",
+
+    "test_plan": {
+      "unit": ["<unit test or N/A>"],
+      "integration": ["<integration test or N/A>"],
+      "ui": ["<ui test or N/A>"],
+      "perf": ["<perf test or N/A>"],
+      "security": ["<security test or N/A>"]
+    },
+
+    "telemetry_events": ["<event or N/A>"],
+    "metrics": [
+      {
+        "name": "<metric name or N/A>",
+        "type": "none",
+        "unit": "N/A",
+        "target": "N/A",
+        "notes": "N/A"
+      }
+    ],
+    "log_expectations": ["<log expectation or N/A>"],
+
+    "acceptance_tests": ["<acceptance test or N/A>"],
+    "acceptance_criteria": ["<criterion 1>", "<criterion 2>"],
+
+    "definition_of_done": {
+      "criteria": ["<DoD criterion 1>", "<DoD criterion 2>"],
+      "requires_tests": true,
+      "requires_telemetry": true,
+      "requires_error_handling": true,
+      "requires_rollback_plan": true
+    },
+
+    "completed_when": "<completion criteria>",
+    "completed_evidence": "<completion evidence>",
+
+    "dependencies": "None",
+    "dependency_ids": [],
+
+    "epic_id": "E001",
+    "feature_id": "E001-F001",
+    "story_id": "E001-F001-S001",
+    "task_id": "E001-F001-S001-T001",
+
+    "phase": "<phase>",
+    "area": "Core",
+    "risk": "medium",
+    "status": "planned",
+    "status_reason": "<why this status is set>",
+    "owner": "unassigned",
+    "reviewers": ["N/A"],
+    "estimate_days": 1,
+    "priority_rank": "should",
+    "source_refs": ["<doc anchor or URL>"],
+    "open_questions": ["N/A"],
+    "notes": "N/A"
+  },
+
+  "enforcement_protocols": {
+    "schema_validation": "Each JSONL line must validate against atom.schema.json",
+    "n_a_policy": "For required fields that do not apply, use explicit \"N/A\" entries; never use empty strings or empty arrays except dependency_ids.",
+    "content_minimums": {
+      "functional_requirements_min": 2,
+      "edge_cases_min": 2,
+      "implementation_steps_min": 2,
+      "acceptance_criteria_min": 2,
+      "definition_of_done_min": 2
+    },
+    "dependency_rules": [
+      "If dependencies != \"None\", dependency_ids must be non-empty.",
+      "Every dependency_id must reference an existing atom."
+    ],
+    "testing_gate": [
+      "At least one non-N/A test exists across unit/integration/ui/perf/security.",
+      "completed_evidence must reference a test or verification artifact."
+    ],
+    "traceability_gate": [
+      "source_refs must include at least one phase2.md anchor relevant to the atom."
+    ],
+    "review_gate": [
+      "status_reason required for all status values.",
+      "owner must be assigned before status moves to in_progress."
+    ],
+    "lint_command": "python3 scripts/validate_atoms.py docs/atoms.jsonl"
+  }
+}

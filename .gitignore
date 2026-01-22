@@ -1,0 +1,53 @@
+# Fixture capture traces (runtime data, not for version control)
+.blaze-traces/
+
+# Cache and temp
+.claude/cache/
+.claude/tsc-cache/
+.tmp/
+__pycache__/
+
+# Compiled objects
+*.o
+
+# Design files (too large for git)
+*.psd
+
+# Test files
+.codex-not-allowlisted-test
+
+# Local thoughts (not shared)
+Blaze/thoughts/
+
+
+# macOS
+.DS_Store
+
+# Editor / agent tooling (local-only)
+.cursor/
+.claude/
+.gemini-clipboard/
+
+# Local runtime & scratch
+.blaze-traces/
+.tmp/
+thoughts/
+
+# Python
+__pycache__/
+*.pyc
+
+# SwiftPM / Swift build
+.build/
+.swiftpm/
+*.dSYM
+
+# Xcode
+DerivedData/
+**/xcuserdata/
+**/*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+*.xcarchive
+*.app

@@ -1,0 +1,196 @@
+{
+  "schema_version": "v2",
+  "id": "E999-F001-S001-T001-A001",
+  "severity": "P2",
+  "epic": "Example Epic Name",
+  "epic_id": "E999",
+  "feature": "Example Feature Name",
+  "feature_id": "E999-F001",
+  "story": "Example Story Name",
+  "story_id": "E999-F001-S001",
+  "story_description": "A clear description of the user story and its value proposition.",
+  "task": "Example Task Name",
+  "task_id": "E999-F001-S001-T001",
+  "task_description": "A detailed description of what this specific task accomplishes.",
+  "atom": "Example Atom Name",
+  "atom_description": "The smallest deliverable unit of work that provides value.",
+  "problem_statement": "Describe the problem this atom solves and why it matters.",
+  "scope_in": [
+    "What is included in this atom",
+    "Specific functionality to implement"
+  ],
+  "scope_out": [
+    "What is explicitly excluded",
+    "Defer to future work"
+  ],
+  "assumptions": [
+    "Prerequisite conditions that must be true",
+    "Dependencies that are assumed to exist"
+  ],
+  "constraints": [
+    "Technical constraints that must be honored",
+    "Non-negotiable requirements"
+  ],
+  "functional_requirements": [
+    "First functional requirement - what the system must do",
+    "Second functional requirement - observable behavior"
+  ],
+  "nonfunctional_requirements": [
+    "Performance, reliability, or other quality attributes"
+  ],
+  "implementation_steps": [
+    "Step 1: First implementation action",
+    "Step 2: Second implementation action"
+  ],
+  "files_touched": [
+    "Blaze/Sources/Example/ExampleFile.swift"
+  ],
+  "new_files": [
+    "Blaze/Sources/Example/NewFile.swift"
+  ],
+  "commands_used": [
+    "swift build",
+    "swift test"
+  ],
+  "data_model_changes": [
+    "Add ExampleModel with fields: id, name, timestamp"
+  ],
+  "api_contracts": [
+    "ExampleService.process(input: Input) -> Output"
+  ],
+  "event_contracts": [
+    "Emit example_completed event on success"
+  ],
+  "ui_states": [
+    "Loading state with spinner",
+    "Success state with result display"
+  ],
+  "ui_interactions": [
+    "User clicks button to trigger action",
+    "System responds with feedback"
+  ],
+  "ui_copy": [
+    "Processing",
+    "Complete!"
+  ],
+  "edge_cases": [
+    "Handle empty input gracefully",
+    "Handle network timeout with retry"
+  ],
+  "failure_modes": [
+    "Network failure - show error message and retry option"
+  ],
+  "rollback_plan": "Revert the changes in files_touched and restore previous behavior.",
+  "test_plan": {
+    "unit": [
+      "Test ExampleService.process with valid input"
+    ],
+    "integration": [
+      "Test end-to-end flow from UI to persistence"
+    ],
+    "ui": [
+      "Verify loading state appears during processing"
+    ],
+    "perf": [
+      "Verify response time under 100ms for typical input"
+    ],
+    "security": [
+      "Verify input validation prevents injection"
+    ]
+  },
+  "telemetry_events": [
+    "example_started",
+    "example_completed"
+  ],
+  "metrics": [
+    {
+      "name": "example_duration_ms",
+      "type": "histogram",
+      "unit": "ms",
+      "target": "<100",
+      "notes": "Track processing time distribution"
+    }
+  ],
+  "log_expectations": [
+    "INFO example_started id=<id>",
+    "INFO example_completed id=<id> duration=<ms>"
+  ],
+  "acceptance_tests": [
+    "Given valid input, when processed, then correct output is returned"
+  ],
+  "acceptance_criteria": [
+    "All unit tests pass",
+    "Integration test demonstrates end-to-end flow"
+  ],
+  "definition_of_done": {
+    "criteria": [
+      "Code reviewed and approved",
+      "All tests pass in CI"
+    ],
+    "requires_tests": true,
+    "requires_telemetry": true,
+    "requires_error_handling": true,
+    "requires_rollback_plan": true
+  },
+  "completed_when": "The feature works as specified and tests pass.",
+  "completed_evidence": "CI test run showing green status and NewFile.swift compiles.",
+  "dependencies": "None",
+  "dependency_ids": [],
+  "phase": "Phase 99: Example",
+  "area": "Core",
+  "risk": "low",
+  "status": "planned",
+  "status_reason": "Awaiting prioritization and scheduling.",
+  "owner": "unassigned",
+  "reviewers": [
+    "reviewer-placeholder"
+  ],
+  "estimate_days": 1.0,
+  "priority_rank": "should",
+  "source_refs": [
+    "docs/atoms/README.md"
+  ],
+  "open_questions": [
+    "Are there any edge cases we have not considered?"
+  ],
+  "notes": "This is a template atom for reference.",
+  "created_at": "2026-01-03T00:00:00Z",
+  "updated_at": "2026-01-04T00:00:00Z",
+  "source_refs_strict": [
+    "docs/atoms/README.md"
+  ],
+  "na_justifications": {
+    "reviewers[0]": "Template placeholder - real atoms must specify actual reviewers"
+  },
+  "verification_steps": [
+    "Run swift build && swift test to verify compilation",
+    "Review code changes and verify acceptance criteria"
+  ],
+  "artifact_outputs": [
+    "Blaze/Sources/Example/NewFile.swift"
+  ],
+  "risk_register": {
+    "risks": [
+      "Implementation may introduce regressions"
+    ],
+    "mitigations": [
+      "Add comprehensive test coverage"
+    ],
+    "blast_radius": "Affects Core subsystem; 1 file impacted",
+    "fallback_plan": "Revert git changes if issues found"
+  },
+  "contracts": {
+    "events": [
+      "example_completed"
+    ],
+    "apis": [
+      "ExampleService.process"
+    ],
+    "state": [
+      "ExampleModel stored in session"
+    ],
+    "persistence": [
+      "Session event store"
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+# Integration Tests CI - Phase 8 Hardening
+#
+# Runs the AskUserQuestion PTY round-trip test with:
+# - Deterministic trace artifacts
+# - Failure diagnostics upload
+# - Merge gate protection
+
+name: Integration Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:  # Allow manual re-runs
+
+concurrency:
+  group: integration-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Deterministic trace output directory
+  BLAZE_TRACE_DIR: ${{ github.workspace }}/.blaze-traces/ci
+  # Test filter for integration tests
+  INTEGRATION_TEST_FILTER: AskUserQuestionRoundTripTests
+
+jobs:
+  integration-tests:
+    name: PTY Round-Trip Tests
+    runs-on: macos-latest
+    timeout-minutes: 5  # 90s test + buffer
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: '5.10'
+
+      - name: Cache Swift packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build
+            ~/Library/Caches/org.swift.swiftpm
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      - name: Check Claude CLI
+        id: claude-check
+        run: |
+          if command -v claude &> /dev/null; then
+            CLAUDE_VERSION=$(claude --version 2>/dev/null || echo "unknown")
+            echo "claude_available=true" >> $GITHUB_OUTPUT
+            echo "claude_version=$CLAUDE_VERSION" >> $GITHUB_OUTPUT
+            echo "✅ Claude CLI found: $CLAUDE_VERSION"
+          else
+            echo "claude_available=false" >> $GITHUB_OUTPUT
+            echo "claude_version=not_installed" >> $GITHUB_OUTPUT
+            echo "⚠️ Claude CLI not found - test will be skipped"
+          fi
+
+      - name: Create trace directory
+        run: mkdir -p "$BLAZE_TRACE_DIR"
+
+      - name: Build
+        working-directory: Blaze
+        run: swift build
+
+      - name: Run Integration Tests
+        id: integration-test
+        working-directory: Blaze
+        timeout-minutes: 2
+        continue-on-error: true
+        env:
+          BLAZE_CI_TRACE_DIR: ${{ env.BLAZE_TRACE_DIR }}
+        run: |
+          echo "🧪 Running integration tests..."
+          echo "Trace directory: $BLAZE_CI_TRACE_DIR"
+
+          swift test --filter "$INTEGRATION_TEST_FILTER" 2>&1 | tee test-output.log
+          TEST_EXIT_CODE=${PIPESTATUS[0]}
+
+          echo "test_exit_code=$TEST_EXIT_CODE" >> $GITHUB_OUTPUT
+          exit $TEST_EXIT_CODE
+
+      - name: Collect test metadata
+        if: always()
+        working-directory: Blaze
+        run: |
+          # Create CI metadata file
+          cat > "$BLAZE_TRACE_DIR/ci-metadata.json" << EOF
+          {
+            "run_id": "${{ github.run_id }}",
+            "run_number": "${{ github.run_number }}",
+            "sha": "${{ github.sha }}",
+            "ref": "${{ github.ref }}",
+            "actor": "${{ github.actor }}",
+            "event_name": "${{ github.event_name }}",
+            "claude_available": "${{ steps.claude-check.outputs.claude_available }}",
+            "claude_version": "${{ steps.claude-check.outputs.claude_version }}",
+            "test_exit_code": "${{ steps.integration-test.outputs.test_exit_code }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
+
+          echo "📝 CI metadata saved"
+          cat "$BLAZE_TRACE_DIR/ci-metadata.json"
+
+      - name: Copy test output
+        if: always()
+        working-directory: Blaze
+        run: |
+          if [ -f test-output.log ]; then
+            cp test-output.log "$BLAZE_TRACE_DIR/"
+            echo "📝 Test output copied to trace directory"
+          fi
+
+      - name: Upload traces on failure
+        if: failure() || steps.integration-test.outputs.test_exit_code != '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-traces-${{ github.run_number }}
+          path: |
+            ${{ env.BLAZE_TRACE_DIR }}/
+          retention-days: 7
+
+      - name: Upload traces on main branch failure
+        if: |
+          (failure() || steps.integration-test.outputs.test_exit_code != '0') &&
+          github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-traces-main-${{ github.sha }}
+          path: |
+            ${{ env.BLAZE_TRACE_DIR }}/
+          retention-days: 30
+
+      - name: Check test result
+        if: steps.integration-test.outputs.test_exit_code != '0'
+        run: |
+          echo "❌ Integration tests failed"
+          echo "See uploaded artifacts for trace files"
+          exit 1
+
+      - name: Success summary
+        if: success() && steps.integration-test.outputs.test_exit_code == '0'
+        run: |
+          echo "✅ Integration tests passed"
+          echo "Claude CLI: ${{ steps.claude-check.outputs.claude_version }}"

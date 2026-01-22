@@ -1,0 +1,383 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Blaze Atom Schema v2 (Ambiguity-Proof)",
+  "description": "Extends v1 with robustness: timestamps, strict refs, N/A justifications, verification steps, risk register, and contracts index.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "severity",
+    "epic",
+    "feature",
+    "story",
+    "story_description",
+    "task",
+    "task_description",
+    "atom",
+    "atom_description",
+    "problem_statement",
+    "scope_in",
+    "scope_out",
+    "assumptions",
+    "constraints",
+    "functional_requirements",
+    "nonfunctional_requirements",
+    "implementation_steps",
+    "files_touched",
+    "new_files",
+    "commands_used",
+    "data_model_changes",
+    "api_contracts",
+    "event_contracts",
+    "ui_states",
+    "ui_interactions",
+    "ui_copy",
+    "edge_cases",
+    "failure_modes",
+    "rollback_plan",
+    "test_plan",
+    "telemetry_events",
+    "metrics",
+    "log_expectations",
+    "acceptance_tests",
+    "acceptance_criteria",
+    "definition_of_done",
+    "completed_when",
+    "completed_evidence",
+    "dependencies",
+    "dependency_ids",
+    "epic_id",
+    "feature_id",
+    "story_id",
+    "task_id",
+    "phase",
+    "area",
+    "risk",
+    "status",
+    "status_reason",
+    "owner",
+    "reviewers",
+    "estimate_days",
+    "priority_rank",
+    "source_refs",
+    "open_questions",
+    "notes",
+    "created_at",
+    "updated_at",
+    "source_refs_strict",
+    "na_justifications",
+    "verification_steps",
+    "artifact_outputs",
+    "risk_register",
+    "contracts"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["v2"],
+      "description": "Schema version marker"
+    },
+    "id": { "$ref": "#/$defs/atomId" },
+    "severity": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2", "P3", "P4", "P5", "P6"]
+    },
+    "epic": { "$ref": "#/$defs/noEllipsisString" },
+    "feature": { "$ref": "#/$defs/noEllipsisString" },
+    "story": { "$ref": "#/$defs/noEllipsisString" },
+    "story_description": { "$ref": "#/$defs/noEllipsisString" },
+    "task": { "$ref": "#/$defs/noEllipsisString" },
+    "task_description": { "$ref": "#/$defs/noEllipsisString" },
+    "atom": { "$ref": "#/$defs/noEllipsisString" },
+    "atom_description": { "$ref": "#/$defs/noEllipsisString" },
+
+    "problem_statement": { "$ref": "#/$defs/noEllipsisString" },
+    "scope_in": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "scope_out": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "assumptions": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "constraints": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+
+    "functional_requirements": { "$ref": "#/$defs/noEllipsisStringListMin2" },
+    "nonfunctional_requirements": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "implementation_steps": { "$ref": "#/$defs/noEllipsisStringListMin2" },
+    "files_touched": { "$ref": "#/$defs/repoPathListMin1" },
+    "new_files": { "$ref": "#/$defs/repoPathOrNaListMin1" },
+    "commands_used": { "$ref": "#/$defs/commandStringListMin1" },
+    "data_model_changes": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "api_contracts": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "event_contracts": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+
+    "ui_states": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "ui_interactions": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "ui_copy": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+
+    "edge_cases": { "$ref": "#/$defs/noEllipsisStringListMin2" },
+    "failure_modes": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "rollback_plan": { "$ref": "#/$defs/noEllipsisString" },
+
+    "test_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit", "integration", "ui", "perf", "security"],
+      "properties": {
+        "unit": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+        "integration": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+        "ui": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+        "perf": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+        "security": { "$ref": "#/$defs/noEllipsisStringListMin1" }
+      }
+    },
+
+    "telemetry_events": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "metrics": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/metric" }
+    },
+    "log_expectations": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+
+    "acceptance_tests": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "acceptance_criteria": { "$ref": "#/$defs/noEllipsisStringListMin2" },
+
+    "definition_of_done": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteria", "requires_tests", "requires_telemetry", "requires_error_handling", "requires_rollback_plan"],
+      "properties": {
+        "criteria": { "$ref": "#/$defs/noEllipsisStringListMin2" },
+        "requires_tests": { "type": "boolean" },
+        "requires_telemetry": { "type": "boolean" },
+        "requires_error_handling": { "type": "boolean" },
+        "requires_rollback_plan": { "type": "boolean" }
+      }
+    },
+
+    "completed_when": { "$ref": "#/$defs/noEllipsisString" },
+    "completed_evidence": { "$ref": "#/$defs/noEllipsisString" },
+
+    "dependencies": { "$ref": "#/$defs/noEllipsisString" },
+    "dependency_ids": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/atomId" }
+    },
+
+    "epic_id": { "$ref": "#/$defs/epicId" },
+    "feature_id": { "$ref": "#/$defs/featureId" },
+    "story_id": { "$ref": "#/$defs/storyId" },
+    "task_id": { "$ref": "#/$defs/taskId" },
+
+    "phase": { "$ref": "#/$defs/phaseEnum" },
+    "area": {
+      "type": "string",
+      "enum": ["Core", "UI", "Data", "QA", "Infra", "Security", "UX"]
+    },
+    "risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "in_progress", "blocked", "done"]
+    },
+    "status_reason": { "$ref": "#/$defs/noEllipsisString" },
+    "owner": { "$ref": "#/$defs/noEllipsisString" },
+    "reviewers": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "estimate_days": { "type": "number", "minimum": 0 },
+    "priority_rank": {
+      "type": "string",
+      "enum": ["must", "should", "could"]
+    },
+    "source_refs": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "open_questions": { "$ref": "#/$defs/noEllipsisStringListMin1" },
+    "notes": { "$ref": "#/$defs/noEllipsisString" },
+
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when atom was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when atom was last updated"
+    },
+    "source_refs_strict": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/repoRefOrUrl" },
+      "description": "Repo-relative paths or https URLs only (no /mnt/, no absolute paths)"
+    },
+    "na_justifications": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/noEllipsisString" },
+      "description": "Keys are field names with N/A values; values are justification reasons"
+    },
+    "verification_steps": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/noEllipsisString" },
+      "description": "How to prove the atom is complete: commands, UI paths, log checks"
+    },
+    "artifact_outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/repoPathOrNa" },
+      "description": "Repo-relative paths of output artifacts or N/A with justification"
+    },
+    "risk_register": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["risks", "mitigations", "blast_radius", "fallback_plan"],
+      "properties": {
+        "risks": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/noEllipsisString" }
+        },
+        "mitigations": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/noEllipsisString" }
+        },
+        "blast_radius": { "$ref": "#/$defs/noEllipsisString" },
+        "fallback_plan": { "$ref": "#/$defs/noEllipsisString" }
+      }
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["events", "apis", "state", "persistence"],
+      "description": "Summary index of all contracts to prevent scattered and missed contracts",
+      "properties": {
+        "events": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/noEllipsisString" }
+        },
+        "apis": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/noEllipsisString" }
+        },
+        "state": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/noEllipsisString" }
+        },
+        "persistence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/noEllipsisString" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noEllipsisString": {
+      "type": "string",
+      "minLength": 1,
+      "not": { "pattern": "\\.\\.\\." },
+      "description": "Non-empty string that must not contain ellipsis (...)"
+    },
+    "noEllipsisStringListMin1": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/noEllipsisString" }
+    },
+    "noEllipsisStringListMin2": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/noEllipsisString" }
+    },
+    "repoPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\/mnt\\/).*$",
+      "description": "Repo-relative path; rejects absolute paths and /mnt/ references"
+    },
+    "repoPathOrNa": {
+      "type": "string",
+      "minLength": 1,
+      "anyOf": [
+        { "pattern": "^(?!/)(?!.*\\/mnt\\/).*$" },
+        { "pattern": "^N/A$" }
+      ],
+      "description": "Repo-relative path or literal 'N/A'"
+    },
+    "repoPathListMin1": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/repoPath" }
+    },
+    "repoPathOrNaListMin1": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/repoPathOrNa" }
+    },
+    "repoRefOrUrl": {
+      "type": "string",
+      "minLength": 1,
+      "anyOf": [
+        { "pattern": "^(docs|Sources|Tests|Blaze|scripts|thoughts|\\.github)/.*$" },
+        { "pattern": "^https://.*$" }
+      ],
+      "not": { "pattern": "^/mnt/.*$" },
+      "description": "Repo-relative path (docs/, Sources/, Tests/, Blaze/, scripts/, thoughts/, .github/) or https URL"
+    },
+    "commandString": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Non-empty command string"
+    },
+    "commandStringListMin1": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/commandString" }
+    },
+    "phaseEnum": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Phase identifier (validated by semantic rules, not schema enum)"
+    },
+    "atomId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}-S\\d{3}-T\\d{3}-A\\d{3}$"
+    },
+    "epicId": {
+      "type": "string",
+      "pattern": "^E\\d{3}$"
+    },
+    "featureId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}$"
+    },
+    "storyId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}-S\\d{3}$"
+    },
+    "taskId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}-S\\d{3}-T\\d{3}$"
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "unit", "target", "notes"],
+      "properties": {
+        "name": { "$ref": "#/$defs/noEllipsisString" },
+        "type": {
+          "type": "string",
+          "enum": ["counter", "gauge", "timer", "histogram", "none"]
+        },
+        "unit": { "$ref": "#/$defs/noEllipsisString" },
+        "target": { "$ref": "#/$defs/noEllipsisString" },
+        "notes": { "$ref": "#/$defs/noEllipsisString" }
+      }
+    }
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Blaze Atom Schema v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "severity",
+    "epic",
+    "feature",
+    "story",
+    "story_description",
+    "task",
+    "task_description",
+    "atom",
+    "atom_description",
+    "problem_statement",
+    "scope_in",
+    "scope_out",
+    "assumptions",
+    "constraints",
+    "functional_requirements",
+    "nonfunctional_requirements",
+    "implementation_steps",
+    "files_touched",
+    "new_files",
+    "commands_used",
+    "data_model_changes",
+    "api_contracts",
+    "event_contracts",
+    "ui_states",
+    "ui_interactions",
+    "ui_copy",
+    "edge_cases",
+    "failure_modes",
+    "rollback_plan",
+    "test_plan",
+    "telemetry_events",
+    "metrics",
+    "log_expectations",
+    "acceptance_tests",
+    "acceptance_criteria",
+    "definition_of_done",
+    "completed_when",
+    "completed_evidence",
+    "dependencies",
+    "dependency_ids",
+    "epic_id",
+    "feature_id",
+    "story_id",
+    "task_id",
+    "phase",
+    "area",
+    "risk",
+    "status",
+    "status_reason",
+    "owner",
+    "reviewers",
+    "estimate_days",
+    "priority_rank",
+    "source_refs",
+    "open_questions",
+    "notes"
+  ],
+  "properties": {
+    "id": { "$ref": "#/$defs/atomId" },
+    "severity": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2", "P3", "P4", "P5", "P6"]
+    },
+    "epic": { "$ref": "#/$defs/nonEmptyString" },
+    "feature": { "$ref": "#/$defs/nonEmptyString" },
+    "story": { "$ref": "#/$defs/nonEmptyString" },
+    "story_description": { "$ref": "#/$defs/nonEmptyString" },
+    "task": { "$ref": "#/$defs/nonEmptyString" },
+    "task_description": { "$ref": "#/$defs/nonEmptyString" },
+    "atom": { "$ref": "#/$defs/nonEmptyString" },
+    "atom_description": { "$ref": "#/$defs/nonEmptyString" },
+
+    "problem_statement": { "$ref": "#/$defs/nonEmptyString" },
+    "scope_in": { "$ref": "#/$defs/stringListMin1" },
+    "scope_out": { "$ref": "#/$defs/stringListMin1" },
+    "assumptions": { "$ref": "#/$defs/stringListMin1" },
+    "constraints": { "$ref": "#/$defs/stringListMin1" },
+
+    "functional_requirements": { "$ref": "#/$defs/stringListMin2" },
+    "nonfunctional_requirements": { "$ref": "#/$defs/stringListMin1" },
+    "implementation_steps": { "$ref": "#/$defs/stringListMin2" },
+    "files_touched": { "$ref": "#/$defs/stringListMin1" },
+    "new_files": { "$ref": "#/$defs/stringListMin1" },
+    "commands_used": { "$ref": "#/$defs/stringListMin1" },
+    "data_model_changes": { "$ref": "#/$defs/stringListMin1" },
+    "api_contracts": { "$ref": "#/$defs/stringListMin1" },
+    "event_contracts": { "$ref": "#/$defs/stringListMin1" },
+
+    "ui_states": { "$ref": "#/$defs/stringListMin1" },
+    "ui_interactions": { "$ref": "#/$defs/stringListMin1" },
+    "ui_copy": { "$ref": "#/$defs/stringListMin1" },
+
+    "edge_cases": { "$ref": "#/$defs/stringListMin2" },
+    "failure_modes": { "$ref": "#/$defs/stringListMin1" },
+    "rollback_plan": { "$ref": "#/$defs/nonEmptyString" },
+
+    "test_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit", "integration", "ui", "perf", "security"],
+      "properties": {
+        "unit": { "$ref": "#/$defs/stringListMin1" },
+        "integration": { "$ref": "#/$defs/stringListMin1" },
+        "ui": { "$ref": "#/$defs/stringListMin1" },
+        "perf": { "$ref": "#/$defs/stringListMin1" },
+        "security": { "$ref": "#/$defs/stringListMin1" }
+      }
+    },
+
+    "telemetry_events": { "$ref": "#/$defs/stringListMin1" },
+    "metrics": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/metric" }
+    },
+    "log_expectations": { "$ref": "#/$defs/stringListMin1" },
+
+    "acceptance_tests": { "$ref": "#/$defs/stringListMin1" },
+    "acceptance_criteria": { "$ref": "#/$defs/stringListMin2" },
+
+    "definition_of_done": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteria", "requires_tests", "requires_telemetry", "requires_error_handling", "requires_rollback_plan"],
+      "properties": {
+        "criteria": { "$ref": "#/$defs/stringListMin2" },
+        "requires_tests": { "type": "boolean" },
+        "requires_telemetry": { "type": "boolean" },
+        "requires_error_handling": { "type": "boolean" },
+        "requires_rollback_plan": { "type": "boolean" }
+      }
+    },
+
+    "completed_when": { "$ref": "#/$defs/nonEmptyString" },
+    "completed_evidence": { "$ref": "#/$defs/nonEmptyString" },
+
+    "dependencies": { "$ref": "#/$defs/nonEmptyString" },
+    "dependency_ids": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/atomId" }
+    },
+
+    "epic_id": { "$ref": "#/$defs/epicId" },
+    "feature_id": { "$ref": "#/$defs/featureId" },
+    "story_id": { "$ref": "#/$defs/storyId" },
+    "task_id": { "$ref": "#/$defs/taskId" },
+
+    "phase": { "$ref": "#/$defs/nonEmptyString" },
+    "area": {
+      "type": "string",
+      "enum": ["Core", "UI", "Data", "QA", "Infra", "Security", "UX"]
+    },
+    "risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "in_progress", "blocked", "done"]
+    },
+    "status_reason": { "$ref": "#/$defs/nonEmptyString" },
+    "owner": { "$ref": "#/$defs/nonEmptyString" },
+    "reviewers": { "$ref": "#/$defs/stringListMin1" },
+    "estimate_days": { "type": "number", "minimum": 0 },
+    "priority_rank": {
+      "type": "string",
+      "enum": ["must", "should", "could"]
+    },
+    "source_refs": { "$ref": "#/$defs/stringListMin1" },
+    "open_questions": { "$ref": "#/$defs/stringListMin1" },
+    "notes": { "$ref": "#/$defs/nonEmptyString" }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "stringListMin1": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "stringListMin2": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "atomId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}-S\\d{3}-T\\d{3}-A\\d{3}$"
+    },
+    "epicId": {
+      "type": "string",
+      "pattern": "^E\\d{3}$"
+    },
+    "featureId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}$"
+    },
+    "storyId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}-S\\d{3}$"
+    },
+    "taskId": {
+      "type": "string",
+      "pattern": "^E\\d{3}-F\\d{3}-S\\d{3}-T\\d{3}$"
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "unit", "target", "notes"],
+      "properties": {
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "type": {
+          "type": "string",
+          "enum": ["counter", "gauge", "timer", "histogram", "none"]
+        },
+        "unit": { "$ref": "#/$defs/nonEmptyString" },
+        "target": { "$ref": "#/$defs/nonEmptyString" },
+        "notes": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    }
+  }
+}

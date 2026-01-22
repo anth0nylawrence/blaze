@@ -1,0 +1,66 @@
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+DerivedData/
+build/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# App data (development)
+*.db
+*.db-wal
+*.db-shm
+*.jsonl
+
+# Secrets
+*.pem
+*.p12
+*.key
+.env
+.env.local
+
+# Build artifacts
+*.app
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.dmg
+*.zip
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Code coverage
+*.xcresult
+codecov.yml
+
+# Logs
+*.log
+logs/

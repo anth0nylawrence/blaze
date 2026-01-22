@@ -1,0 +1,346 @@
+{
+  "schema_version": "v2",
+  "id": "E005-F009-S002-T008-A001",
+  "severity": "P2",
+  "epic": "E005: Extensibility and Configuration",
+  "epic_id": "E005",
+  "feature": "F009: Visual Hook Builder",
+  "feature_id": "E005-F009",
+  "story": "S002: Hook Builder UI Components",
+  "story_id": "E005-F009-S002",
+  "story_description": "Provide a comprehensive template gallery with production-ready hook recipes that users can deploy with one click, covering security, testing, context, notifications, and workflow patterns.",
+  "task": "T008: Populate Template Gallery with Production Hook Recipes",
+  "task_id": "E005-F009-S002-T008",
+  "task_description": "Expand the HookTemplates module from 5 basic templates to 17+ production-ready recipes sourced from the Claude Code community, covering multi-stage validation, MCP deletion protection, quality checks, task completion verification, session management, and notification logging.",
+  "atom": "A001: Add 17 Production Hook Recipes to Template Gallery",
+  "atom_description": "Extend HookTemplates with 12 additional templates: fileWriteValidation, bashCommandSafety, multiStageValidation, mcpDeletionProtection, conditionalEnvironment, fileWriteQualityCheck, editAnalysisFeedback, taskCompletionVerification, buildTestEnforcement, contextTranscriptReview, projectContextLoader, oneTimeInitialization, sessionResumeRestoration, contextBackup, notificationLogger, permissionAutoApproval, and userPromptSecurityGuidance. Each template includes production-tested content from Claude Code community best practices.",
+  "problem_statement": "The current 5 templates provide basic coverage but miss critical patterns discovered by the Claude Code community: multi-stage validation combining fast deterministic checks with LLM analysis, MCP tool protection, quality enforcement with linters, and comprehensive session lifecycle management. Without these recipes, users must reverse-engineer complex patterns from documentation.",
+  "scope_in": [
+    "Add fileWriteValidation template (PreToolUse, Write|Edit, prompt) blocking /etc, system dirs, .env, credentials, path traversal",
+    "Add bashCommandSafety template (PreToolUse, Bash, prompt) analyzing for destructive ops, privilege escalation, network abuse",
+    "Add multiStageValidation template (PreToolUse, Bash, hybrid) combining quick-check.sh with LLM deep analysis",
+    "Add mcpDeletionProtection template (PreToolUse, mcp__.*__delete.*, prompt) requiring deletion confirmation",
+    "Add conditionalEnvironment template (PreToolUse, *, command) skipping validation outside CI",
+    "Add fileWriteQualityCheck template (PostToolUse, Write|Edit, command) running linters on modified files",
+    "Add editAnalysisFeedback template (PostToolUse, Edit, prompt) analyzing for syntax errors, security vulns, breaking changes",
+    "Add taskCompletionVerification template (Stop, *, prompt) verifying tests run, build succeeded, questions answered",
+    "Add buildTestEnforcement template (Stop, *, prompt) checking if code modified requires build verification",
+    "Add contextTranscriptReview template (Stop, *, prompt) reviewing full transcript for test/build completion",
+    "Add projectContextLoader template (SessionStart, *, command) auto-detecting project type and exporting env vars",
+    "Add oneTimeInitialization template (SessionStart, startup, command) with once:true for first-run setup",
+    "Add sessionResumeRestoration template (SessionStart, resume, command) restoring state on session resume",
+    "Add contextBackup template (PreCompact, auto, command) backing up context before compaction",
+    "Add notificationLogger template (Notification, *, command) logging all notifications for audit trails",
+    "Add permissionAutoApproval template (PermissionRequest, Bash, prompt) contextual auto-approval evaluation",
+    "Add userPromptSecurityGuidance template (UserPromptSubmit, *, prompt) injecting security warnings when discussing auth/permissions",
+    "Update HookTemplates.all to include all 17 templates",
+    "Add new TemplateCategory cases: multiStage, mcp, quality, lifecycle, audit, permissions to categorize expanded templates",
+    "Update templates(for:) to filter by new categories"
+  ],
+  "scope_out": [
+    "Modifying existing 5 templates from T005",
+    "Template editing or customization UI",
+    "Template versioning or migration logic",
+    "Remote template fetching or registry sync",
+    "Template translation or localization",
+    "User-created custom template storage"
+  ],
+  "assumptions": [
+    "T005 HookTemplates module exists with Template struct and TemplateCategory enum",
+    "HookType enum supports prompt, command, and hybrid cases",
+    "Claude Code hook output schema is stable across the recipes",
+    "Scripts reference CLAUDE_PLUGIN_ROOT environment variable for portability",
+    "jq is available on user systems for JSON processing in command hooks"
+  ],
+  "constraints": [
+    "Must not break existing T005 templates or API surface",
+    "All new templates must conform to existing Template struct schema",
+    "Command templates must output valid JSON matching hook output schema",
+    "Prompt templates must return valid decision keywords (allow/deny/ask/approve/block)",
+    "All bash scripts must use set -euo pipefail for safety",
+    "Templates must be portable across macOS and Linux"
+  ],
+  "functional_requirements": [
+    "fileWriteValidation returns deny with reason when path contains /etc, /System, .env, credentials, or .. traversal patterns",
+    "bashCommandSafety returns deny when command contains rm -rf /, chmod 777, curl|bash, sudo without justification",
+    "multiStageValidation runs quick-check.sh (5s timeout) first, then LLM analysis (15s timeout) for comprehensive review",
+    "mcpDeletionProtection returns ask when any mcp__*__delete* tool is invoked, requiring explicit confirmation",
+    "conditionalEnvironment returns allow immediately when CI environment variable is not set",
+    "fileWriteQualityCheck runs eslint for .js/.ts files, swiftlint for .swift, ruff for .py on modified files",
+    "editAnalysisFeedback returns systemMessage with analysis of potential syntax errors, security issues, or breaking changes",
+    "taskCompletionVerification returns block if tests not run or build not executed after code changes",
+    "buildTestEnforcement inspects tool history for Write/Edit usage and requires build verification if present",
+    "contextTranscriptReview examines full conversation transcript to verify all quality gates were met",
+    "projectContextLoader detects package.json, Cargo.toml, Package.swift to set PROJECT_TYPE env var",
+    "oneTimeInitialization runs first-run-setup.sh only once per session using once:true option",
+    "sessionResumeRestoration runs restore-state.sh when session type is resume to reload previous context",
+    "contextBackup runs backup-context.sh before automatic compaction to preserve important context",
+    "notificationLogger appends notification JSON to audit log file for compliance and debugging",
+    "permissionAutoApproval evaluates command context and returns allow for safe operations, ask for risky ones",
+    "userPromptSecurityGuidance returns systemMessage with security warnings when prompt mentions auth, API keys, or permissions"
+  ],
+  "nonfunctional_requirements": [
+    "All 17 templates load in under 5 milliseconds total",
+    "Template content strings total under 100KB memory",
+    "All templates thread-safe through Sendable conformance",
+    "Command templates complete within configured timeout (default 60s)",
+    "Prompt templates complete within configured timeout (default 30s)"
+  ],
+  "implementation_steps": [
+    "Open Blaze/Sources/Core/Hooks/HookTemplates.swift for editing",
+    "Add TemplateCategory cases: multiStage, mcp, quality, lifecycle, audit, permissions if not present",
+    "Add static let fileWriteValidation with PreToolUse event, Write|Edit matcher, prompt hookType verifying path safety",
+    "Add static let bashCommandSafety with PreToolUse event, Bash matcher, prompt hookType analyzing command safety",
+    "Add static let multiStageValidation with PreToolUse event, Bash matcher, hybrid hookType combining command and prompt",
+    "Add static let mcpDeletionProtection with PreToolUse event, mcp__.*__delete.* regex matcher, prompt hookType requiring confirmation",
+    "Add static let conditionalEnvironment with PreToolUse event, wildcard matcher, command hookType checking CI env var",
+    "Add static let fileWriteQualityCheck with PostToolUse event, Write|Edit matcher, command hookType running linters",
+    "Add static let editAnalysisFeedback with PostToolUse event, Edit matcher, prompt hookType analyzing changes",
+    "Add static let taskCompletionVerification with Stop event, wildcard matcher, prompt hookType verifying completion",
+    "Add static let buildTestEnforcement with Stop event, wildcard matcher, prompt hookType requiring build",
+    "Add static let contextTranscriptReview with Stop event, wildcard matcher, prompt hookType reviewing transcript",
+    "Add static let projectContextLoader with SessionStart event, wildcard matcher, command hookType detecting project",
+    "Add static let oneTimeInitialization with SessionStart event, startup matcher, command hookType with once option",
+    "Add static let sessionResumeRestoration with SessionStart event, resume matcher, command hookType restoring state",
+    "Add static let contextBackup with PreCompact event, auto matcher, command hookType backing up context",
+    "Add static let notificationLogger with Notification event, wildcard matcher, command hookType logging",
+    "Add static let permissionAutoApproval with PermissionRequest event, Bash matcher, prompt hookType evaluating",
+    "Add static let userPromptSecurityGuidance with UserPromptSubmit event, wildcard matcher, prompt hookType warning",
+    "Update static let all array to include all 17 templates in logical grouping order",
+    "Update static func templates(for:) to handle new TemplateCategory cases",
+    "Add HookTemplatesExpansionTests.swift with tests for all 12 new templates"
+  ],
+  "files_touched": [
+    "Blaze/Sources/Core/Hooks/HookTemplates.swift",
+    "Blaze/Tests/BlazeTests/HookTemplatesExpansionTests.swift"
+  ],
+  "new_files": [
+    "Blaze/Tests/BlazeTests/HookTemplatesExpansionTests.swift"
+  ],
+  "commands_used": [
+    "swift build to compile updated module",
+    "swift test --filter HookTemplatesExpansionTests to run new tests",
+    "xcodebuild -scheme Blaze build to verify Xcode compatibility"
+  ],
+  "data_model_changes": [
+    "TemplateCategory enum extended with multiStage, mcp, quality, lifecycle, audit, permissions cases if needed",
+    "HookTemplates.all array expanded from 5 to 17 templates",
+    "No database or persistence changes"
+  ],
+  "api_contracts": [
+    "HookTemplates.all returns array of 17 Template instances",
+    "HookTemplates.templates(for:) returns templates matching any TemplateCategory including new cases",
+    "Template struct unchanged - same 9 properties as T005"
+  ],
+  "event_contracts": [
+    "fileWriteValidation, bashCommandSafety, multiStageValidation, mcpDeletionProtection, conditionalEnvironment respond to PreToolUse",
+    "fileWriteQualityCheck, editAnalysisFeedback respond to PostToolUse",
+    "taskCompletionVerification, buildTestEnforcement, contextTranscriptReview respond to Stop",
+    "projectContextLoader, oneTimeInitialization, sessionResumeRestoration respond to SessionStart",
+    "contextBackup responds to PreCompact",
+    "notificationLogger responds to Notification",
+    "permissionAutoApproval responds to PermissionRequest",
+    "userPromptSecurityGuidance responds to UserPromptSubmit"
+  ],
+  "ui_states": [
+    "N/A - templates consumed by Template Gallery View (T002)"
+  ],
+  "ui_interactions": [
+    "N/A - interaction handled by Template Gallery View"
+  ],
+  "ui_copy": [
+    "N/A - template names and descriptions defined in Template struct"
+  ],
+  "edge_cases": [
+    "multiStageValidation must handle quick-check.sh not found gracefully",
+    "fileWriteQualityCheck must handle missing linter binaries without failing",
+    "sessionResumeRestoration must handle missing state file on first resume",
+    "notificationLogger must create audit directory if not exists",
+    "conditionalEnvironment must handle CI env var being empty vs unset"
+  ],
+  "failure_modes": [
+    "Missing jq binary causes command templates to fail; mitigation: check jq availability and provide fallback",
+    "Linter not installed causes fileWriteQualityCheck to error; mitigation: skip linting with warning if linter not found",
+    "quick-check.sh missing causes multiStageValidation to fail first stage; mitigation: proceed to LLM analysis only",
+    "Backup directory not writable causes contextBackup to fail; mitigation: log warning and continue without backup"
+  ],
+  "rollback_plan": "Revert changes to HookTemplates.swift to restore T005 baseline of 5 templates. Delete HookTemplatesExpansionTests.swift. No database changes to rollback. Git revert of commit restores previous state.",
+  "test_plan": {
+    "unit": [
+      "Test HookTemplates.all contains exactly 17 templates",
+      "Test each new template has unique non-empty id",
+      "Test each new template has non-empty name and description",
+      "Test each new template has valid event string matching known hook events",
+      "Test each new template has valid hookType enum value",
+      "Test fileWriteValidation has event PreToolUse and matcher Write|Edit",
+      "Test bashCommandSafety has event PreToolUse and matcher Bash",
+      "Test multiStageValidation has hookType hybrid",
+      "Test mcpDeletionProtection has matcher regex mcp__.*__delete.*",
+      "Test conditionalEnvironment outputs valid JSON with allow decision",
+      "Test fileWriteQualityCheck content contains eslint or linter reference",
+      "Test editAnalysisFeedback has hookType prompt",
+      "Test taskCompletionVerification has event Stop",
+      "Test buildTestEnforcement content references Write or Edit tool check",
+      "Test contextTranscriptReview has event Stop with wildcard matcher",
+      "Test projectContextLoader content detects package.json",
+      "Test oneTimeInitialization content includes once flag handling",
+      "Test sessionResumeRestoration has matcher resume",
+      "Test contextBackup has event PreCompact",
+      "Test notificationLogger has event Notification",
+      "Test permissionAutoApproval has event PermissionRequest",
+      "Test userPromptSecurityGuidance has event UserPromptSubmit",
+      "Test templates(for: .security) returns fileWriteValidation and bashCommandSafety plus T005 security templates",
+      "Test templates(for: .lifecycle) returns sessionStart and preCompact templates"
+    ],
+    "integration": [
+      "Test all command template content is valid bash syntax using bash -n",
+      "Test all prompt template content is valid English text without syntax errors",
+      "Test fileWriteQualityCheck executes without error on sample .js file",
+      "Test projectContextLoader correctly detects Swift project with Package.swift",
+      "Test notificationLogger creates log file and appends JSON entry"
+    ],
+    "ui": [
+      "N/A - no UI components in this atom"
+    ],
+    "perf": [
+      "Test loading all 17 templates completes in under 5 milliseconds",
+      "Test templates(for:) filtering completes in under 100 microseconds"
+    ],
+    "security": [
+      "Test fileWriteValidation content blocks all path traversal patterns",
+      "Test bashCommandSafety content blocks rm -rf /, chmod 777, curl|bash",
+      "Test mcpDeletionProtection requires explicit confirmation for delete operations",
+      "Test userPromptSecurityGuidance warns about auth and API key discussions"
+    ]
+  },
+  "telemetry_events": [
+    "hook_template_expanded: Emitted when expanded template set is first loaded, includes template_count of 17",
+    "hook_template_selected: Emitted when user selects a template from gallery, includes template_id and category"
+  ],
+  "metrics": [
+    {
+      "name": "expanded_template_count",
+      "type": "gauge",
+      "unit": "count",
+      "target": "17 templates available in gallery",
+      "notes": "Static count verifying all templates loaded"
+    },
+    {
+      "name": "template_selection_rate",
+      "type": "counter",
+      "unit": "selections/session",
+      "target": "Track which templates are most popular",
+      "notes": "Per-template counters for product insights"
+    }
+  ],
+  "log_expectations": [
+    "INFO level log when expanded templates loaded showing count of 17",
+    "DEBUG level log when specific template accessed showing template_id"
+  ],
+  "acceptance_tests": [
+    "Verify HookTemplates.all returns 17 Template instances",
+    "Verify template gallery UI shows all 17 templates organized by category",
+    "Verify selecting multiStageValidation template loads correct content with both command and prompt stages",
+    "Verify fileWriteQualityCheck template runs eslint when applied to JS file",
+    "Verify notificationLogger template creates audit log entries"
+  ],
+  "acceptance_criteria": [
+    "All 17 templates defined with complete id, name, description, event, matcher, hookType, and content",
+    "All command templates contain valid bash scripts with proper error handling",
+    "All prompt templates contain clear decision criteria returning valid output keywords",
+    "HookTemplates.all returns array of exactly 17 templates",
+    "templates(for:) correctly categorizes all 17 templates",
+    "All templates pass bash -n syntax validation for command types",
+    "Documentation comments describe each template's purpose and configuration"
+  ],
+  "definition_of_done": {
+    "criteria": [
+      "HookTemplates.swift contains all 17 template definitions",
+      "HookTemplatesExpansionTests.swift passes all unit tests",
+      "Integration tests verify bash script validity",
+      "All templates appear in Template Gallery View",
+      "Code review completed by reviewer",
+      "Documentation updated with template descriptions"
+    ],
+    "requires_tests": true,
+    "requires_telemetry": true,
+    "requires_error_handling": true,
+    "requires_rollback_plan": true
+  },
+  "completed_when": "HookTemplates.swift contains 17 template definitions with complete content; HookTemplates.all returns 17 templates; templates(for:) returns correct filtering for all categories; all unit and integration tests pass; Template Gallery View displays all 17 templates.",
+  "completed_evidence": "Screenshot of Template Gallery showing all 17 templates; test report with HookTemplatesExpansionTests passing; git diff showing expanded HookTemplates.swift with all template content.",
+  "dependencies": "Requires T005 HookTemplates Module to provide Template struct, TemplateCategory enum, and base templates infrastructure.",
+  "dependency_ids": [
+    "E005-F009-S001-T005-A001"
+  ],
+  "phase": "Phase 3: Extensibility",
+  "area": "Core",
+  "risk": "low",
+  "status": "planned",
+  "status_reason": "Implementation ready to begin after T005 completes; all template content sourced from community best practices.",
+  "owner": "unassigned",
+  "reviewers": [
+    "hooks-team-lead",
+    "security-reviewer"
+  ],
+  "estimate_days": 1,
+  "priority_rank": "should",
+  "source_refs": [
+    "https://gist.github.com/alexfazio/653c5164d726987569ee8229a19f451f"
+  ],
+  "source_refs_strict": [
+    "https://gist.github.com/alexfazio/653c5164d726987569ee8229a19f451f"
+  ],
+  "open_questions": [
+    "Should templates support user customization before deployment",
+    "Should templates include version numbers for update tracking",
+    "Should some templates be marked as 'advanced' for power users only"
+  ],
+  "notes": "This atom expands the template library from 5 basic examples to 17 production-ready recipes sourced from Claude Code community best practices. The expanded set covers all major hook events and common automation patterns.",
+  "created_at": "2026-01-13T21:00:00+11:00",
+  "updated_at": "2026-01-13T21:00:00+11:00",
+  "na_justifications": {
+    "ui_states[0]": "Templates are data definitions consumed by Template Gallery View (T002); no direct UI rendering in this atom",
+    "ui_interactions[0]": "User interactions handled by Template Gallery View; this atom provides data only",
+    "ui_copy[0]": "User-facing text is the template name and description properties, defined as Template struct fields"
+  },
+  "verification_steps": [
+    "Run swift build and verify HookTemplates.swift compiles with all 17 templates",
+    "Run swift test --filter HookTemplatesExpansionTests and verify all tests pass",
+    "Open Template Gallery in app and verify all 17 templates appear with correct names and descriptions",
+    "Select multiStageValidation template and verify it loads with both command and prompt content stages"
+  ],
+  "artifact_outputs": [
+    "Blaze/Sources/Core/Hooks/HookTemplates.swift (modified)",
+    "Blaze/Tests/BlazeTests/HookTemplatesExpansionTests.swift (new)"
+  ],
+  "risk_register": {
+    "risks": [
+      "Community-sourced templates may contain subtle security issues",
+      "Templates may not work on all macOS versions or shell configurations",
+      "Expanded template list may overwhelm users in gallery UI"
+    ],
+    "mitigations": [
+      "All templates reviewed for security before inclusion",
+      "Templates tested on macOS 13+ with bash 5.x and zsh",
+      "Templates organized by category with clear descriptions to aid discovery"
+    ],
+    "blast_radius": "Low - templates are optional starting points; users can ignore or modify them; no automatic execution without user action",
+    "fallback_plan": "If expanded templates cause issues, remove them from HookTemplates.all while keeping T005 baseline; Template Gallery continues working with 5 templates"
+  },
+  "contracts": {
+    "events": [
+      "All 17 hook events consumed: PreToolUse, PostToolUse, Stop, SessionStart, PreCompact, Notification, PermissionRequest, UserPromptSubmit"
+    ],
+    "apis": [
+      "HookTemplates.all: [Template] returns 17 templates",
+      "HookTemplates.templates(for:) filters by category including new categories"
+    ],
+    "state": [
+      "17 Template instances as immutable compile-time constants"
+    ],
+    "persistence": [
+      "No persistence - templates exist only as static code"
+    ]
+  }
+}

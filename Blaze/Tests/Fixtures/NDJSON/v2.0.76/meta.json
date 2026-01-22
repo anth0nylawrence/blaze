@@ -1,0 +1,51 @@
+{
+  "capture_date" : "2026-01-02T12:32:00Z",
+  "claude_version" : "2.0.76",
+  "flags" : [
+    "--output-format",
+    "stream-json",
+    "--verbose"
+  ],
+  "notes" : "Tool was denied in non-interactive mode but schema captured successfully. Tool name is AskUserQuestion (not AskUserQuestionTool).",
+  "parent_tool_use_id_variant" : "null",
+  "round_trip_date" : "2026-01-12T05:32:05Z",
+  "round_trip_success" : true,
+  "round_trip_validated" : true,
+  "schema" : {
+    "input" : {
+      "questions" : [
+        {
+          "header" : "string (optional)",
+          "multiSelect" : "boolean (default false)",
+          "options" : [
+            {
+              "description" : "string (optional)",
+              "label" : "string (required)"
+            }
+          ],
+          "question" : "string (required)"
+        }
+      ]
+    },
+    "tool_result" : {
+      "message" : {
+        "content" : [
+          {
+            "content" : "string (option label or free text)",
+            "is_error" : "boolean",
+            "tool_use_id" : "string",
+            "type" : "tool_result"
+          }
+        ],
+        "role" : "user"
+      },
+      "parent_tool_use_id" : "null",
+      "session_id" : "string",
+      "type" : "user"
+    }
+  },
+  "session_id" : "fa101fdf-8852-4750-bc8d-e74026fa3ea7",
+  "tool_name" : "AskUserQuestion",
+  "tool_use_id" : "toolu_01JkxcSGCS4MbwVoLXJjaUBt",
+  "winning_envelope_variant" : "C_session_id"
+}

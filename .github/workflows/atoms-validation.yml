@@ -1,0 +1,95 @@
+# Atom Validation CI
+#
+# Validates atoms.jsonl against v2 schema and ensures roadmap is up-to-date.
+# Runs on all pushes and PRs to prevent broken roadmap from merging.
+
+name: Atoms Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/atoms/**'
+      - 'docs/roadmap/**'
+      - 'scripts/validate_atoms.py'
+      - 'scripts/render_atoms_roadmap.py'
+      - 'scripts/smoke_test_atoms_pipeline.sh'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/atoms/**'
+      - 'docs/roadmap/**'
+      - 'scripts/validate_atoms.py'
+      - 'scripts/render_atoms_roadmap.py'
+      - 'scripts/smoke_test_atoms_pipeline.sh'
+  workflow_dispatch:
+
+concurrency:
+  group: atoms-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-atoms:
+    name: Validate Atoms
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install jsonschema
+
+      - name: Validate atoms.jsonl
+        run: |
+          echo "==> Validating atoms against v2 schema..."
+          python3 scripts/validate_atoms.py docs/atoms/atoms.jsonl --schema v2
+
+      - name: Validate template
+        run: |
+          echo "==> Validating atom template..."
+          python3 scripts/validate_atoms.py --validate-template docs/atoms/atom.template.v2.json --schema v2
+
+      - name: Check roadmap is up-to-date
+        run: |
+          echo "==> Rendering roadmap to temp file..."
+          python3 scripts/render_atoms_roadmap.py \
+            --input docs/atoms/atoms.jsonl \
+            --output /tmp/roadmap-check.md
+
+          echo "==> Comparing with committed roadmap..."
+          if diff -q docs/roadmap/feature-roadmap.md /tmp/roadmap-check.md; then
+            echo "Roadmap is up-to-date"
+          else
+            echo "ERROR: Roadmap is out of date!"
+            echo ""
+            echo "The committed roadmap does not match the atoms.jsonl."
+            echo "Run 'make atoms' and commit the changes."
+            echo ""
+            echo "Diff:"
+            diff docs/roadmap/feature-roadmap.md /tmp/roadmap-check.md || true
+            exit 1
+          fi
+
+      - name: Run smoke tests
+        run: |
+          echo "==> Running adversarial smoke tests..."
+          chmod +x scripts/smoke_test_atoms_pipeline.sh
+          ./scripts/smoke_test_atoms_pipeline.sh
+
+      - name: Summary
+        if: success()
+        run: |
+          ATOM_COUNT=$(wc -l < docs/atoms/atoms.jsonl | tr -d ' ')
+          echo "=== Validation Complete ==="
+          echo "  Atoms validated: $ATOM_COUNT"
+          echo "  Template: valid"
+          echo "  Roadmap: up-to-date"
+          echo "  Smoke tests: passed"
