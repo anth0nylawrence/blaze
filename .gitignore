@@ -1,3 +1,15 @@
+# Credentials and secrets (NEVER commit)
+.env
+.env.*
+*.env
+*.p12
+*.cer
+*.mobileprovision
+*.keychain-db
+notarytool-credentials*
+apple-app-site-association
+AuthKey_*.p8
+
 # Fixture capture traces (runtime data, not for version control)
 .blaze-traces/
 
