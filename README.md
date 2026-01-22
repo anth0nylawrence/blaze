@@ -383,20 +383,20 @@ And with git worktree support, you can run Claude Code on a bug fix while Codex 
 ### Feature Comparison Matrix
 
 | Feature | Blaze | Warp 2.0 | Cursor | VS Code + Extensions | CLI Direct | Commander | CodexMonitor |
-|---------|-------|----------|--------|---------------------|------------|-----------|--------------|
+|---------|:-----:|:--------:|:------:|:-------------------:|:----------:|:---------:|:------------:|
 | **Platform** | Native macOS | Native | Electron | Electron | Terminal | Native macOS | Tauri |
 | **Multi-CLI Support** | Claude, Gemini, Codex | Warp agents | Cursor models | Via extensions | Single CLI | Claude only | Codex only |
-| **Structured Events** | Yes | Partial | No | No | N/A | TBD | Yes |
-| **Visual Diff Review** | Yes | No | Yes | Via extensions | No | Yes | Yes |
-| **Visual Hooks Builder** | Yes | No | No | No | No | No | No |
+| **Structured Events** | ✅ | Partial | ❌ | ❌ | N/A | TBD | ✅ |
+| **Visual Diff Review** | ✅ | ❌ | ✅ | Via extensions | ❌ | ✅ | ✅ |
+| **Visual Hooks Builder** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | **Trust Modes** | 4 modes + allowlists | Model-level | Project rules | Extension settings | CLI flags | TBD | Via Codex |
 | **Session Persistence** | SQLite + JSONL | Warp Drive | Project-based | Workspace | Varies | TBD | Thread storage |
-| **Worktree Support** | Yes | No | No | No | Manual | No | Yes |
-| **Subagent Display** | Yes | No | No | No | Text only | No | Yes |
-| **Token Visualization** | Yes | No | No | No | No | No | No |
-| **60fps Streaming** | Yes | Yes | No | No | N/A | TBD | Yes |
-| **Glass Effects** | 5 levels | Some | No | No | N/A | Some | No |
-| **Price** | TBD | Free + Pro | $20/mo | Free + ext | Free (API) | Free | Free |
+| **Worktree Support** | ✅ | ❌ | ❌ | ❌ | Manual | ❌ | ✅ |
+| **Subagent Display** | ✅ | ❌ | ❌ | ❌ | Text only | ❌ | ✅ |
+| **Token Visualization** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **60fps Streaming** | ✅ | ✅ | ❌ | ❌ | N/A | TBD | ✅ |
+| **Glass Effects** | 5 levels | Some | ❌ | ❌ | N/A | Some | ❌ |
+| **Price** | Free | Free + Pro | $20/mo | Free + ext | Free (API) | Free | Free |
 
 ### Decision Guide
 
