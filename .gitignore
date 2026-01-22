@@ -51,3 +51,13 @@ DerivedData/
 
 *.xcarchive
 *.app
+
+# SwiftPM build artifacts
+.build/
+.swiftpm/
+
+# Release artifacts (we'll create this)
+dist/
+
+# macOS cruft
+.DS_Store

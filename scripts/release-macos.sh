@@ -86,6 +86,10 @@ echo "==> Zipping: $ZIP"
 cd "$DIST"
 ditto -c -k --sequesterRsrc --keepParent "${APP_NAME}.app" "$(basename "$ZIP")"
 
+# Create DMG installer
+"$REPO_ROOT/scripts/make-dmg.sh" "$APP" "$VERSION"
+
+
 echo "==> Done."
 echo "App: $APP"
 echo "Zip: $ZIP"
